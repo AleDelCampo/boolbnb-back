@@ -14,6 +14,12 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
+
+    public function create()
+    {
+        return view('apartments.create');
+    }
+
     public function edit(Request $request): View
     {
         return view('profile.edit', [

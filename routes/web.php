@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ApartmentController;
+use App\Models\Apartment;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,9 +25,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/apartments/create', [ApartmentController::class, 'create'])->name('apartments.create');
+    Route::post('/apartments', [ApartmentController::class, 'store'])->name('apartments.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/logout', [ProfileController::class, 'logout'])->name('logout');
 });
-
-require __DIR__.'/auth.php';

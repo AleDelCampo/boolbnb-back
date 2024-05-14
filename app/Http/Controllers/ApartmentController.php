@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
 {
@@ -21,7 +22,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('apartments.create');
     }
 
     /**
@@ -29,7 +30,22 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        //
+        $request->validated();
+
+        $newApartment = new Apartment();    
+
+        if($request->hasFile('image')) {
+
+            $path = Storage::disk('public')->put('bnb_images', $request->image);
+
+            $newApartment->image = $path;
+        }
+
+        $newApartment->fill($request->all());
+            
+        $newApartment->save();
+
+        return redirect()->route('admin');     
     }
 
     /**
