@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Apartment extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = ['title', 'n_rooms', 'n_beds', 'n_bathrooms', 'squared_meters', 'image', 'is_visible', 'description', 'address', 'latitude', 'longitude', 'user_id', 'slug'];
 
