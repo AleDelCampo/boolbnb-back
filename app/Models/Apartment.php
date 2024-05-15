@@ -11,7 +11,7 @@ class Apartment extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['title', 'n_rooms', 'n_beds', 'n_bathrooms', 'squared_meters', 'image', 'is_visible', 'description', 'address', 'latitude', 'longitude', 'user_id', 'slug'];
+    protected $fillable = ['title', 'n_rooms', 'n_beds', 'n_bathrooms', 'squared_meters', 'is_visible', 'description', 'address', 'latitude', 'longitude', 'user_id', 'slug'];
 
     public function sponsorships()
     {
