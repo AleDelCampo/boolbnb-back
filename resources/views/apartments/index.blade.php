@@ -4,8 +4,8 @@
 <section>
     <div class="container">
 <div class="d-flex justify-content-between my-4">
-    <h2 class="fs-4 text-secondary">Progetti</h2>
-    <a class="btn btn-primary" href="{{route('apartments.create')}}">Aggiungi</a>
+    <h2 class="fs-4 text-secondary">Appartamenti</h2>
+    {{-- <a class="btn btn-primary" href="{{route('apartments.create')}}">Aggiungi</a> --}}
 </div>
     
     </div>
@@ -31,10 +31,10 @@
                    <tr>
                     <th scope="row">{{$apartment->id}}</th>
                     <td>
-                        <a href="{{route('admin.apartments.show', $apartment)}}">{{$apartment->title}}</a></td>
+                        {{-- <a href="{{route('apartments.show', $apartment)}}">{{$apartment->title}}</a></td> --}}
                     <td>{{$apartment->description}}</td>
                     <td>
-                        <a href="{{route('admin.apartments.edit', $apartment)}}"><i class="fa-solid fa-pen-to-square"></i></a>
+                        {{-- <a href="{{route('apartments.edit', $apartment)}}"><i class="fa-solid fa-pen-to-square"></i></a> --}}
                     </td>
                    </tr>
                @empty
