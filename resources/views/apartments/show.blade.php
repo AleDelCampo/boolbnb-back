@@ -73,10 +73,10 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                    <form action="{{route('admin.apartments.destroy', $apartment->id)}}" methods="POST">
+                    <form action="{{route('admin.apartments.destroy', $apartment->id)}}" method="POST">
                         @csrf
-                        @method('DELETE')
-                        <button type="button" class="btn btn-primary">Elimina</button>
+                        @method("DELETE")
+                        <button class="btn btn-primary">Elimina</button>
                     </form>
                   </div>
                 </div>

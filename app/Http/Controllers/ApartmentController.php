@@ -94,6 +94,6 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        //
+        echo'lalalla';
     }
 }
