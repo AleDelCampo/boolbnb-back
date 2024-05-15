@@ -148,20 +148,13 @@
 
 <script>
 
-  // function handleKeyUp(event){
-  //   console.log(event)
-  // }
 
   function handleKeyUp(event) {
 
     const input = document.getElementById('address').value;
-    // console.log(input)
 
-  // const inputValue = event.target.value;
-  // Esegui la chiamata API utilizzando Axios o un'altra libreria HTTP
-  axios.get('autocomplete-address?q=' + input)
+  axios.get('http://127.0.0.1:8000/api/autocomplete-address?query=' + input)
     .then(response => {
-      // Gestisci la risposta dell'API
       console.log(response.data);
     })
     .catch(error => {

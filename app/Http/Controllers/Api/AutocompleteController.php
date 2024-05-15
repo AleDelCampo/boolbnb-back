@@ -8,41 +8,23 @@ use Illuminate\Http\Request;
 
 class AutocompleteController extends Controller
 {
-    public function autocompleteAddress(Request $request)
+    public function autocompleteAddress()
     {
-        // Ottieni il valore della query dall'input del client
-        $query = $request->input('query');
-
-        // Imposta la chiave API di TomTom
-        $apiKey = 'N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY';
-
-        // Crea un'istanza del client GuzzleHTTP
-        $client = new Client();
-
-        // Effettua una richiesta GET all'API di TomTom per cercare gli indirizzi
-        $response = $client->request(
-            'GET',
-            'https://api.tomtom.com/search/2/geocode/Via-Napoli.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY',
-            //  [
-            //     'query' => [
-            //         'key' => $apiKey,
-            //     ]
-            // ]
-        );
-
-        // Decodifica la risposta JSON ricevuta dall'API di TomTom
-        $data = json_decode($response->getBody(), true);
-
-        // Inizializza un array per contenere gli indirizzi ottenuti
-        $addresses = [];
-
-        // Itera su ogni risultato della ricerca per estrarre gli indirizzi completi
-        foreach ($data['results'] as $result) {
-            $addresses[] = $result['address']['freeformAddress'];
-        }
 
 
-        // Restituisci l'array degli indirizzi completi
-        return $addresses;
+        $query = $_GET['query'];
+
+        // Esegui la chiamata all'API esterna e recupera i risultati
+        $res = file_get_contents('https://api.tomtom.com/search/2/geocode/' . $query . '.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY');
+
+        // conversione del risultato json in un array associativo
+        $res = json_decode($res, true);
+
+        // Restituisci i risultati in formato JSON
+        return response()->json([
+            'succes' => true,
+            'result' => $res
+
+        ]);
     }
 }

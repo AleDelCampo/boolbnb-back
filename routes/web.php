@@ -52,7 +52,6 @@ Route::middleware(['auth', 'verified'])
             // Route::get('/users', [DashboardController::class, 'users'])->name('users');
 
             //rotta per chiamata API
-            Route::get('autocomplete-address', [AutocompleteController::class, 'autocompleteAddress']);
 
             // rotte di risorsa per gli appartamenti
             Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
