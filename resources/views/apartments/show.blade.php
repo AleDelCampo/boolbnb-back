@@ -7,7 +7,7 @@
 {{-- @dd($apartment); --}}
 
     <div class="card">
-        <img src="..." class="card-img-top" alt="immagine dell'appartamento">
+        <img src="{{asset('storage/' . $apartment->image)}}" class="card-img-top" alt="immagine dell'appartamento">
         <div class="card-body">
             <h5 class="card-title">{{$apartment->title}}</h5>
 
