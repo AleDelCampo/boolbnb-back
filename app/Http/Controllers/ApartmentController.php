@@ -54,9 +54,9 @@ class ApartmentController extends Controller
         }
 
         // chiamata API per la conversione dell'indirizzo in latitudine e longitudine
-        $res = file_get_contents('https://api.tomtom.com/search/2/geocode/'.Str::slug($request->address).'.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY');
+        $res = file_get_contents('https://api.tomtom.com/search/2/geocode/' . Str::slug($request->address) . '.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY');
         // conversione del risultato json in un array associativo
-        $res = json_decode($res,true);
+        $res = json_decode($res, true);
 
         // inserimento della latitudine del nuovo appartamento
         $newApartment->latitude = $res['results'][0]['position']['lat'];
@@ -77,6 +77,8 @@ class ApartmentController extends Controller
 
         //inserimento dati in tabella ponte
         $newApartment->services()->attach($request->services);
+
+
 
         return redirect()->route('admin.apartments.show', $newApartment);
     }
@@ -116,9 +118,9 @@ class ApartmentController extends Controller
         }
 
         // chiamata API per la conversione dell'indirizzo in latitudine e longitudine
-        $res = file_get_contents('https://api.tomtom.com/search/2/geocode/'.Str::slug($request->address).'.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY');
+        $res = file_get_contents('https://api.tomtom.com/search/2/geocode/' . Str::slug($request->address) . '.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY');
         // conversione del risultato json in un array associativo
-        $res = json_decode($res,true);
+        $res = json_decode($res, true);
 
         // modifica della latitudine del nuovo appartamento
         $apartment->latitude = $res['results'][0]['position']['lat'];

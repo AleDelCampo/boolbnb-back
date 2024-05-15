@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\Api\AutocompleteController;
 use App\Models\Apartment;
 use Illuminate\Support\Facades\Route;
+use Psy\Readline\Hoa\Autocompleter;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +51,7 @@ Route::middleware(['auth', 'verified'])
 
             // Route::get('/users', [DashboardController::class, 'users'])->name('users');
 
+            //rotta per chiamata API
 
             // rotte di risorsa per gli appartamenti
             Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
