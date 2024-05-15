@@ -7,6 +7,7 @@ use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Service;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -41,7 +42,7 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        // $request->validated();
+        $request->validated();
 
         $newApartment = new Apartment();
 

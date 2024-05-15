@@ -29,8 +29,8 @@ class StoreApartmentRequest extends FormRequest
             'n_beds' => 'required|max:100',
             'n_bathrooms' => 'required|max:100',
             'squared_meters' => 'required|max:4000',
-            'is_visible' => 'required',
             'address' => 'required|max:100',
+            'service_id' => 'nullable|exists:services,id',
         ];
     }
 
@@ -52,6 +52,7 @@ class StoreApartmentRequest extends FormRequest
             'squared_meters.max' => 'Area massima di :max metri quadrati',
             'address.required' => 'Inserisci un indirizzo valido',
             'address.max' => 'Non credo esistano vie lunghe :max caratteri!!',
+            'service_id.exists' => "PERCHE' NON PROVI AD HACKERARMI I ....",
         ];
     }
 }
