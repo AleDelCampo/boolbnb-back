@@ -10,6 +10,10 @@ use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Str;
+
+
+
 class ApartmentController extends Controller
 {
     /**
@@ -17,7 +21,8 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        //
+        $apartments = Apartment::all();
+        return view('apartments.index', compact('apartments'));
     }
 
     /**
@@ -25,15 +30,10 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-
+        //prendiamo i servizi da db e le passiamo alla view
         $services = Service::all();
-        // dd($services);
-
-        // prelevo tutti i tag dal database e li passo alla vista
 
         return view('apartments.create', compact('services'));
-
-        // return view('apartments.create');
     }
 
     /**
@@ -41,7 +41,7 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        $request->validated();
+        // $request->validated();
 
         $newApartment = new Apartment();
 
@@ -54,6 +54,9 @@ class ApartmentController extends Controller
 
         $newApartment->fill($request->all());
 
+        $newApartment->slug = Str::slug($newApartment->title);
+
+
         //collegamento appartamento al'utente che si è loggato
         $newApartment->user_id = Auth::id();
 
@@ -62,7 +65,7 @@ class ApartmentController extends Controller
         //inserimento dati in tabella ponte
         $newApartment->services()->attach($request->services);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('apartments.show', $newApartment->id);
     }
 
     /**
@@ -70,7 +73,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        //
+        return view('apartments.show', compact('apartment'));
     }
 
     /**
@@ -78,15 +81,43 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        //
+        //prendiamo i servizi da db e le passiamo alla view
+        $services = Service::all();
+
+        return view('apartments.edit', compact('apartment', 'service'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateApartmentRequest $request, Apartment $apartment)
+    public function update(StoreApartmentRequest $request, Apartment $apartment)
     {
-        //
+        // $request->validated();
+
+
+        if ($request->hasFile('image')) {
+
+            $path = Storage::disk('public')->put('bnb_images', $request->image);
+
+            $apartment->image = $path;
+        }
+
+        $apartment->slug = Str::slug($request->title);
+
+        $apartment->update($request->all());
+
+
+        //collegamento appartamento al'utente che si è loggato
+        // $apartment->user_id = Auth::id();
+
+        $apartment->save();
+
+        // modifichiamo i services collegati al apartment
+        $apartment->services()->sync($request->services);
+
+
+
+        return redirect()->route('apartments.show', $apartment->id);
     }
 
     /**
@@ -94,6 +125,8 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        //
+        $apartment->delete();
+
+        return redirect()->route('apartment.index');
     }
 }
