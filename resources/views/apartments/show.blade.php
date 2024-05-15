@@ -55,7 +55,7 @@
         </div>
         <div class="card-footer">
             {{-- link to room edit page --}}
-            <a href="{{route('admin.apartments.edit', $apartment->id)}}" class="btn btn-outline-warning">Modifica</a>
+            <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-outline-warning">Modifica</a>
 
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteRoomModal">
@@ -74,7 +74,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                    <form action="{{route('admin.apartments.destroy', $apartment->id)}}" method="POST">
+                    <form action="{{route('admin.apartments.destroy', $apartment)}}" method="POST">
                         @csrf
                         @method("DELETE")
                         <button class="btn btn-primary">Elimina</button>

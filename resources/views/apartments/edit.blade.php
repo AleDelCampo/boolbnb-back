@@ -7,7 +7,7 @@
     <div class="container py-4">
         <h1>Modifica il tuo Appartamento!!</h1>
 
-        <form action="{{route('apartments.update', $apartment)}}" method="POST">
+        <form action="{{route('admin.apartments.update', $apartment)}}" method="POST">
             @csrf
 
             @method("PUT")
@@ -15,7 +15,7 @@
             <div class="mb-2">
                 <label for="title" class="form-label">Nome struttura: </label>
                 <input type="text" class="form-control {{--@error('title') is-invalid @enderror--}}" id="title"
-                    value="{{ old('title') ?? $apartment->title }} name=" title" required>
+                    value="{{ old('title') ?? $apartment->title }}" name=" title" required>
                 {{--@error('title')
                 <div class="invalid-feedback">
                     {{$message}}

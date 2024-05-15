@@ -7,7 +7,7 @@
   <div class="container py-4">
     <h1>Inserisci il tuo Appartamento!!</h1>
 
-    <form action="{{route('apartments.store')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('admin.apartments.store')}}" method="POST" enctype="multipart/form-data">
       @csrf
 
       <div class="mb-2">

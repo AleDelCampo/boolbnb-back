@@ -26,7 +26,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     // Route::get('/apartments/create', [ApartmentController::class, 'create'])->name('apartments.create');
-    Route::post('/apartments', [ApartmentController::class, 'store'])->name('apartments.store');
+    // Route::post('/apartments', [ApartmentController::class, 'store'])->name('apartments.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -51,7 +51,7 @@ Route::middleware(['auth', 'verified'])
 
 
             // rotte di risorsa per gli appartamenti
-            Route::resource('apartments', ApartmentController::class);
-            // ->parameters(['apartments' => 'apartment:slug']);
+            Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
+            // ;
         }
     );

@@ -65,7 +65,7 @@ class ApartmentController extends Controller
         //inserimento dati in tabella ponte
         $newApartment->services()->attach($request->services);
 
-        return redirect()->route('apartments.show', $newApartment->id);
+        return redirect()->route('admin.apartments.show', $newApartment);
     }
 
     /**
@@ -84,7 +84,7 @@ class ApartmentController extends Controller
         //prendiamo i servizi da db e le passiamo alla view
         $services = Service::all();
 
-        return view('apartments.edit', compact('apartment', 'service'));
+        return view('apartments.edit', compact('apartment', 'services'));
     }
 
     /**
@@ -117,7 +117,7 @@ class ApartmentController extends Controller
 
 
 
-        return redirect()->route('apartments.show', $apartment->id);
+        return redirect()->route('admin.apartments.show', $apartment);
     }
 
     /**
@@ -127,8 +127,6 @@ class ApartmentController extends Controller
     {
         $apartment->delete();
 
-        return redirect()->route('apartment.index');
-        $apartment->delete();
         return redirect()->route('admin.apartments.index');
     }
 }
