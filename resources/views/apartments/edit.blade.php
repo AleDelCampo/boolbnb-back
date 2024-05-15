@@ -7,7 +7,7 @@
     <div class="container py-4">
         <h1>Modifica il tuo Appartamento!!</h1>
 
-        <form action="{{route('admin.apartments.update', $apartment)}}" method="POST">
+        <form action="{{route('admin.apartments.update', $apartment)}}" method="POST" enctype="multipart/form-data">
             @csrf
 
             @method("PUT")
