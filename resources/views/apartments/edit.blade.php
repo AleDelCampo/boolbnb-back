@@ -37,8 +37,8 @@
 
             <div class="mb-2">
                 <label for="address" class="form-label">Indirizzo: </label>
-                <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address">
-                @error('address')
+                <input type="text" class="form-control {{--@error('address') is-invalid @enderror--}}" id="address" value="{{ old('address') ?? $apartment->address }}" name="address">
+                {{--@error('address')
                 <div class="invalid-feedback">
                     {{$message}}
                 </div>
@@ -58,8 +58,8 @@
 
             <div class="mb-2">
                 <label for="n_rooms" class="form-label">Numero stanze: </label>
-                <input type="number" class="form-control @error('n_rooms') is-invalid @enderror" id="n_rooms" name="n_rooms">
-                @error('n_rooms')
+                <input type="number" class="form-control {{--@error('n_rooms') is-invalid @enderror--}}" id="n_rooms" value="{{ old('n_rooms') ?? $apartment->n_rooms }}" name="n_rooms">
+                {{--@error('n_rooms')
                 <div class="invalid-feedback">
                     {{$message}}
                 </div>
@@ -68,8 +68,8 @@
 
             <div class="mb-2">
                 <label for="n_beds" class="form-label">Numero letti: </label>
-                <input type="number" class="form-control @error('n_beds') is-invalid @enderror" id="n_beds" name="n_beds">
-                @error('n_beds')
+                <input type="number" class="form-control {{--@error('n_beds') is-invalid @enderror--}}" id="n_beds" value="{{ old('n_beds') ?? $apartment->n_beds }}" name="n_beds">
+                {{--@error('n_beds')
                 <div class="invalid-feedback">
                     {{$message}}
                 </div>
@@ -78,8 +78,8 @@
 
             <div class="mb-2">
                 <label for="n_bathrooms" class="form-label">Numero bagni: </label>
-                <input type="number" class="form-control @error('n_bathrooms') is-invalid @enderror" id="n_bathrooms" name="n_bathrooms">
-                @error('n_bathrooms')
+                <input type="number" class="form-control {{--@error('n_bathrooms') is-invalid @enderror--}}" id="n_bathrooms" value="{{ old('n_bathrooms') ?? $apartment->n_bathrooms }}" name="n_bathrooms">
+                {{--@error('n_bathrooms')
                 <div class="invalid-feedback">
                     {{$message}}
                 </div>
@@ -88,8 +88,8 @@
 
             <div class="mb-2">
                 <label for="squared_meters" class="form-label">Metri quadri: </label>
-                <input type="number" class="form-control @error('squared_meters') is-invalid @enderror" id="squared_meters" name="squared_meters">
-                @error('squared_meters')
+                <input type="number" class="form-control {{--@error('squared_meters') is-invalid @enderror--}}" id="squared_meters" value="{{ old('squared_meters') ?? $apartment->squared_meters }}" name="squared_meters">
+                {{--@error('squared_meters')
                 <div class="invalid-feedback">
                     {{$message}}
                 </div>
@@ -119,8 +119,13 @@
                     <div class="form-check ">
 
                         <input type="checkbox" name="services[]" value="{{$service->id}}" class="form-check-input"
-                            id="service-{{$service->id}}" {{ in_array($service->id, old('services', [])) ? 'checked' :
-                        '' }}
+                            id="service-{{$service->id}}" 
+                            
+                            @if ($errors->any())
+                                {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}
+                            @else
+                                {{ $apartment->services->contains($service) ? 'checked' : '' }}
+                            @endif
                         >
 
                         <label for="service-{{$service->id}}" class="form-check-label">{{$service->name}}</label>
