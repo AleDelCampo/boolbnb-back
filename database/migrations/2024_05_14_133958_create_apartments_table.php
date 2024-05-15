@@ -16,15 +16,15 @@ return new class extends Migration
             $table->tinyInteger('n_bathrooms');
             $table->smallInteger('squared_meters');
             $table->text('image')->nullable();
-            $table->boolean('is_visible');
+            $table->boolean('is_visible')->default(1);
             $table->text('description')->nullable();
             $table->string('address');
-            $table->decimal('latitude');
-            $table->decimal('longitude');
+            $table->decimal('latitude')->nullable();
+            $table->decimal('longitude')->nullable();
 
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
-            $table->string('slug')->unique();
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }

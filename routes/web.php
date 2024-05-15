@@ -25,10 +25,33 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/apartments/create', [ApartmentController::class, 'create'])->name('apartments.create');
+    // Route::get('/apartments/create', [ApartmentController::class, 'create'])->name('apartments.create');
     Route::post('/apartments', [ApartmentController::class, 'store'])->name('apartments.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/logout', [ProfileController::class, 'logout'])->name('logout');
+    // Route::post('/logout', [ProfileController::class, 'logout'])->name('logout');
 });
+
+require __DIR__ . '/auth.php';
+
+Route::middleware(['auth', 'verified'])
+    ->name('admin.')
+    ->prefix('admin')
+    ->group(
+        function () {
+            // qui ci metto tutte le rotte che voglio che siano:
+            // raggruppate sotto lo stesso middelware
+            // i loro nomi inizino tutti con "admin.
+            // tutti i loro url inizino con "admin/"
+
+            // Route::get('/', [DashboardController::class, 'index'])->name('index');
+
+            // Route::get('/users', [DashboardController::class, 'users'])->name('users');
+
+
+            // rotte di risorsa per gli appartamenti
+            Route::resource('apartments', ApartmentController::class);
+            // ->parameters(['apartments' => 'apartment:slug']);
+        }
+    );

@@ -9,7 +9,7 @@ class Apartment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'slug', 'n_rooms', 'n_beds', 'n_bathrooms', 'm2', 'image', 'is_visible', 'description', 'address', 'latitude', 'longitude', 'user_id'];
+    protected $fillable = ['title', 'n_rooms', 'n_beds', 'n_bathrooms', 'squared_meters', 'image', 'is_visible', 'description', 'address', 'latitude', 'longitude', 'user_id', 'slug'];
 
     public function sponsorships()
     {
@@ -23,5 +23,9 @@ class Apartment extends Model
     public function visits()
     {
         return $this->hasMany(Visit::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

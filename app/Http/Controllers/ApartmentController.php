@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apartment;
+
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use App\Models\Service;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
@@ -22,7 +25,15 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('apartments.create');
+
+        $services = Service::all();
+        // dd($services);
+
+        // prelevo tutti i tag dal database e li passo alla vista
+
+        return view('apartments.create', compact('services'));
+
+        // return view('apartments.create');
     }
 
     /**
@@ -32,9 +43,9 @@ class ApartmentController extends Controller
     {
         $request->validated();
 
-        $newApartment = new Apartment();    
+        $newApartment = new Apartment();
 
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
 
             $path = Storage::disk('public')->put('bnb_images', $request->image);
 
@@ -42,10 +53,16 @@ class ApartmentController extends Controller
         }
 
         $newApartment->fill($request->all());
-            
+
+        //collegamento appartamento al'utente che si è loggato
+        $newApartment->user_id = Auth::id();
+
         $newApartment->save();
 
-        return redirect()->route('admin');     
+        //inserimento dati in tabella ponte
+        $newApartment->services()->attach($request->services);
+
+        return redirect()->route('dashboard');
     }
 
     /**
