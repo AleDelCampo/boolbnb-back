@@ -52,6 +52,18 @@ class ApartmentController extends Controller
             $newApartment->image = $path;
         }
 
+        // chiamata API per la conversione dell'indirizzo in latitudine e longitudine
+        $res = file_get_contents('https://api.tomtom.com/search/2/geocode/'.Str::slug($request->address).'.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY');
+        // conversione del risultato json in un array associativo
+        $res = json_decode($res,true);
+
+        // inserimento della latitudine del nuovo appartamento
+        $newApartment->latitude = $res['results'][0]['position']['lat'];
+
+        // inserimento della longitudine del nuovo appartamento
+        $newApartment->longitude = $res['results'][0]['position']['lon'];
+
+
         $newApartment->fill($request->all());
 
         $newApartment->slug = Str::slug($newApartment->title);
@@ -101,6 +113,18 @@ class ApartmentController extends Controller
 
             $apartment->image = $path;
         }
+
+        // chiamata API per la conversione dell'indirizzo in latitudine e longitudine
+        $res = file_get_contents('https://api.tomtom.com/search/2/geocode/'.Str::slug($request->address).'.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY');
+        // conversione del risultato json in un array associativo
+        $res = json_decode($res,true);
+
+        // modifica della latitudine del nuovo appartamento
+        $apartment->latitude = $res['results'][0]['position']['lat'];
+
+        // modifica della longitudine del nuovo appartamento
+        $apartment->longitude = $res['results'][0]['position']['lon'];
+
 
         $apartment->slug = Str::slug($request->title);
 
