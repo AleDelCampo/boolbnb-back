@@ -53,7 +53,7 @@ class ApartmentController extends Controller
         }
 
         // chiamata API per la conversione dell'indirizzo in latitudine e longitudine
-        $res = file_get_contents('https://api.tomtom.com/search/2/geocode/Via-Olimpia-28-Pontecagnano.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY');
+        $res = file_get_contents('https://api.tomtom.com/search/2/geocode/'.Str::slug($request->address).'.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY');
         // conversione del risultato json in un array associativo
         $res = json_decode($res,true);
 
@@ -115,7 +115,7 @@ class ApartmentController extends Controller
         }
 
         // chiamata API per la conversione dell'indirizzo in latitudine e longitudine
-        $res = file_get_contents('https://api.tomtom.com/search/2/geocode/Via-Olimpia-28-Pontecagnano.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY');
+        $res = file_get_contents('https://api.tomtom.com/search/2/geocode/'.Str::slug($request->address).'.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY');
         // conversione del risultato json in un array associativo
         $res = json_decode($res,true);
 
