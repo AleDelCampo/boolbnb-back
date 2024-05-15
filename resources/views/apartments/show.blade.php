@@ -57,10 +57,13 @@
             {{-- link to room edit page --}}
             <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-outline-warning">Modifica</a>
 
+
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteRoomModal">
                 Elimina
             </button>
+            <a href="{{route('admin.apartments.index', $apartment)}}" class="btn btn-outline-success">Homepage</a>
+
             <!-- Modal -->
             <div class="modal fade" id="deleteRoomModal" tabindex="-1" aria-hidden="true">
               <div class="modal-dialog">
@@ -78,6 +81,8 @@
                         @csrf
                         @method("DELETE")
                         <button class="btn btn-primary">Elimina</button>
+                        <a href="{{route('admin.apartments.index', $apartment)}}" class="btn btn-outline-success">Modifica</a>
+
                     </form>
                   </div>
                 </div>
