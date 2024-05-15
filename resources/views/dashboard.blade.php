@@ -18,7 +18,14 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+                    
                 </div>
+                <div class="container text-center py-5">
+                    <a class="btn btn-primary" href="">Lista appartamenti</a>
+
+
+                </div>
+
             </div>
         </div>
     </div>
