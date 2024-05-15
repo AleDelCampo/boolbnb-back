@@ -19,12 +19,13 @@ return new class extends Migration
             $table->boolean('is_visible')->default(1);
             $table->text('description')->nullable();
             $table->string('address');
-            $table->decimal('latitude')->nullable();
-            $table->decimal('longitude')->nullable();
+            $table->string('latitude');
+            $table->string('longitude');
 
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
-            $table->string('slug')->nullable();
+            $table->string('slug');
+            $table->softDeletes(); //aggiunge la colonna delete_at per la soft delete
             $table->timestamps();
         });
     }
