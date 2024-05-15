@@ -3,10 +3,27 @@
 @section('content')
 
 <body class="bg-create">
-
+  
   <div class="container py-4">
     <h1>Inserisci il tuo Appartamento!!</h1>
+    <?php 
+    
+    
+    $query = "Via-Napoli";
+    
+    
+    $res = file_get_contents('https://api.tomtom.com/search/2/geocode/Via-Napoli.json?key=N4I4VUaeK36jrRC3vR5FfWqJS6fP6oTY');
+        // conversione del risultato json in un array associativo
+    $res = json_decode($res, true);
 
+    foreach ($res['results'] as $result) {
+            $addresses[] = $result['address']['freeformAddress'];
+        }
+    
+        var_dump($addresses)
+      
+    ?>
+    
     <form action="{{route('admin.apartments.store')}}" method="POST" enctype="multipart/form-data">
       @csrf
 
@@ -32,9 +49,11 @@
         @enderror--}}
       </div>
 
+
       <div class="mb-2">
         <label for="address" class="form-label">Indirizzo: </label>
-        <input type="text" class="form-control {{--@error('address') is-invalid @enderror--}}" id="address" name="address">
+        <input type="text" class="form-control {{--@error('address') is-invalid @enderror--}}" id="address" name="address" onkeyup="handleKeyUp('ciao')">
+        
         {{--@error('address')
         <div class="invalid-feedback">
           {{$message}}
@@ -117,10 +136,38 @@
 
       </div>
 
+      
+
+
       <button type="submit" class="btn btn-primary"></i>Registra!!</button>
 
     </form>
   </div>
 
 </body>
+
+<script>
+
+  // function handleKeyUp(event){
+  //   console.log(event)
+  // }
+
+  function handleKeyUp(event) {
+
+    const input = document.getElementById('address').value;
+    // console.log(input)
+
+  // const inputValue = event.target.value;
+  // Esegui la chiamata API utilizzando Axios o un'altra libreria HTTP
+  axios.get('autocomplete-address?q=' + input)
+    .then(response => {
+      // Gestisci la risposta dell'API
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+</script>
 @endsection
