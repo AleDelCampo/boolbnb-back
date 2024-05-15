@@ -128,5 +128,7 @@ class ApartmentController extends Controller
         $apartment->delete();
 
         return redirect()->route('apartment.index');
+        $apartment->delete();
+        return redirect()->route('admin.apartments.index');
     }
 }
