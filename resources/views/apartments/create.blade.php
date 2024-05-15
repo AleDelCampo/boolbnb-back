@@ -34,7 +34,7 @@
 
       <div class="mb-2">
         <label for="address" class="form-label">Indirizzo: </label>
-        <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}">
+        <input v-model="filterStreet" @keyup="autocomplete()" type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}">
         @error('address')
         <div class="invalid-feedback">
           {{$message}}
