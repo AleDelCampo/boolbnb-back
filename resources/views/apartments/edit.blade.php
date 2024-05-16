@@ -37,7 +37,13 @@
 
             <div class="mb-2">
                 <label for="address" class="form-label">Indirizzo: </label>
-                <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" value="{{ old('address') ?? $apartment->address }}" name="address">
+                <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" value="{{ old('address') ?? $apartment->address }}"  onkeyup="handleKeyUp()" name="address">
+                
+                <div class="auto-complete-box hide">
+                    <ul id="suggested-roads-list">
+                    </ul>
+                </div>
+                
                 @error('address')
                 <div class="invalid-feedback">
                     {{$message}}
@@ -142,5 +148,69 @@
         </form>
     </div>
 
+    <script>
+    
+        let streets=[];
+      
+        function handleKeyUp(event) {
+          const UlEle = document.getElementById('suggested-roads-list');
+          UlEle.innerHTML='';
+          
+      
+          const input = document.getElementById('address').value;
+      
+          axios.get('http://127.0.0.1:8000/api/autocomplete-address?query=' + input)
+          .then(response => {
+            // console.log(response.data);
+      
+            // inserita l'array dei risultati in un array locale
+            streets=response.data.result.results;
+      
+            console.log(streets);
+      
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      
+      
+          console.log(streets.length);
+          if(streets.length != 0){
+      
+      
+            for(let i=0; i<streets.length;i++){
+      
+              const liEl=document.createElement('li');
+        
+              const divEl=document.createElement('div');
+        
+              divEl.innerText=streets[i].address.freeformAddress + ', ' + streets[i].address.country;
+        
+              liEl.append(divEl);
+        
+              UlEle.append(liEl);
+      
+              liEl.addEventListener('click', function(){
+      
+                document.getElementById('address').value = liEl.innerText;
+                document.querySelector('.auto-complete-box').classList.add('hide');
+      
+              });
+        
+        
+            }
+      
+            document.querySelector('.auto-complete-box').classList.remove('hide');
+      
+          } else {
+      
+            document.querySelector('.auto-complete-box').classList.add('hide');
+      
+          }
+      
+      }
+      
+    </script>
 </body>
+
 @endsection

@@ -36,7 +36,7 @@
 
       <div class="mb-2" id="address-box">
         <label for="address" class="form-label">Indirizzo: </label>
-        <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}" onkeyup="handleKeyUp('ciao')">
+        <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}" onkeyup="handleKeyUp()">
         
         <div class="auto-complete-box hide">
           <ul id="suggested-roads-list">
