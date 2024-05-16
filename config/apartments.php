@@ -112,7 +112,7 @@ return [
         "address" => "Via Boncompagni 16, 00187 Roma",
         "latitude" => 41.908549,
         "longitude" => 12.494439,
-        "slug" => "my-rentallnn",
+        "slug" => "my-rental-inn",
         "user_id" => 1
     ],
     [
