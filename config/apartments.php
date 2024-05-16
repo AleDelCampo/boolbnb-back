@@ -98,7 +98,7 @@ return [
         "address" => "Via Lorenzo Il Magnifico 1, 00162 Roma",
         "latitude" => 41.913429,
         "longitude" => 12.521391,
-        "slug" => "casakico",
+        "slug" => "casa-kico",
         "user_id" => 1
     ],
     [
