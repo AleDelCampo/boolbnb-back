@@ -99,6 +99,15 @@
         </div>
         @enderror
       </div>
+
+
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="is_visible" id="is_visible" value="true" {{ old('is_visible') ? 'checked' : ''}}>
+        <label class="form-check-label" for="is_visible" style="user-select: none; background-color:rgba(0,0,0,.7)">
+            Vuoi rendere l'appartamento visibile agli utenti?
+        </label>
+      </div>
+
       
       <div class="mb-4">
         <label class="mb-2" for="">Servizi</label>

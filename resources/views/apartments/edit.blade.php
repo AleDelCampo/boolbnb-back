@@ -102,18 +102,10 @@
                 @enderror
             </div>
 
-            <div>Vuoi oscurare l'appartamento?</div>
-
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="is_visible" id="is_visible1" value="1">
-                <label class="form-check-label" for="is_visible1">
-                    Sì
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="is_visible" id="is_visible2" value="0">
-                <label class="form-check-label" for="is_visible2">
-                    No
+                <input class="form-check-input" type="checkbox" name="is_visible" id="is_visible" value="true" {{ $apartment->is_visible || old('is_visible') ? 'checked' : '' }}>
+                <label class="form-check-label" for="is_visible" style="user-select: none; background-color:rgba(0,0,0,.7)">
+                    Vuoi rendere l'appartamento visibile agli utenti?
                 </label>
             </div>
 
