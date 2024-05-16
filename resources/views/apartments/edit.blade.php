@@ -114,7 +114,7 @@
                 <div class="d-flex gap-4">
 
                     @foreach($services as $service)
-                    <div class="form-check ">
+                    <div class="form-check @error('services') is-invalid @enderror">
 
                         <input type="checkbox" name="services[]" value="{{$service->id}}" class="form-check-input"
                             id="service-{{$service->id}}" 
@@ -130,7 +130,12 @@
 
                     </div>
                     @endforeach
-
+                    @error('services')
+                    <div class="invalid-feedback">
+                        {{$message}}
+                    </div>
+                    @enderror
+                    
                 </div>
 
             </div>
@@ -141,6 +146,10 @@
     </div>
 
     <script>
+
+        let flag = false;
+
+        console.log(flag,'start');
 
         // controllo sull'input dell'address
         if(document.getElementById('address').value.trim()!= ''){
@@ -154,6 +163,9 @@
         let streets=[];
       
         function handleKeyUp(event) {
+             flag=false;
+             console.log(flag,'input')
+
             // lista delle vie suggerite
             const UlEle = document.getElementById('suggested-roads-list');
             UlEle.innerHTML='';
@@ -206,6 +218,9 @@
               UlEle.append(liEl);
       
               liEl.addEventListener('click', function(){
+
+                flag=true;
+                console.log(flag,'cliccato')
       
                 // viene inserito la via scelta nella casella del'address
                 document.getElementById('address').value = liEl.innerText;

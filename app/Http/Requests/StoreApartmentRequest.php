@@ -25,7 +25,7 @@ class StoreApartmentRequest extends FormRequest
             'title' => 'required|max:100',
             'description' => 'max:8000',
             'image' => 'file|max:2048|nullable|mimes:jpg,png',
-            'n_rooms' => 'required|max:100|min:0',
+            'n_rooms' => 'required|numeric|between:0,100',
             'n_beds' => 'required|numeric|between:0,100',
             'n_bathrooms' => 'required|numeric|between:0,100',
             'squared_meters' => 'required|numeric|between:0,4000',
@@ -64,7 +64,7 @@ class StoreApartmentRequest extends FormRequest
             'address.required' => 'Inserisci un indirizzo valido',
             'address.max' => 'Non credo esistano vie lunghe :max caratteri!!',
             
-            'service_id.exists' => "PERCHE' NON PROVI AD HACKERARMI I ....",
+            'services.required' => "Inserisci almeno un servizio",
         ];
     }
 }
