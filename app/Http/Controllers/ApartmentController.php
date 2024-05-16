@@ -109,7 +109,7 @@ class ApartmentController extends Controller
      */
     public function update(StoreApartmentRequest $request, Apartment $apartment)
     {
-        // $request->validated();
+        $request->validated();
 
 
         if ($request->hasFile('image')) {
