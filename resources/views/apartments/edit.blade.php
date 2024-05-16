@@ -135,23 +135,38 @@
 
             </div>
 
-            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-arrows-rotate"></i> Registra!!</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit"><i class="fa-solid fa-arrows-rotate"></i> Registra!!</button>
 
         </form>
     </div>
 
     <script>
+
+        // controllo sull'input dell'address
+        if(document.getElementById('address').value.trim()!= ''){
+            // il campo non è vuoto quindi il bottone è attivo
+            document.querySelector('#btn-submit').disabled=false;
+        }else{
+            // il campo è vuoto quindi il bottone è disattivato
+            document.querySelector('#btn-submit').disabled=true;
+        }
     
         let streets=[];
       
         function handleKeyUp(event) {
+            // lista delle vie suggerite
             const UlEle = document.getElementById('suggested-roads-list');
             UlEle.innerHTML='';
           
-      
+            // valore del campo dell'address
             const input = document.getElementById('address').value;
+
             // controllo sull'input che non sia vuoto
             if(input.trim()!= ''){
+
+                 // il bottone viene disattivato ogni qual volta si scrivono o cancellano caratteri
+                document.querySelector('#btn-submit').disabled=true;
+
 
                 axios.get('http://127.0.0.1:8000/api/autocomplete-address?query=' + input)
                 .then(response => {
@@ -192,8 +207,14 @@
       
               liEl.addEventListener('click', function(){
       
+                // viene inserito la via scelta nella casella del'address
                 document.getElementById('address').value = liEl.innerText;
+
+                // il menu viene nascosto
                 document.querySelector('.auto-complete-box').classList.add('hide');
+
+                // quando la via viene cliccata dai suggerimenti allora il pulsate si attiva e l'utente registrato può inviare il form
+                document.querySelector('#btn-submit').disabled=false;
       
               });
         
