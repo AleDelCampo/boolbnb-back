@@ -78,7 +78,7 @@ return [
         "n_bathrooms" => 1,
         "squared_meters" => 70,
         "image" => "bnb_images/bnb-6.jpg",
-        "description" => "Arsenio Lupin verrebbe qui per riposarsi dopo i colpi  operati in questo quartiere,  il più ricco ed esclusivo di Roma. Pied a terre appena ristrutturato, nuovo, pieno di colori futuristi  e liberty. Atmosfere fatte di divertimento, gioco, belle donne e humour  care al Lupin che è in te. Nel silenzio di un attico di un palazzo razionalista italiano anni '30, godrai un'atmosfera originale, bevendo con la tua complice un buon flute di bollicine o abbronzandoti in terrazzo.",
+        "description" => "Pied a terre appena ristrutturato, nuovo, pieno di colori futuristi  e liberty. Atmosfere fatte di divertimento, gioco, belle donne e humour  care al Lupin che è in te. Nel silenzio di un attico di un palazzo razionalista italiano anni '30, godrai un'atmosfera originale, bevendo con la tua complice un buon flute di bollicine o abbronzandoti in terrazzo.",
         "address" => "Via Parioli 62, 00197 Roma",
         "latitude" => 41.925661,
         "longitude" => 12.487973,
@@ -86,7 +86,7 @@ return [
         "user_id" => 1
     ],
     [
-        "title" => "CasaKico",
+        "title" => "Casa Kico",
         "n_rooms" => 2,
         "n_beds" => 3,
         "n_bathrooms" => 1,
@@ -102,7 +102,7 @@ return [
         "user_id" => 1
     ],
     [
-        "title" => "My Rentallnn",
+        "title" => "My Rental Inn",
         "n_rooms" => 2,
         "n_beds" => 3,
         "n_bathrooms" => 2,
