@@ -35,7 +35,7 @@
                 @enderror
             </div>
 
-            <div class="mb-2">
+            <div class="mb-2" id="address-box">
                 <label for="address" class="form-label">Indirizzo: </label>
                 <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" value="{{ old('address') ?? $apartment->address }}"  onkeyup="handleKeyUp()" name="address">
                 
@@ -153,25 +153,33 @@
         let streets=[];
       
         function handleKeyUp(event) {
-          const UlEle = document.getElementById('suggested-roads-list');
-          UlEle.innerHTML='';
+            const UlEle = document.getElementById('suggested-roads-list');
+            UlEle.innerHTML='';
           
       
-          const input = document.getElementById('address').value;
-      
-          axios.get('http://127.0.0.1:8000/api/autocomplete-address?query=' + input)
-          .then(response => {
-            // console.log(response.data);
-      
-            // inserita l'array dei risultati in un array locale
-            streets=response.data.result.results;
-      
-            console.log(streets);
-      
-          })
-          .catch(error => {
-            console.error(error);
-          });
+            const input = document.getElementById('address').value;
+            // controllo sull'input che non sia vuoto
+            if(input.trim()!= ''){
+
+                axios.get('http://127.0.0.1:8000/api/autocomplete-address?query=' + input)
+                .then(response => {
+                // console.log(response.data);
+            
+                // inserita l'array dei risultati in un array locale
+                streets=response.data.result.results;
+            
+                console.log(streets);
+            
+                })
+                .catch(error => {
+                console.error(error);
+                });
+            }else{
+
+                document.querySelector('.auto-complete-box').classList.add('hide');
+
+            }
+
       
       
           console.log(streets.length);

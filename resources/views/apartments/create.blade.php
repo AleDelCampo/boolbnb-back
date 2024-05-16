@@ -140,26 +140,32 @@
   let streets=[];
 
   function handleKeyUp(event) {
-    const UlEle = document.getElementById('suggested-roads-list');
-    UlEle.innerHTML='';
-    
+      const UlEle = document.getElementById('suggested-roads-list');
+      UlEle.innerHTML='';
+      
 
-    const input = document.getElementById('address').value;
+      const input = document.getElementById('address').value;
 
-    axios.get('http://127.0.0.1:8000/api/autocomplete-address?query=' + input)
-    .then(response => {
-      // console.log(response.data);
+      // controllo sull'input che non sia vuoto
+      if(input.trim()!= ''){
+        axios.get('http://127.0.0.1:8000/api/autocomplete-address?query=' + input)
+        .then(response => {
+          // console.log(response.data);
 
-      // inserita l'array dei risultati in un array locale
-      streets=response.data.result.results;
+          // inserita l'array dei risultati in un array locale
+          streets=response.data.result.results;
 
-      console.log(streets);
+          console.log(streets);
 
-    })
-    .catch(error => {
-      console.error(error);
-    });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      }else{
 
+        document.querySelector('.auto-complete-box').classList.add('hide');
+
+      }
 
     console.log(streets.length);
     if(streets.length != 0){
