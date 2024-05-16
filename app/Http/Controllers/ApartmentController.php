@@ -109,8 +109,7 @@ class ApartmentController extends Controller
      */
     public function update(StoreApartmentRequest $request, Apartment $apartment)
     {
-        // $request->validated();
-
+        $request->validated();
 
         if ($request->hasFile('image')) {
 
@@ -137,7 +136,7 @@ class ApartmentController extends Controller
 
 
         //collegamento appartamento al'utente che si è loggato
-        // $apartment->user_id = Auth::id();
+        $apartment->user_id = Auth::id();
 
         $apartment->save();
 
