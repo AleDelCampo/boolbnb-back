@@ -54,7 +54,12 @@ Route::middleware(['auth', 'verified'])
             //rotta per chiamata API
 
             // rotte di risorsa per gli appartamenti
-            Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
+            Route::group(['middleware' => 'validated'], function () {
+                Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
+                // Route::get('user/{id}', function () {
+                //     //Only user with id 1 can see profile of user with id 1
+                // });
+            });
             // ;
         }
     );
