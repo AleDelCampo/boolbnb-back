@@ -39,7 +39,7 @@
                    </tr>
                @empty
                    <tr>
-                    <td>Nessun progetto</td>
+                    <td>Nessun Appartamento</td>
                    </tr>
                @endforelse
             </tbody>
