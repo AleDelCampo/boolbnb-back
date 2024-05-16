@@ -70,6 +70,78 @@ return [
         "longitude" => 12.4886,
         "slug" => "rome-garden-suite",
         "user_id" => 1
-    ]
-
+    ],
+    [
+        "title" => "Casine Liberty Futurista",
+        "n_rooms" => 1,
+        "n_beds" => 1,
+        "n_bathrooms" => 1,
+        "squared_meters" => 70,
+        "image" => "bnb_images/bnb-6.jpg",
+        "description" => "Arsenio Lupin verrebbe qui per riposarsi dopo i colpi  operati in questo quartiere,  il più ricco ed esclusivo di Roma. Pied a terre appena ristrutturato, nuovo, pieno di colori futuristi  e liberty. Atmosfere fatte di divertimento, gioco, belle donne e humour  care al Lupin che è in te. Nel silenzio di un attico di un palazzo razionalista italiano anni '30, godrai un'atmosfera originale, bevendo con la tua complice un buon flute di bollicine o abbronzandoti in terrazzo.",
+        "address" => "Via Parioli 62, 00197 Roma",
+        "latitude" => 41.925661,
+        "longitude" => 12.487973,
+        "slug" => "casine-liberty-futurista",
+        "user_id" => 1
+    ],
+    [
+        "title" => "CasaKico",
+        "n_rooms" => 2,
+        "n_beds" => 3,
+        "n_bathrooms" => 1,
+        "squared_meters" => 90,
+        "image" => "bnb_images/bnb-7.jpg",
+        "description" => "La cura per il design e l'attenzione per i particolari hanno permesso di creare un ambiente molto accogliente dove sarà piacevole trascorrere il vostro tempo.
+        Ogni dettaglio, dai mobili alla cucina, il soggiorno, le camere da letto e il bagno sono completamente nuovi, garantendo un'esperienza di soggiorno impeccabile.
+        L'appartamento è situato a piazza Bologna, in una posizione centrale e strategica.",
+        "address" => "Via Lorenzo Il Magnifico 1, 00162 Roma",
+        "latitude" => 41.913429,
+        "longitude" => 12.521391,
+        "slug" => "casakico",
+        "user_id" => 1
+    ],
+    [
+        "title" => "My Rentallnn",
+        "n_rooms" => 2,
+        "n_beds" => 3,
+        "n_bathrooms" => 2,
+        "squared_meters" => 95,
+        "image" => "bnb_images/bnb-8.jpg",
+        "description" => "Appartamento ristrutturato situato al quarto piano in una delle zone più eleganti di Roma, in prossimità della famosa via Veneto, e del grande giardino di Villa Borghese...ideale per gli amanti dello sport e delle passeggiate all'aperto. Grazie alla posizione strategica si raggiungono a piedi, velocemente, sia Fontana di Trevi che Piazza di Spagna.",
+        "address" => "Via Boncompagni 16, 00187 Roma",
+        "latitude" => 41.908549,
+        "longitude" => 12.494439,
+        "slug" => "my-rentallnn",
+        "user_id" => 1
+    ],
+    [
+        "title" => "Saint Peter Dome",
+        "n_rooms" => 3,
+        "n_beds" => 3,
+        "n_bathrooms" => 1,
+        "squared_meters" => 110,
+        "image" => "bnb_images/bnb-9.jpg",
+        "description" => "L'appartamento si trova nel centro di Roma, vicinissimo alla Città del Vaticano e alla basilica di San Pietro. È possibile ammirare la magnificenza della cupola di San Pietro dal balcone dell'appartamento.
+        Lo staff della “Cupola di San Pietro” sarà lieto di ospitare e accogliere gli ospiti affinché vivano un'esperienza indimenticabile a Roma.",
+        "address" => "Via della Cava Aurelia 6, 00165 Roma",
+        "latitude" => 41.89679,
+        "longitude" => 12.4507,
+        "slug" => "saint-peter-dome",
+        "user_id" => 1
+    ],
+    [
+        "title" => "Domus Britannia",
+        "n_rooms" => 2,
+        "n_beds" => 4,
+        "n_bathrooms" => 1,
+        "squared_meters" => 100,
+        "image" => "bnb_images/bnb-10.jpg",
+        "description" => "Benvenuti nel nostro incantevole attico nel cuore del quartiere San Giovanni, che dispone di due accoglienti camere da letto, una cucina completamente attrezzata, un bagno confortevole e una sala da pranzo accogliente con comodo divano letto, offrendo spazio per un massimo di 7 ospiti. Esplorate le meraviglie di Roma, facilmente raggiungibili a piedi così come la stazione della metro e varie fermate dell'autobus nelle vicinanze. Godete del tramonto dal nostro balcone con vista San Pietro!",
+        "address" => "Piazza Armenia 12, 00183 Roma",
+        "latitude" => 41.87798,
+        "longitude" => 12.50816,
+        "slug" => "domus-britannia",
+        "user_id" => 1
+    ],
 ];
