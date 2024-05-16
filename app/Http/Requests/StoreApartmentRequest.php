@@ -30,7 +30,7 @@ class StoreApartmentRequest extends FormRequest
             'n_bathrooms' => 'required|numeric|between:0,100',
             'squared_meters' => 'required|numeric|between:0,4000',
             'address' => 'required|max:100',
-            'service_id' => 'nullable|exists:services,id',
+            'services' => 'required|exists:services,id|array|min:1',
         ];
     }
 
