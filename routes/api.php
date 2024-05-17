@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApartmentController;
 use App\Http\Controllers\Api\AutocompleteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('autocomplete-address', [AutocompleteController::class, 'autocompleteAddress']);
+Route::get('/apartments', [ApartmentController::class, 'index']);
+
+// rotta per la show dei singoli progetti
+Route::get('/apartments/{slug}', [ApartmentController::class, 'show']);
