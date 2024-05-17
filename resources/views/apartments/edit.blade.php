@@ -6,8 +6,8 @@
 
     <div class="container py-4">
         <h1>Modifica il tuo Appartamento!!</h1>
-
-        <form action="{{route('admin.apartments.update', $apartment)}}" method="POST" enctype="multipart/form-data">
+                                                                                                                                {{-- se la funzione ritorna true i valori vengono inviati altrimenti no --}}
+        <form action="{{route('admin.apartments.update', $apartment)}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
             @csrf
 
             @method("PUT")
@@ -140,16 +140,14 @@
 
             </div>
 
-            <button type="submit" class="btn btn-primary" id="btn-submit"><i class="fa-solid fa-arrows-rotate"></i> Registra!!</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit"><i class="fa-solid fa-arrows-rotate"></i> REGISTRA!!</button>
 
         </form>
     </div>
 
     <script>
-
-        let flag = false;
-
-        console.log(flag,'start');
+        // variabile flag, in base al sue valore(true o false) permette l'invio o meno dei dati del form
+        let flag = true;
 
         // controllo sull'input dell'address
         if(document.getElementById('address').value.trim()!= ''){
@@ -161,10 +159,35 @@
         }
     
         let streets=[];
+
+
+        // valida l'invio del form
+        function validateForm(){
+            // controllo del flag
+            if(flag){
+                // return true
+                return flag;
+            }else{
+                // return false
+                return flag;
+            }
+
+        }
+
+        document.querySelector('#address').addEventListener('click',function(){
+            // variabile settata a false così da non poter inviare i dati del form
+            flag=false;
+
+            // il bottone viene disattivato ogni qual volta si scrivono o cancellano caratteri
+            document.querySelector('#btn-submit').disabled=true;
+
+        });
+
+
       
         function handleKeyUp(event) {
-             flag=false;
-             console.log(flag,'input')
+            // la variabile viene settata a false ogni volta che vengono iseriti o cancellati caratteri
+            flag=false;
 
             // lista delle vie suggerite
             const UlEle = document.getElementById('suggested-roads-list');
@@ -178,7 +201,6 @@
 
                  // il bottone viene disattivato ogni qual volta si scrivono o cancellano caratteri
                 document.querySelector('#btn-submit').disabled=true;
-
 
                 axios.get('http://127.0.0.1:8000/api/autocomplete-address?query=' + input)
                 .then(response => {
@@ -199,25 +221,22 @@
 
             }
 
-      
-      
-          console.log(streets.length);
           if(streets.length != 0){
       
       
             for(let i=0; i<streets.length;i++){
       
-              const liEl=document.createElement('li');
+                const liEl=document.createElement('li');
+            
+                const divEl=document.createElement('div');
+            
+                divEl.innerText=streets[i].address.freeformAddress + ', ' + streets[i].address.country;
+            
+                liEl.append(divEl);
+            
+                UlEle.append(liEl);
         
-              const divEl=document.createElement('div');
-        
-              divEl.innerText=streets[i].address.freeformAddress + ', ' + streets[i].address.country;
-        
-              liEl.append(divEl);
-        
-              UlEle.append(liEl);
-      
-              liEl.addEventListener('click', function(){
+                liEl.addEventListener('click', function(){
 
                 flag=true;
                 console.log(flag,'cliccato')

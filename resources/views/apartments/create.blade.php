@@ -7,8 +7,8 @@
   <div class="container py-4">
     <h1>Inserisci il tuo Appartamento!!</h1>
     
-    
-    <form action="{{route('admin.apartments.store')}}" method="POST" enctype="multipart/form-data">
+                                                                                                    {{-- se la funzione ritorna true i valori vengono inviati altrimenti no --}}
+    <form action="{{route('admin.apartments.store')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
       @csrf
 
       <div class="mb-2">
@@ -151,6 +151,9 @@
 
 <script>
 
+  // variabile flag, in base al sue valore(true o false) permette l'invio o meno dei dati del form
+  let flag = false;
+
 
   // controllo sull'input dell'address
   if(document.getElementById('address').value.trim()!= ''){
@@ -164,7 +167,34 @@
   let streets=[];
 
 
+  // valida l'invio del form
+  function validateForm(){
+    // controllo del flag
+    if(flag){
+        // return true
+        return flag;
+    }else{
+        // return false
+        return flag;
+    }
+
+  }
+
+  document.querySelector('#address').addEventListener('click',function(){
+    // variabile settata a false così da non poter inviare i dati del form
+    flag=false;
+
+    // il bottone viene disattivato ogni qual volta si scrivono o cancellano caratteri
+    document.querySelector('#btn-submit').disabled=true;
+
+  });
+
+
   function handleKeyUp(event) {
+    // la variabile viene settata a false ogni volta che vengono iseriti o cancellati caratteri
+    flag=false;
+
+
     // lista delle vie suggerite
       const UlEle = document.getElementById('suggested-roads-list');
       UlEle.innerHTML='';
@@ -214,6 +244,8 @@
         UlEle.append(liEl);
 
         liEl.addEventListener('click', function(){
+
+          flag=true;
 
           // viene inserito la via scelta nella casella del'address
           document.getElementById('address').value = liEl.innerText;
