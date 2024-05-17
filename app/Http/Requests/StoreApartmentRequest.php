@@ -25,12 +25,12 @@ class StoreApartmentRequest extends FormRequest
             'title' => 'required|max:100',
             'description' => 'max:8000',
             'image' => 'file|max:2048|nullable|mimes:jpg,png',
-            'n_rooms' => 'required|max:100',
-            'n_beds' => 'required|max:100',
-            'n_bathrooms' => 'required|max:100',
-            'squared_meters' => 'required|max:4000',
+            'n_rooms' => 'required|numeric|between:0,100',
+            'n_beds' => 'required|numeric|between:0,100',
+            'n_bathrooms' => 'required|numeric|between:0,100',
+            'squared_meters' => 'required|numeric|between:0,4000',
             'address' => 'required|max:100',
-            'service_id' => 'nullable|exists:services,id',
+            'services' => 'required|exists:services,id|array|min:1',
         ];
     }
 
@@ -39,20 +39,32 @@ class StoreApartmentRequest extends FormRequest
         return [
             'title.required' => 'Inserisci nome Albergo',
             'title.max' => "Puoi usare al massimo :max caratteri",
+
             'description.max' => "Puoi usare al massimo :max caratteri",
+
             'image.mimes' => "Inserisci un immagine",
             'image.max' => "Peso limite 2048 KB",
+
             'n_rooms.required' => 'Inserisci almeno una stanza',
-            'n_rooms.max' => 'Massimo :max stanze',
+            'n_rooms.between'=> 'Non possono essere inseriti valori inferiori a 0 e maggiori di 100',
+            'n_rooms.numeric'=> 'Il valore da inserire deve essere numerico',
+            
             'n_beds.required' => 'Inserisci almeno un posto letto',
-            'n_beds.max' => 'Massimo :max letti',
+            'n_beds.between'=> 'Non possono essere inseriti valori inferiori a 0 e maggiori di 100',
+            'n_beds.numeric'=> 'Il valore da inserire deve essere numerico',
+            
             'n_bathrooms.required' => 'Inserisci almeno un bagno',
-            'n_bathrooms.max' => 'Massimo :max bathrooms',
+            'n_bathrooms.between'=> 'Non possono essere inseriti valori inferiori a 0 e maggiori di 100',
+            'n_bathrooms.numeric'=> 'Il valore da inserire deve essere numerico',
+            
             'squared_meters.required' => 'Inserisci area Albergo',
-            'squared_meters.max' => 'Area massima di :max metri quadrati',
+            'squared_meters.between'=> 'Non possono essere inseriti valori inferiori a 0 e maggiori di 4000',
+            'squared_meters.numeric'=> 'Il valore da inserire deve essere numerico',
+            
             'address.required' => 'Inserisci un indirizzo valido',
             'address.max' => 'Non credo esistano vie lunghe :max caratteri!!',
-            'service_id.exists' => "PERCHE' NON PROVI AD HACKERARMI I ....",
+            
+            'services.required' => "Inserisci almeno un servizio",
         ];
     }
 }

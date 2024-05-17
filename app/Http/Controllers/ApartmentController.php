@@ -111,6 +111,7 @@ class ApartmentController extends Controller
     {
         $request->validated();
 
+
         if ($request->hasFile('image')) {
 
             $path = Storage::disk('public')->put('bnb_images', $request->image);

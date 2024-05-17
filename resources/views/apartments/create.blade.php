@@ -7,8 +7,8 @@
   <div class="container py-4">
     <h1>Inserisci il tuo Appartamento!!</h1>
     
-    
-    <form action="{{route('admin.apartments.store')}}" method="POST" enctype="multipart/form-data">
+                                                                                                    {{-- se la funzione ritorna true i valori vengono inviati altrimenti no --}}
+    <form action="{{route('admin.apartments.store')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
       @csrf
 
       <div class="mb-2">
@@ -62,7 +62,7 @@
 
       <div class="mb-2">
         <label for="n_rooms" class="form-label">Numero stanze: </label>
-        <input type="number" class="form-control @error('n_rooms') is-invalid @enderror" id="n_rooms" value="{{ old('n_rooms') }}" name="n_rooms">
+        <input type="number" class="form-control @error('n_rooms') is-invalid @enderror" id="n_rooms" value="{{ old('n_rooms') }}" name="n_rooms" min="0" max="100">
         @error('n_rooms')
         <div class="invalid-feedback">
           {{$message}}
@@ -72,7 +72,7 @@
 
       <div class="mb-2">
         <label for="n_beds" class="form-label">Numero letti: </label>
-        <input type="number" class="form-control @error('n_beds') is-invalid @enderror" id="n_beds" value="{{ old('n_beds') }}" name="n_beds">
+        <input type="number" class="form-control @error('n_beds') is-invalid @enderror" id="n_beds" value="{{ old('n_beds') }}" name="n_beds" min="0" max="100">
         @error('n_beds')
         <div class="invalid-feedback">
           {{$message}}
@@ -82,7 +82,7 @@
 
       <div class="mb-2">
         <label for="n_bathrooms" class="form-label">Numero bagni: </label>
-        <input type="number" class="form-control @error('n_bathrooms') is-invalid @enderror" id="n_bathrooms" value="{{ old('n_bathrooms') }}" name="n_bathrooms">
+        <input type="number" class="form-control @error('n_bathrooms') is-invalid @enderror" id="n_bathrooms" value="{{ old('n_bathrooms') }}" name="n_bathrooms" min="0" max="100">
         @error('n_bathrooms')
         <div class="invalid-feedback">
           {{$message}}
@@ -92,20 +92,29 @@
 
       <div class="mb-2">
         <label for="squared_meters" class="form-label">Metri quadri: </label>
-        <input type="number" class="form-control @error('squared_meters') is-invalid @enderror" id="squared_meters" value="{{ old('squared_meters') }}" name="squared_meters">
+        <input type="number" class="form-control @error('squared_meters') is-invalid @enderror" id="squared_meters" value="{{ old('squared_meters') }}" name="squared_meters" min="0" max="100">
         @error('squared_meters')
         <div class="invalid-feedback">
           {{$message}}
         </div>
         @enderror
       </div>
+
+
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="is_visible" id="is_visible" value="1" {{ old('is_visible') ? 'checked' : ''}}>
+        <label class="form-check-label" for="is_visible" style="user-select: none; background-color:rgba(0,0,0,.7)">
+            Vuoi rendere l'appartamento visibile agli utenti?
+        </label>
+      </div>
+
       
       <div class="mb-4">
         <label class="mb-2" for="">Servizi</label>
         <div class="d-flex gap-4">
           
           @foreach($services as $service)
-          <div class="form-check ">
+          <div class="form-check @error('services') is-invalid @enderror">
 
             <input 
             type="checkbox" 
@@ -120,6 +129,11 @@
 
           </div>
           @endforeach
+          @error('services')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+          @enderror
 
         </div>
 
@@ -128,7 +142,7 @@
       
 
 
-      <button type="submit" class="btn btn-primary"></i>Registra!!</button>
+      <button type="submit" class="btn btn-primary" id="btn-submit"></i>Registra!!</button>
 
     </form>
   </div>
@@ -137,17 +151,63 @@
 
 <script>
 
+  // variabile flag, in base al sue valore(true o false) permette l'invio o meno dei dati del form
+  let flag = false;
+
+
+  // controllo sull'input dell'address
+  if(document.getElementById('address').value.trim()!= ''){
+    // il campo non è vuoto quindi il bottone è attivo
+    document.querySelector('#btn-submit').disabled=false;
+  }else{
+    // il campo è vuoto quindi il bottone è disattivato
+    document.querySelector('#btn-submit').disabled=true;
+  }
+
   let streets=[];
 
+
+  // valida l'invio del form
+  function validateForm(){
+    // controllo del flag
+    if(flag){
+        // return true
+        return flag;
+    }else{
+        // return false
+        return flag;
+    }
+
+  }
+
+  document.querySelector('#address').addEventListener('click',function(){
+    // variabile settata a false così da non poter inviare i dati del form
+    flag=false;
+
+    // il bottone viene disattivato ogni qual volta si scrivono o cancellano caratteri
+    document.querySelector('#btn-submit').disabled=true;
+
+  });
+
+
   function handleKeyUp(event) {
+    // la variabile viene settata a false ogni volta che vengono iseriti o cancellati caratteri
+    flag=false;
+
+
+    // lista delle vie suggerite
       const UlEle = document.getElementById('suggested-roads-list');
       UlEle.innerHTML='';
-      
 
+    // valore del campo dell'address
       const input = document.getElementById('address').value;
 
       // controllo sull'input che non sia vuoto
       if(input.trim()!= ''){
+
+        // il bottone viene disattivato ogni qual volta si scrivono o cancellano caratteri
+        document.querySelector('#btn-submit').disabled=true;
+
         axios.get('http://127.0.0.1:8000/api/autocomplete-address?query=' + input)
         .then(response => {
           // console.log(response.data);
@@ -185,15 +245,23 @@
 
         liEl.addEventListener('click', function(){
 
+          flag=true;
+
+          // viene inserito la via scelta nella casella del'address
           document.getElementById('address').value = liEl.innerText;
+
+          // il menu viene nascosto
           document.querySelector('.auto-complete-box').classList.add('hide');
+
+          // quando la via viene cliccata dai suggerimenti allora il pulsate si attiva e l'utente registrato può inviare il form
+          document.querySelector('#btn-submit').disabled=false;
+        
 
         });
   
-  
       }
 
-      document.querySelector('.auto-complete-box').classList.remove('hide');
+      document.querySelector('.auto-complete-box').classList.remove('hide');      
 
     } else {
 
