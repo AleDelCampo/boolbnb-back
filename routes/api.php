@@ -5,23 +5,15 @@ use App\Http\Controllers\Api\AutocompleteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
+// Rotta per ottenere i dati dell'utente autenticato
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Rotta per l'autocompletamento degli indirizzi
 Route::get('autocomplete-address', [AutocompleteController::class, 'autocompleteAddress']);
-Route::get('/apartments', [ApartmentController::class, 'index']);
 
-// rotta per la show dei singoli progetti
+// Rotte per gestire gli appartamenti
+Route::get('/apartments', [ApartmentController::class, 'index']);
 Route::get('/apartments/{slug}', [ApartmentController::class, 'show']);
+Route::get('/search', [ApartmentController::class, 'search']); // Rotta per la ricerca

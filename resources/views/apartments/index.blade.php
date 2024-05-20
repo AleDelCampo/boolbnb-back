@@ -79,7 +79,7 @@
                                     </div>
                                     <div class="col-6 d-flex justify-content-end align-items-center">
                                         <div>
-                                            <a class="btn my_btn" href="{{route('admin.apartments.create')}}" href="{{route('admin.apartments.show', $apartment)}}">Visualilzza</a>
+                                            <a class="btn my_btn" href="{{route('admin.apartments.show', $apartment)}}">Visualilzza</a>
                                             
                                         </div>
                                         
