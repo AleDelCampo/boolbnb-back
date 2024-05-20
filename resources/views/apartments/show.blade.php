@@ -7,71 +7,75 @@
     {{-- @dd($apartment); --}}
     
     <div class="card mt-4">
-        
-        <div class="card-body">
-            {{-- link apartment image --}}
-            <img src="{{asset('storage/' . $apartment->image)}}" class="card-img-top mb-3" alt="immagine dell'appartamento" style="max-width: 500px">
-            <div class="mb-3">
-                <h2 class="card-title"><strong>{{$apartment->title}}</strong></h2>
-
-                {{-- room infos --}}
-                <div class="d-flex gap-3 mb-3">
-                    <small>
-                    <span class="m2">
-                        {{$apartment->squared_meters}}m²
-                    </span>
-                    -
-                    <span class="rooms">
-                        {{$apartment->n_rooms}} camera da letto
-                    </span>
-                    -
-                    <span class="beds">
-                        {{$apartment->n_beds}} posti letto
-                    </span>
-                    -
-                    <span class="bathrooms">
-                        {{$apartment->n_bathrooms}} bagni
-                    </span>
-                    </small>
-                </div>
-
-                <hr>
-
+        <div class="d-flex">
+            <div class="card-body col-6">
+                {{-- link apartment image --}}
+                <img src="{{asset('storage/' . $apartment->image)}}" class="card-img-top" alt="immagine dell'appartamento" style="max-width: 100%">
+            </div>
+            
+            <div class="card-body col-6">
                 <div class="mb-3">
-                    Proprietario: {{$apartment->user->name}}
+                    <h2 class="card-title"><strong>{{$apartment->title}}</strong></h2>
+    
+                    {{-- room infos --}}
+                    <div class="d-flex gap-3 mb-3">
+                        <small>
+                        <span class="m2">
+                            {{$apartment->squared_meters}}m²
+                        </span>
+                        -
+                        <span class="rooms">
+                            {{$apartment->n_rooms}} camera da letto
+                        </span>
+                        -
+                        <span class="beds">
+                            {{$apartment->n_beds}} posti letto
+                        </span>
+                        -
+                        <span class="bathrooms">
+                            {{$apartment->n_bathrooms}} bagni
+                        </span>
+                        </small>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="mb-3">
+                        Proprietario: {{$apartment->user->name}}
+                    </div>
+                </div>
+    
+                <hr>
+                
+                {{-- room description --}}
+                <p>
+                    {{$apartment->description}}
+                </p>
+    
+                <hr>
+                
+                {{-- room services --}}
+                <strong class="mb-3">
+                    Servizi
+                </strong>
+                <ul id="services-list" class="d-flex gap-5">
+                    @foreach($apartment->services as $services)
+                    <li>
+                        {{$services->name}}
+                    </li>
+                    @endforeach
+                </ul>
+                
+                <hr>
+    
+                {{-- room position --}}
+                <div class="position">
+                    {{$apartment->address}}
                 </div>
             </div>
-
-            <hr>
-            
-            {{-- room description --}}
-            <p>
-                {{$apartment->description}}
-            </p>
-
-            <hr>
-            
-            {{-- room services --}}
-            <strong class="mb-3">
-                Servizi
-            </strong>
-            <ul id="services-list" class="d-flex gap-5">
-                @foreach($apartment->services as $services)
-                <li>
-                    {{$services->name}}
-                </li>
-                @endforeach
-            </ul>
-            
-            <hr>
-
-            {{-- room position --}}
-            <div class="position">
-                {{$apartment->address}}
-            </div>
-
         </div>
-        <div class="card-footer">
+
+        <div class="card-footer d-flex justify-content-center p-3 gap-3">
             {{-- link to room edit page --}}
             <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-outline-warning">Modifica</a>
 
@@ -110,7 +114,7 @@
 </div>
 
 <style>
-#app {
+body {
     background-color: #5F8B8D;
 }
 

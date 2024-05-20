@@ -153,4 +153,10 @@
         }
     });
 </script>
+
+<style>
+    small {
+        color: red;
+    }
+</style>
 @endsection
