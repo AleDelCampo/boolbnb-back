@@ -2,58 +2,80 @@
 
 @section('content')
 
-<div class="container">
+<div class="container pb-4">
 
-{{-- @dd($apartment); --}}
-
-    <div class="card">
-        {{-- link apartment image --}}
-        <img src="{{asset('storage/' . $apartment->image)}}" class="card-img-top" alt="immagine dell'appartamento" style="max-width: 300px">
-        <div class="card-body">
-            <h5 class="card-title">{{$apartment->title}}</h5>
-
-            <h6 class="mb-3">
-                Proprietario: {{$apartment->user->name}}
-            </h6>
-            
-            {{-- room services --}}
-            <strong>
-                Servizi
-            </strong>
-            <ul class="d-flex gap-4">
-                @foreach($apartment->services as $services)
-                <li>
-                    {{$services->name}}
-                </li>
-                @endforeach
-            </ul>
-            {{-- room infos --}}
-            <div class="d-flex gap-3 mb-3">
-                <div class="m2">
-                    Grandezza: {{$apartment->squared_meters}}m²
-                </div>
-                <div class="rooms">
-                    Stanze: {{$apartment->n_rooms}}
-                </div>
-                <div class="beds">
-                   Posti letto: {{$apartment->n_beds}}
-                </div>
-                <div class="bathrooms">
-                    Bagni: {{$apartment->n_bathrooms}}
-                </div>
+    {{-- @dd($apartment); --}}
+    
+    <div class="card mt-4">
+        <div class="d-flex">
+            <div class="card-body col-6">
+                {{-- link apartment image --}}
+                <img src="{{asset('storage/' . $apartment->image)}}" class="card-img-top" alt="immagine dell'appartamento" style="max-width: 100%">
             </div>
-
-            {{-- room description --}}
-            <p>
-                {{$apartment->description}}
-            </p>
-
-            {{-- room position --}}
-            <div class="position">
-                {{$apartment->address}}
+            
+            <div class="card-body col-6">
+                <div class="mb-3">
+                    <h2 class="card-title"><strong>{{$apartment->title}}</strong></h2>
+    
+                    {{-- room infos --}}
+                    <div class="d-flex gap-3 mb-3">
+                        <small>
+                        <span class="m2">
+                            {{$apartment->squared_meters}}m²
+                        </span>
+                        -
+                        <span class="rooms">
+                            {{$apartment->n_rooms}} camera da letto
+                        </span>
+                        -
+                        <span class="beds">
+                            {{$apartment->n_beds}} posti letto
+                        </span>
+                        -
+                        <span class="bathrooms">
+                            {{$apartment->n_bathrooms}} bagni
+                        </span>
+                        </small>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="mb-3">
+                        Proprietario: {{$apartment->user->name}}
+                    </div>
+                </div>
+    
+                <hr>
+                
+                {{-- room description --}}
+                <p>
+                    {{$apartment->description}}
+                </p>
+    
+                <hr>
+                
+                {{-- room services --}}
+                <strong class="mb-3">
+                    Servizi
+                </strong>
+                <ul id="services-list" class="d-flex gap-5">
+                    @foreach($apartment->services as $services)
+                    <li>
+                        {{$services->name}}
+                    </li>
+                    @endforeach
+                </ul>
+                
+                <hr>
+    
+                {{-- room position --}}
+                <div class="position">
+                    {{$apartment->address}}
+                </div>
             </div>
         </div>
-        <div class="card-footer">
+
+        <div class="card-footer d-flex justify-content-center p-3 gap-3">
             {{-- link to room edit page --}}
             <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-outline-warning">Modifica</a>
 
@@ -69,7 +91,7 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h1 class="modal-title fs-5">Eliminazione appartamento</h1>
+                    <h1 class="modal-title fs-5">Eliminare appartamento</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
@@ -90,6 +112,17 @@
     </div>
     
 </div>
+
+<style>
+body {
+    background-color: #5F8B8D;
+}
+
+#services-list {
+    list-style-type: none;
+}
+
+</style>
 
 @endsection
 
