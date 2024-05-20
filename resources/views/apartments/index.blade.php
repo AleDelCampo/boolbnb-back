@@ -49,7 +49,7 @@
         </div>
 
 
-        <div class="col-8">
+        <div class="col-8 flex-grow-1 ">
 
             <div class="container">
                 <h2 class="fs-4 text-secondary py-4">Appartamenti</h2>                
