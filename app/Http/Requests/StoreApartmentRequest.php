@@ -25,10 +25,10 @@ class StoreApartmentRequest extends FormRequest
             'title' => 'required|max:100',
             'description' => 'max:8000',
             'image' => 'file|max:2048|nullable|mimes:jpg,png',
-            'n_rooms' => 'required|numeric|between:0,100',
-            'n_beds' => 'required|numeric|between:0,100',
-            'n_bathrooms' => 'required|numeric|between:0,100',
-            'squared_meters' => 'required|numeric|between:0,4000',
+            'n_rooms' => 'required|numeric|between:1,100',
+            'n_beds' => 'required|numeric|between:1,100',
+            'n_bathrooms' => 'required|numeric|between:1,100',
+            'squared_meters' => 'required|numeric|between:10,4000',
             'address' => 'required|max:100',
             'services' => 'required|exists:services,id|array|min:1',
         ];
@@ -46,19 +46,19 @@ class StoreApartmentRequest extends FormRequest
             'image.max' => "Peso limite 2048 KB",
 
             'n_rooms.required' => 'Inserisci almeno una stanza',
-            'n_rooms.between'=> 'Non possono essere inseriti valori inferiori a 0 e maggiori di 100',
+            'n_rooms.between'=> 'Non possono essere inseriti valori inferiori a 1 e maggiori di 100',
             'n_rooms.numeric'=> 'Il valore da inserire deve essere numerico',
             
             'n_beds.required' => 'Inserisci almeno un posto letto',
-            'n_beds.between'=> 'Non possono essere inseriti valori inferiori a 0 e maggiori di 100',
+            'n_beds.between'=> 'Non possono essere inseriti valori inferiori a 1 e maggiori di 100',
             'n_beds.numeric'=> 'Il valore da inserire deve essere numerico',
             
             'n_bathrooms.required' => 'Inserisci almeno un bagno',
-            'n_bathrooms.between'=> 'Non possono essere inseriti valori inferiori a 0 e maggiori di 100',
+            'n_bathrooms.between'=> 'Non possono essere inseriti valori inferiori a 1 e maggiori di 100',
             'n_bathrooms.numeric'=> 'Il valore da inserire deve essere numerico',
             
             'squared_meters.required' => 'Inserisci area Albergo',
-            'squared_meters.between'=> 'Non possono essere inseriti valori inferiori a 0 e maggiori di 4000',
+            'squared_meters.between'=> 'Non possono essere inseriti valori inferiori a 10 e maggiori di 4000',
             'squared_meters.numeric'=> 'Il valore da inserire deve essere numerico',
             
             'address.required' => 'Inserisci un indirizzo valido',
