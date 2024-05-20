@@ -2,149 +2,176 @@
 
 @section('content')
 
-<body class="bg-create">
+<body class="bg-form">
   
   <div class="container py-4">
-    <h1>Inserisci il tuo Appartamento!!</h1>
-    
-                                                                                                    {{-- se la funzione ritorna true i valori vengono inviati altrimenti no --}}
-    <form action="{{route('admin.apartments.store')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-      @csrf
+    <h1 class="mt-3 mb-5 text-center">Aggiungi un un nuovo appartamento</h1>
 
-      <div class="mb-2">
-        <label for="title" class="form-label">Nome struttura: </label>
-        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
-          value="{{ old('title') }}" required>
-        @error('title')
-        <div class="invalid-feedback">
-          {{$message}}
-        </div>
-        @enderror
-      </div>
-
-      <div class="mb-2">
-        <label for="description" class="form-label">Descrizione struttura: </label>
-        <textarea type="text" class="form-control @error('description') is-invalid @enderror" id="description"
-          name="description" required>{{ old('description') }}</textarea>
-           @error('description')
-        <div class="invalid-feedback">
-          {{$message}}
-        </div>
-        @enderror
-      </div>
+    <div class="form-container p-5 rounded-3">
 
 
-      <div class="mb-2" id="address-box">
-        <label for="address" class="form-label">Indirizzo: </label>
-        <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}" onkeyup="handleKeyUp()">
-        
-        <div class="auto-complete-box hide">
-          <ul id="suggested-roads-list">
-          </ul>
-        </div>
+      <form action="{{route('admin.apartments.store')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+        @csrf
 
-        @error('address')
-        <div class="invalid-feedback">
-          {{$message}}
-        </div>
-        @enderror
-      </div>
-
-      <div class="mb-2">
-        <label for="image" class="form-label">Anteprima: </label>
-        <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
-        @error('image')
-        <div class="invalid-feedback">
-          {{$message}}
-        </div>
-        @enderror
-      </div>
-
-      <div class="mb-2">
-        <label for="n_rooms" class="form-label">Numero stanze: </label>
-        <input type="number" class="form-control @error('n_rooms') is-invalid @enderror" id="n_rooms" value="{{ old('n_rooms') }}" name="n_rooms" min="0" max="100">
-        @error('n_rooms')
-        <div class="invalid-feedback">
-          {{$message}}
-        </div>
-        @enderror
-      </div>
-
-      <div class="mb-2">
-        <label for="n_beds" class="form-label">Numero letti: </label>
-        <input type="number" class="form-control @error('n_beds') is-invalid @enderror" id="n_beds" value="{{ old('n_beds') }}" name="n_beds" min="0" max="100">
-        @error('n_beds')
-        <div class="invalid-feedback">
-          {{$message}}
-        </div>
-        @enderror
-      </div>
-
-      <div class="mb-2">
-        <label for="n_bathrooms" class="form-label">Numero bagni: </label>
-        <input type="number" class="form-control @error('n_bathrooms') is-invalid @enderror" id="n_bathrooms" value="{{ old('n_bathrooms') }}" name="n_bathrooms" min="0" max="100">
-        @error('n_bathrooms')
-        <div class="invalid-feedback">
-          {{$message}}
-        </div>
-        @enderror
-      </div>
-
-      <div class="mb-2">
-        <label for="squared_meters" class="form-label">Metri quadri: </label>
-        <input type="number" class="form-control @error('squared_meters') is-invalid @enderror" id="squared_meters" value="{{ old('squared_meters') }}" name="squared_meters" min="0" max="100">
-        @error('squared_meters')
-        <div class="invalid-feedback">
-          {{$message}}
-        </div>
-        @enderror
-      </div>
-
-
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="is_visible" id="is_visible" value="1" {{ old('is_visible') ? 'checked' : ''}}>
-        <label class="form-check-label" for="is_visible" style="user-select: none; background-color:rgba(0,0,0,.7)">
-            Vuoi rendere l'appartamento visibile agli utenti?
-        </label>
-      </div>
-
-      
-      <div class="mb-4">
-        <label class="mb-2" for="">Servizi</label>
-        <div class="d-flex gap-4">
-          
-          @foreach($services as $service)
-          <div class="form-check @error('services') is-invalid @enderror">
-
-            <input 
-            type="checkbox" 
-            name="services[]"
-            value="{{$service->id}}" 
-            class="form-check-input" 
-            id="service-{{$service->id}}"
-            {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}
-            > 
-            
-            <label for="service-{{$service->id}}" class="form-check-label">{{$service->name}}</label>
-
-          </div>
-          @endforeach
-          @error('services')
+        <div class="row">
+          <div class="mb-4 col-6">
+            <label for="title" class="fw-bold form-label">Nome della struttura <span class="obg-field">*</span></label>
+            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
+              value="{{ old('title') }}" required>
+            @error('title')
             <div class="invalid-feedback">
-                {{$message}}
+              {{$message}}
             </div>
+            @enderror
+          </div>
+          
+          <div class="mb-4  col-6" id="address-box">
+            <label for="address" class="fw-bold form-label">Indirizzo <span class="obg-field">*</span></label>
+            <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="" onkeyup="handleKeyUp()">
+            
+            <div class="auto-complete-box hide">
+              <ul id="suggested-roads-list" class="list-group">
+              </ul>
+            </div>
+    
+            @error('address')
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+            @enderror
+          </div>
+
+
+        </div>
+  
+  
+        <div class="mb-4">
+          <label for="description" class="fw-bold form-label">Descrizione</label>
+          <textarea type="text" class="form-control @error('description') is-invalid @enderror" id="description"
+            name="description" >{{ old('description') }}</textarea>
+             @error('description')
+          <div class="invalid-feedback">
+            {{$message}}
+          </div>
           @enderror
+        </div>
+  
+  
+  
+        <div class="mb-4">
+          <label for="image" class="fw-bold form-label">Anteprima</label>
+          <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
+          @error('image')
+          <div class="invalid-feedback">
+            {{$message}}
+          </div>
+          @enderror
+        </div>
+
+
+        <div class="row">
+          <div class="mb-4 col-6">
+            <label for="n_rooms" class="fw-bold form-label">Numero stanze <span class="obg-field">*</span></label>
+            <input type="number" class="form-control @error('n_rooms') is-invalid @enderror" id="n_rooms" value="{{ old('n_rooms') }}" name="n_rooms" min="0" max="100">
+            @error('n_rooms')
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+            @enderror
+          </div>
+    
+          <div class="mb-4 col-6">
+            <label for="n_beds" class="fw-bold form-label">Numero letti <span class="obg-field">*</span></label>
+            <input type="number" class="form-control @error('n_beds') is-invalid @enderror" id="n_beds" value="{{ old('n_beds') }}" name="n_beds" min="0" max="100">
+            @error('n_beds')
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+            @enderror
+          </div>
+
 
         </div>
 
+        <div class="row">
+          <div class="mb-4 col-6">
+            <label for="n_bathrooms" class="fw-bold form-label">Numero bagni <span class="obg-field">*</span></label>
+            <input type="number" class="form-control @error('n_bathrooms') is-invalid @enderror" id="n_bathrooms" value="{{ old('n_bathrooms') }}" name="n_bathrooms" min="0" max="100">
+            @error('n_bathrooms')
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+            @enderror
+          </div>
+    
+          <div class="mb-4 col-6">
+            <label for="squared_meters" class="fw-bold form-label">Metri quadri <span class="obg-field">*</span></label>
+            <input type="number" class="form-control @error('squared_meters') is-invalid @enderror" id="squared_meters" value="{{ old('squared_meters') }}" name="squared_meters" min="0" max="100">
+            @error('squared_meters')
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+            @enderror
+          </div>
+
+        </div>
+  
+  
+  
+  
+        
+        
+        <div class="mb-4">
+          <label class="mb-4 fw-bold" >Servizi <span class="obg-field">*</span></label>
+          <div class="d-flex gap-4 flex-wrap ">
+            
+            @foreach($services as $service)
+            <div class="form-check @error('services') is-invalid @enderror ">
+              
+              <input 
+              type="checkbox" 
+              name="services[]"
+              value="{{$service->id}}" 
+              class="btn-check prova" 
+              id="btn-check-{{$service->id}}"
+              {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}
+              > 
+              
+              <label for="btn-check-{{$service->id}}" class="btn service-btn" >{{$service->name}}</label>
+              
+            </div>
+            @endforeach
+            @error('services')
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+            @enderror
+            
+          </div>
+
+
+          
+        </div>
+        
+        <div class="form-check mb-5">
+          <input class="form-check-input" type="checkbox" name="is_visible" id="is_visible" value="1" {{ old('is_visible') ? 'checked' : ''}}>
+          <label class="fw-bold form-check-label" for="is_visible" style="user-select: none">
+              Vuoi rendere l'appartamento visibile agli utenti?
+          </label>
+        </div>
+        
+  
+  
+        <button type="submit" class="btn btn-cta w-100" id="btn-submit"></i>Inserisci</button>
+  
+      </form>
+
+      <div class="mt-3 obg-field">
+        <small>(*)Campo obbligatorio</small>
       </div>
 
-      
-
-
-      <button type="submit" class="btn btn-primary" id="btn-submit"></i>Registra!!</button>
-
-    </form>
+    </div>
+    
   </div>
 
 </body>
@@ -169,6 +196,8 @@
 
   // valida l'invio del form
   function validateForm(){
+
+    console.log(flag)
     // controllo del flag
     if(flag){
         // return true
@@ -238,8 +267,9 @@
         const divEl=document.createElement('div');
   
         divEl.innerText=streets[i].address.freeformAddress + ', ' + streets[i].address.country;
-  
+
         liEl.append(divEl);
+        liEl.classList.add('list-group-item','list-group-item-action');
   
         UlEle.append(liEl);
 

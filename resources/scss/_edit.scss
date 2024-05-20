@@ -1,5 +1,20 @@
-.bg-edit {
-    background-image: url(https://a0.muscache.com/im/pictures/5e67688b-757d-44d6-8b4b-1e91dc6fe49f.jpg?im_w=1920);
-    background-repeat: no-repeat;
-    background-size: cover;
+@use './variables' as *;
+
+
+.bg-form {
+
+    #img-box {
+
+        width: 200px;
+        height: 100px;
+
+        img {
+            border-radius: 5px;
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+    }
+
 }
