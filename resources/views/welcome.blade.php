@@ -1,19 +1,23 @@
 @extends('layouts.app')
 @section('content')
 <body  class="bg-home">
-    <div class="jumbotron p-4 rounded-3">
-        <div class="container py-5 bg-cnt">
-    
-            <h1>BoolBnB</h1>
-    
-            <div>
-                Benvenuto sulla nostra piattaforma!!
+
+    <div class="container d-flex align-items-center ">
+
+        <div class="row mt-5">
+            <div class="col-6">
+                <img class="img-fluid" src="{{asset('storage/bnb_images/BoolBnB.png')}}" alt="">
             </div>
-    
-            <a class="btn btn-primary mt-4" href="{{route('dashboard')}}">Vai alla DashBoard</a>
-    
+            <div class="col-6 my-auto text-center  ">
+                <a class="btn my_btn mt-4" href="{{route('admin.apartments.index')}}">Accedi</a>
+
+
+            </div>
         </div>
+
     </div>
+
+
 </body>
 
 @endsection

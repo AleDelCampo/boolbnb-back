@@ -27,11 +27,11 @@
                     </div>
                     <div id="nav-list" class="row mt-5 ">
     
-                        <div class="col-12 py-2 ">
+                        {{-- <div class="col-12 py-2 ">
                             <a class="btn my_bg_color my_btn fw-bold w-100 " href="{{ url('dashboard') }}">{{__('Dashboard')}}</a>
-                        </div>
+                        </div> --}}
                         <div class="col-12 py-2">
-                            <a class="btn my_bg_color fw-bold w-100" href="{{ url('profile')}}">{{__('Profile')}}</a>
+                            <a class="btn my_bg_color fw-bold w-100" href="{{ url('profile')}}">{{__('Profilo')}}</a>
                         </div>
                         <div class="col-12 py-2">
                             <a class="btn my_bg_color fw-bold w-100" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -62,8 +62,8 @@
                 <div class="row p-0">
                     @forelse ($apartments as $apartment)
                     <div class="col-6">
-                        <div id="tile" class="row p-3 my-3">
-                            <div id="img-container" class="col-3 rounded-2">
+                        <div id="tile" class="row p-3 my-3 ">
+                            <div id="img-container" class="col-4 rounded-2">
                                 <img  src="{{asset('storage/' . $apartment->image)}}" alt="">
                 
                             </div>
@@ -79,7 +79,7 @@
                                     </div>
                                     <div class="col-6 d-flex justify-content-end align-items-center">
                                         <div>
-                                            <a class="btn my_btn" href="{{route('admin.apartments.show', $apartment)}}">Visualilzza</a>
+                                            <a class="btn my_btn" href="{{route('admin.apartments.show', $apartment)}}">Visualizza</a>
                                             
                                         </div>
                                         
@@ -91,8 +91,9 @@
             
                     </div>
                     @empty
-                    <div>
-                        Nessun appartamento
+                    <div class="text-center">
+                       Nessun appartamento disponibile
+                        <hr>
                     </div>
                     
         

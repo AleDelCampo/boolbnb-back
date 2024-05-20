@@ -1,12 +1,23 @@
-.bg-home {
-    background-image: url(https://a0.muscache.com/im/pictures/5e67688b-757d-44d6-8b4b-1e91dc6fe49f.jpg?im_w=1920);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
+@use './variables' as *;
 
-.bg-cnt {
-    background-color: black;
-    opacity: 0.6;
-    border-radius: 24px;
+
+.bg-home {
+    height: calc(100vh - 56px);
+
+    .my_btn {
+        border: 1px solid $accentColor;
+        background-color: white;
+
+        font-weight: bold;
+        color: $accentColor;
+
+        padding-inline: 50px;
+        border-radius: 20px;
+
+        &:hover {
+            border: 1px solid white;
+            background-color: $accentColor;
+            color: white;
+        }
+    }
 }

@@ -24,7 +24,7 @@ class EnsureValidPath
         //se l'utente cerca di accedere ad una risorsa non sua, viene reinderizzato alla dashboard
         if ($requestedUserId != null && $requestedUserId['user_id'] != Auth::id()) {
 
-            return redirect()->route('dashboard');
+            return redirect()->route('admin.apartments.index');
         }
 
 
