@@ -23,7 +23,7 @@
     <div id="app" >
 
 
-        <nav class="navbar navbar-expand-md navbar-light shadow-sm ">
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm bg-white">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                     {{-- config('app.name', 'Laravel') --}}
