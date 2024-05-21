@@ -31,7 +31,7 @@ class ApartmentController extends Controller
         // Ottenere latitudine e longitudine dalla richiesta
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
-        $radius = $request->input('radius', 20); // Raggio in km, di default 20 km
+        $radius = $request->input('radius'); // Raggio in km, di default 20 km
 
         // Query per trovare appartamenti entro un certo raggio utilizzando la formula di Haversine
         $apartments = Apartment::selectRaw("*, (
