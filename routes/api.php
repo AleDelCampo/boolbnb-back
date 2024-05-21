@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ApartmentController;
 use App\Http\Controllers\Api\AutocompleteController;
+use App\Http\Controllers\Api\LeadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,6 @@ Route::get('autocomplete-address', [AutocompleteController::class, 'autocomplete
 Route::get('/apartments', [ApartmentController::class, 'index']);
 Route::get('/apartments/{slug}', [ApartmentController::class, 'show']);
 Route::get('/search', [ApartmentController::class, 'search']); // Rotta per la ricerca
+
+// Rotta per prendere dati dal form front-end
+Route::post('/new-contact', [LeadController::class, 'store']);
