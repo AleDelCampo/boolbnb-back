@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use App\Models\Service;
 use Illuminate\Database\Query\Builder as DatabaseQueryBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,44 +21,13 @@ class FilterController extends Controller
         $sqMeters = $request->input('sqMeters');
 
 
-        // if (isset($rooms)) {
-        //     $apartments = Apartment::where('n_rooms', '=', $request->input('rooms'))->get();
-        // } else {
-        //     // $apartments = Apartment::all();
-        //     if (isset($beds)) {
-        //         $apartments = Apartment::where('n_beds', '=', $request->input('beds'))->get();
-        //     } else {
-        //         // $apartments = Apartment::all();
-        //         if (isset($bathrooms)) {
-        //             $apartments = Apartment::where('n_bathrooms', '=', $request->input('bathrooms'))->get();
-        //         } else {
-        //             // $apartments = Apartment::all();
-        //             if (isset($sqMeters)) {
-        //                 $apartments = Apartment::where('squared_meters', '=', $request->input('sqMeters'))->get();
-        //             } else {
-        //                 $apartments = Apartment::all();
-        //             }
-        //         }
-        //     }
-        // }
-
-        // $users = DB::table('users')
-        //         ->when($role, function (Builder $query, string $role) {
-        //             $query->where('role_id', $role);
-        //         })
-        //         ->get();
-
-
-
         $apartments = DB::table('apartments')
-            // ->when($rooms, function (Builder $query, int $rooms) {
-            //     $query->where('n_rooms', (int) $rooms);
-            // })
+
+            //filtri: quando viene trovato il campo effettua il filtro per quel campo
 
             ->when($rooms, function (DatabaseQueryBuilder $query, int $rooms) {
                 $query->where('n_rooms', $rooms);
             })
-            // ->where('n_beds', '=', $beds)
             ->when($beds, function (DatabaseQueryBuilder $query, int $beds) {
                 $query->where('n_beds', $beds);
             })
@@ -69,18 +39,46 @@ class FilterController extends Controller
             })
             ->get();
 
+        $services = Apartment::with('services')->get();
 
 
         return response()->json([
             'succes' => true,
-            'result' => $apartments
+            'results' => $apartments,
+            'services' => $services
+
 
         ]);
     }
-}
 
-// $users = DB::table('users')
-//                 ->when($role, function (Builder $query, string $role) {
-//                     $query->where('role_id', $role);
-//                 })
-//                 ->get();
+    public function service()
+    {
+        $services = Service::all();
+        return response()->json([
+            'succes' => true,
+            'results' => $services
+        ]);
+    }
+
+    public function serviceFilter(Request $request)
+    {
+        // $services = Service::all();
+
+        $services = $request->input('ids');
+
+        $apartments = Apartment::with('services')
+            ->where('ids', '=', $services)
+
+            ->get();
+
+
+
+
+        // $services = Apartment::with('services')->get();
+
+        return response()->json([
+            'succes' => true,
+            'results' => $apartments
+        ]);
+    }
+}
