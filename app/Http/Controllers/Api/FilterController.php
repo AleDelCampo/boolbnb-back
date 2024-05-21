@@ -13,43 +13,37 @@ class FilterController extends Controller
 {
     // Metodo per cercare appartamenti in base alla posizione
     public function filter(Request $request)
-    {
-        // Ottengo il numero di stanze
-        $rooms = $request->input('rooms');
-        $beds = $request->input('beds');
-        $bathrooms = $request->input('bathrooms');
-        $sqMeters = $request->input('sqMeters');
+{
+    $rooms = $request->input('rooms');
+    $beds = $request->input('beds');
+    $bathrooms = $request->input('bathrooms');
+    $sqMeters = $request->input('sqMeters');
+    $services = $request->input('services');
+    $apartments = Apartment::query()
+        ->when($rooms, function ($query, $rooms) {
+            $query->where('n_rooms', $rooms);
+        })
+        ->when($beds, function ($query, $beds) {
+            $query->where('n_beds', $beds);
+        })
+        ->when($bathrooms, function ($query, $bathrooms) {
+            $query->where('n_bathrooms', $bathrooms);
+        })
+        ->when($sqMeters, function ($query, $sqMeters) {
+            $query->where('squared_meters', $sqMeters);
+        })
+        ->when($services, function ($query, $services) {
+            $query->whereHas('services', function ($subQuery) use ($services) {
+                $subQuery->whereIn('id', $services);
+            });
+        })
+        ->get();
 
-
-        $apartments = DB::table('apartments')
-
-            //filtri: quando viene trovato il campo effettua il filtro per quel campo
-
-            ->when($rooms, function (DatabaseQueryBuilder $query, int $rooms) {
-                $query->where('n_rooms', $rooms);
-            })
-            ->when($beds, function (DatabaseQueryBuilder $query, int $beds) {
-                $query->where('n_beds', $beds);
-            })
-            ->when($bathrooms, function (DatabaseQueryBuilder $query, int $bathrooms) {
-                $query->where('n_bathrooms', $bathrooms);
-            })
-            ->when($sqMeters, function (DatabaseQueryBuilder $query, int $sqMeters) {
-                $query->where('squared_meters', $sqMeters);
-            })
-            ->get();
-
-        $services = Apartment::with('services')->get();
-
-
-        return response()->json([
-            'succes' => true,
-            'results' => $apartments,
-            'services' => $services
-
-
-        ]);
-    }
+    return response()->json([
+        'success' => true,
+        'results' => $apartments
+    ]);
+}
 
     public function service()
     {
@@ -61,24 +55,18 @@ class FilterController extends Controller
     }
 
     public function serviceFilter(Request $request)
-    {
-        // $services = Service::all();
+{
+    $services = $request->input('services');
 
-        $services = $request->input('ids');
+    $apartments = Apartment::with('services')
+        ->whereHas('services', function ($query) use ($services) {
+            $query->whereIn('id', $services);
+        })
+        ->get();
 
-        $apartments = Apartment::with('services')
-            ->where('ids', '=', $services)
-
-            ->get();
-
-
-
-
-        // $services = Apartment::with('services')->get();
-
-        return response()->json([
-            'succes' => true,
-            'results' => $apartments
-        ]);
-    }
+    return response()->json([
+        'success' => true,
+        'results' => $apartments
+    ]);
+}
 }
