@@ -24,6 +24,7 @@ class FilterController extends Controller
     $bathrooms = $request->input('bathrooms');
     $sqMeters = $request->input('sqMeters');
     $services = $request->input('services');
+
     $apartments = Apartment::selectRaw("*, (
         6371 * acos(
             cos(radians(?)) *
@@ -46,11 +47,14 @@ class FilterController extends Controller
             $query->where('squared_meters', $sqMeters);
         })
         ->when($services, function ($query, $services) {
-            $query->whereHas('services', function ($subQuery) use ($services) {
-                $subQuery->whereIn('id', $services);
-            });
+            // Condizioni per garantire che tutti i servizi selezionati siano presenti
+            foreach ($services as $service) {
+                $query->whereHas('services', function ($subQuery) use ($service) {
+                    $subQuery->where('id', $service);
+                });
+            }
         })
-        ->having('distance', '<', $radius)  //Seleziona solo gli appartameti in cui il valore della colonna distance è inferiore al valore del raggio specificato dall'utente.
+        ->having('distance', '<', $radius)
         ->orderBy('distance')
         ->get();
 
@@ -70,18 +74,18 @@ class FilterController extends Controller
     }
 
     public function serviceFilter(Request $request)
-{
-    $services = $request->input('services');
+    {
+        $services = $request->input('services');
 
-    $apartments = Apartment::with('services')
-        ->whereHas('services', function ($query) use ($services) {
-            $query->whereIn('id', $services);
-        })
-        ->get();
+        $apartments = Apartment::with('services')
+            ->whereHas('services', function ($query) use ($services) {
+                $query->whereIn('id', $services);
+            })
+            ->get();
 
-    return response()->json([
-        'success' => true,
-        'results' => $apartments
-    ]);
-}
+        return response()->json([
+            'success' => true,
+            'results' => $apartments
+        ]);
+    }
 }
