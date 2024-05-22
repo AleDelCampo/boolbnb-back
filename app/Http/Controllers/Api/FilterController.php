@@ -14,12 +14,25 @@ class FilterController extends Controller
     // Metodo per cercare appartamenti in base alla posizione
     public function filter(Request $request)
 {
+    // Ottenere latitudine e longitudine dalla richiesta
+    $latitude = $request->input('latitude');
+    $longitude = $request->input('longitude');
+    $radius = $request->input('radius', 20); // Raggio in km, di default 20 km
+
     $rooms = $request->input('rooms');
     $beds = $request->input('beds');
     $bathrooms = $request->input('bathrooms');
     $sqMeters = $request->input('sqMeters');
     $services = $request->input('services');
-    $apartments = Apartment::query()
+    $apartments = Apartment::selectRaw("*, (
+        6371 * acos(
+            cos(radians(?)) *
+            cos(radians(latitude)) *
+            cos(radians(longitude) - radians(?)) +
+            sin(radians(?)) *
+            sin(radians(latitude))
+        )
+    ) AS distance", [$latitude, $longitude, $latitude])
         ->when($rooms, function ($query, $rooms) {
             $query->where('n_rooms', $rooms);
         })
@@ -37,6 +50,8 @@ class FilterController extends Controller
                 $subQuery->whereIn('id', $services);
             });
         })
+        ->having('distance', '<', $radius)  //Seleziona solo gli appartameti in cui il valore della colonna distance è inferiore al valore del raggio specificato dall'utente.
+        ->orderBy('distance')
         ->get();
 
     return response()->json([
@@ -49,7 +64,7 @@ class FilterController extends Controller
     {
         $services = Service::all();
         return response()->json([
-            'succes' => true,
+            'success' => true,
             'results' => $services
         ]);
     }
