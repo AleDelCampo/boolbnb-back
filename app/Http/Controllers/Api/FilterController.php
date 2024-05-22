@@ -17,7 +17,7 @@ class FilterController extends Controller
     // Ottenere latitudine e longitudine dalla richiesta
     $latitude = $request->input('latitude');
     $longitude = $request->input('longitude');
-    $radius = $request->input('radius', 20); // Raggio in km, di default 20 km
+    $radius = $request->input('radius'); // Raggio in km, di default 20 km
 
     $rooms = $request->input('rooms');
     $beds = $request->input('beds');
