@@ -32,6 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/errors.404', function () {
+    return view('errors.404');
+})->middleware(['auth', 'verified'])->name('errors.404');
+
 require __DIR__ . '/auth.php';
 
 Route::middleware(['auth', 'verified'])

@@ -14,7 +14,6 @@
 
         <h1>404</h1>
         <p>Pagina Non Trovata</p>
-        <p>{{ $message }}</p>
 
         <a class="btn my_btn" href="{{ url('/') }}">Torna alla HomePage</a>
 
