@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewContact;
+use App\Models\Lead;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class LeadController extends Controller
@@ -15,7 +18,12 @@ class LeadController extends Controller
             'name' => 'required',
             'surname' => 'required',
             'mail_address' => 'required|email',
-            'message' => 'required'
+            'message' => 'required',
+
+
+            // test
+            'apartment_id' => 'nullable'
+
         ], [
             'name.required' => "Devi inserire il tuo nome",
             'surname.required' => "Devi inserire il tuo cognome",
@@ -33,16 +41,23 @@ class LeadController extends Controller
             ]);
         }
 
+
         // salvataggio nel db
+        $newLead = new Lead();
+        $newLead->fill($request->all());
+        $newLead->save();
 
 
         // invio della mail
+        Mail::to('pool.gutierrezv@gmail.com')->send(new NewContact($newLead));
+
 
         // risposta client
 
         //restituiamo json con success true
         return response()->json([
             'success' => true,
+            'request' => $request->all(),
         ]);
 
     }
