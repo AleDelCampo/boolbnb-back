@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ApartmentController;
 use App\Http\Controllers\Api\AutocompleteController;
+use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Api\FilterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,6 @@ Route::get('/search', [ApartmentController::class, 'search']); // Rotta per la r
 Route::get('/filter', [FilterController::class, 'filter']); // Rotta per i filtri
 Route::get('/service', [FilterController::class, 'service']); // Rotta per i filtri
 Route::get('/service_filter', [FilterController::class, 'serviceFilter']); // Rotta per i filtri
+
+// Rotta per prendere dati dal form front-end
+Route::post('/new-contact', [LeadController::class, 'store']);
