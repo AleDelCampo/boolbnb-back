@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\Api\AutocompleteController;
+use App\Http\Controllers\LeadController;
 use App\Models\Apartment;
 use Illuminate\Support\Facades\Route;
 use Psy\Readline\Hoa\Autocompleter;
@@ -62,5 +63,16 @@ Route::middleware(['auth', 'verified'])
                 // });
             });
             // ;
+            // Route::group(['middleware' => 'validated'], function () {
+            //     Route::resource('leads', LeadController::class);
+            //      return view('emails.new-contact');
+            // });
         }
     );
+
+     Route::get('/leads', [LeadController::class, 'index'])->middleware(['auth', 'verified'])->name('leads.index');
+
+    // Route::group(['middleware' => 'validated'], function () {
+    //   Route::resource('leads', LeadController::class);
+    //     return view('leads.index');
+    // });
