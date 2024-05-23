@@ -13,9 +13,10 @@ use Illuminate\Support\Str;
 
 class LeadController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $leads = Lead::where('user_id', '=', Auth::id())->get();
+        $leads = Lead::where('apartment_id', '=', $id)->get();
+        // $leads = Lead::all();
 
         return view('leads.index', compact('leads'));
     }

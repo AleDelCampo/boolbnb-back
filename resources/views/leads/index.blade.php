@@ -6,12 +6,15 @@
 <div class="container">
     @forelse ($leads as $lead)
         
-    <div>
+    <div class="py-3">
         <div>
-            {{$lead->name}}
+            {{$lead->name}} {{$lead->surname}}
         </div>
         <div>
-            {{$lead->surname}}
+            {{$lead->mail_address}}
+        </div>
+        <div>
+            {{$lead->message}}
         </div>
     </div>
     @empty

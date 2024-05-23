@@ -79,6 +79,8 @@
             {{-- link to room edit page --}}
             <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-outline-warning">Modifica</a>
 
+            <a href="{{route('leads.index', $apartment->id)}}" class="btn btn-outline-warning">Messaggi</a>
+
 
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteRoomModal">

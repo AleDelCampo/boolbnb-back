@@ -70,9 +70,10 @@ Route::middleware(['auth', 'verified'])
         }
     );
 
-     Route::get('/leads', [LeadController::class, 'index'])->middleware(['auth', 'verified'])->name('leads.index');
+     Route::get('/leads/{id}', [LeadController::class, 'index'])->middleware(['auth', 'verified'])->name('leads.index');
 
     // Route::group(['middleware' => 'validated'], function () {
     //   Route::resource('leads', LeadController::class);
     //     return view('leads.index');
     // });
+    
