@@ -2,10 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ApartmentController;
-use App\Http\Controllers\Api\AutocompleteController;
-use App\Models\Apartment;
+use App\Http\Controllers\SponsorshipController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
-use Psy\Readline\Hoa\Autocompleter;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,26 +36,22 @@ require __DIR__ . '/auth.php';
 Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->prefix('admin')
-    ->group(
-        function () {
-            // qui ci metto tutte le rotte che voglio che siano:
-            // raggruppate sotto lo stesso middelware
-            // i loro nomi inizino tutti con "admin.
-            // tutti i loro url inizino con "admin/"
+    ->group(function () {
+        Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
 
-            // Route::get('/', [DashboardController::class, 'index'])->name('index');
+        // Definisci le rotte per le sponsorizzazioni
+        Route::get('sponsorship/create/{apartment:slug}', [SponsorshipController::class, 'create'])->name('sponsor.create');
+        Route::post('sponsorship/store/{apartment:slug}', [SponsorshipController::class, 'store'])->name('sponsor.store');
+        Route::get('sponsorship/show/{apartment:slug}', [SponsorshipController::class, 'show'])->name('sponsor.show');
+    });
 
-            // Route::get('/users', [DashboardController::class, 'users'])->name('users');
+        Route::middleware(['auth', 'verified'])->group(function () {
+            Route::get('payment/form', [PaymentController::class, 'show'])->name('payment.form');
+            Route::post('payment/process', [PaymentController::class, 'process'])->name('payment.process');
+            Route::get('payment/success', [PaymentController::class, 'success'])->name('payment.success');
+            Route::get('/payment/show', [PaymentController::class, 'show'])->name('payment.show');
 
-            //rotta per chiamata API
+});
 
-            // rotte di risorsa per gli appartamenti
-            Route::group(['middleware' => 'validated'], function () {
-                Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
-                // Route::get('user/{id}', function () {
-                //     //Only user with id 1 can see profile of user with id 1
-                // });
-            });
-            // ;
-        }
-    );
+
+
