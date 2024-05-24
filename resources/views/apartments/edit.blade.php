@@ -199,7 +199,7 @@
 
 <script>
     // Variabile flag, in base al suo valore (true o false) permette l'invio o meno dei dati del form
-  let flag = false;
+  let flag = true;
   
   // Funzione per verificare lo stato di compilazione di tutti i campi obbligatori
   function checkRequiredFields() {
