@@ -28,3 +28,5 @@ Route::get('/service_filter', [FilterController::class, 'serviceFilter']); // Ro
 Route::post('/new-contact', [LeadController::class, 'store']);
 
 Route::get('/visits', [StatisticController::class, 'counter']);
+
+Route::post('/visits/store', [StatisticController::class, 'store']);

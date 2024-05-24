@@ -20,4 +20,21 @@ class StatisticController extends Controller
         ]);
 
     }
+
+    public function store(Request $request){
+
+        $newVisit = new Visit();
+
+        $newVisit['timestamp_visit'] = date('Y-m-d');
+        $newVisit['ip_address'] = $request->ip;
+        $newVisit['apartment_id'] = $request->apartment;
+
+        $newVisit->save();
+
+        return response()->json([
+            'success' => true,
+            'result' => 'siumm'
+        ]);
+
+    }
 }
