@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Apartment;
 use App\Models\Lead;
 
 use App\Models\User;
@@ -15,10 +16,13 @@ class LeadController extends Controller
 {
     public function index($id)
     {
+        $slug = Apartment::find($id);
+        $slug = $slug -> slug;
+        
         $leads = Lead::where('apartment_id', '=', $id)->get();
         // $leads = Lead::all();
 
-        return view('leads.index', compact('leads'));
+        return view('leads.index', compact('leads', 'slug'));
     }
 
     public function show(Lead $lead)

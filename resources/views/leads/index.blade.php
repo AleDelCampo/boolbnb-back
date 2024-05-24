@@ -2,9 +2,12 @@
 
 @section('content')
 
-<section>
-    <div class="container py-4">
-        <h1>Messaggi</h1>
+<section id="main">
+    <div class="container py-2">
+
+        <a href="{{route('admin.apartments.show', $slug)}}" class="btn btn-success">Torna</a>
+
+        <h1 class="pt-2">Messaggi</h1>
         
         <div class="container">
             <div class="row p-0">
@@ -13,7 +16,7 @@
                     <div class="row p-3 my-3">
                         <div class="row">
                             <div class="col-3">
-                                <div class="fw-bold pt-1pb-2">
+                                <div class="fw-bold pt-1 pb-2">
                                     {{$lead->name}} {{$lead->surname}}
                                 </div>
                                 <div>

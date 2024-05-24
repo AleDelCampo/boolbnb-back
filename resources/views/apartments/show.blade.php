@@ -79,17 +79,15 @@
             {{-- link to room edit page --}}
             <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-outline-warning">Modifica</a>
 
-            {{-- <a href="{{route('leads.index', $apartment->id)}}" class="btn btn-outline-warning">Messaggi</a> --}}
-
-            {{-- Test --}}
-            <a href="{{route('admin.leads.index', $apartment->id)}}" class="btn btn-outline-warning">Messaggi</a>
-            
-
-
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteRoomModal">
                 Elimina
             </button>
+
+            {{-- Test --}}
+            {{-- <a href="{{route('leads.index', $apartment->id)}}" class="btn btn-outline-warning">Messaggi</a> --}}
+            <a href="{{route('admin.leads.index', $apartment->id)}}" class="btn btn-outline-info">Messaggi</a>
+
             <a href="{{route('admin.apartments.index', $apartment)}}" class="btn btn-outline-success">Homepage</a>
 
             <!-- Modal -->
