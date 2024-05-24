@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\Api\AutocompleteController;
+use App\Http\Controllers\LeadController;
 use App\Models\Apartment;
 use Illuminate\Support\Facades\Route;
 use Psy\Readline\Hoa\Autocompleter;
@@ -60,7 +61,11 @@ Route::middleware(['auth', 'verified'])
                 // Route::get('user/{id}', function () {
                 //     //Only user with id 1 can see profile of user with id 1
                 // });
+                Route::get('/leads/{id}', [LeadController::class, 'index'])->name('leads.index');
             });
             // ;
+           
         }
     );
+
+// Route::get('/leads/{id}', [LeadController::class, 'index'])->middleware(['auth', 'verified'])->name('leads.index');
