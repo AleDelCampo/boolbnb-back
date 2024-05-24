@@ -10,7 +10,7 @@
             let randomData = [];
             let months = (year === '2024') ? 4 : 12; // Se l'anno è 2024, genera dati fino a maggio, altrimenti per tutti i mesi
             for (let i = 0; i < months; i++) { // Genera dati per ogni mese
-                randomData.push(Math.floor(Math.random() * 2000) + 1); // Genera un numero casuale compreso tra 1 e 2000
+                randomData.push(Math.floor(Math.random() * 60) + 1); // Genera un numero casuale compreso tra 1 e 2000
             }
             return randomData;
         }
