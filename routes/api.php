@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ApartmentController;
 use App\Http\Controllers\Api\AutocompleteController;
 use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Api\FilterController;
+use App\Http\Controllers\Api\StatisticController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,7 @@ Route::get('/service_filter', [FilterController::class, 'serviceFilter']); // Ro
 
 // Rotta per prendere dati dal form front-end
 Route::post('/new-contact', [LeadController::class, 'store']);
+
+Route::get('/visits', [StatisticController::class, 'counter']);
+
+Route::post('/visits/store', [StatisticController::class, 'store']);
