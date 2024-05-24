@@ -19,7 +19,7 @@ class ApartmentController extends Controller
 
     // Metodo per ottenere un appartamento specifico tramite slug
     public function show($slug) {
-        $apartment = Apartment::with(['sponsorships','services'])->where('slug', $slug)->firstOrFail();
+        $apartment = Apartment::selectRaw('apartments.*, users.name as user_name, users.surname as user_surname')->join('users','users.id','=','apartments.user_id')->with(['sponsorships','services'])->where('slug', $slug)->firstOrFail();
         return response()->json([
             "success" => true,
             "apartment" => $apartment
