@@ -61,19 +61,11 @@ Route::middleware(['auth', 'verified'])
                 // Route::get('user/{id}', function () {
                 //     //Only user with id 1 can see profile of user with id 1
                 // });
+                Route::get('/leads/{id}', [LeadController::class, 'index'])->name('leads.index');
             });
             // ;
-            // Route::group(['middleware' => 'validated'], function () {
-            //     Route::resource('leads', LeadController::class);
-            //      return view('emails.new-contact');
-            // });
+           
         }
     );
 
-     Route::get('/leads/{id}', [LeadController::class, 'index'])->middleware(['auth', 'verified'])->name('leads.index');
-
-    // Route::group(['middleware' => 'validated'], function () {
-    //   Route::resource('leads', LeadController::class);
-    //     return view('leads.index');
-    // });
-    
+// Route::get('/leads/{id}', [LeadController::class, 'index'])->middleware(['auth', 'verified'])->name('leads.index');
