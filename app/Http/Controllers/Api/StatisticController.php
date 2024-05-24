@@ -10,7 +10,9 @@ use App\Models\Visit;
 class StatisticController extends Controller
 {
     public function counter() {
-        $visits = Visit::count();
+        $year = $_GET['year'];
+        $month = $_GET['month'];
+        $visits = Visit::whereYear('timestamp_visit',$year)->whereMonth('timestamp_visit',$month)->count();
 
         return response()->json([
             'success' => true,

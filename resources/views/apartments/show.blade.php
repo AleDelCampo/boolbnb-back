@@ -7,15 +7,22 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Funzione per generare dati casuali per un determinato anno
         function generateRandomData(year) {
-            //let randomData = []; // Se l'anno è 2024, genera dati fino a maggio, altrimenti per tutti i mesi
-            //for (let i = 0; i < 12; i++) { // Genera dati per ogni mese
-                //randomData.push(Math.floor(Math.random() * 60) + 1); // Genera un numero casuale compreso tra 1 e 2000
+            let randomData = []; // Se l'anno è 2024, genera dati fino a maggio, altrimenti per tutti i mesi
+            
+            
+            for (let i = 0; i < 12; i++) { // Genera dati per ogni mese
                 
-            // }
-            // return randomData;
-            axios.get('http://127.0.0.1:8000/api/visits').then(res=> {
-                console.log(res)
-            })
+                axios.get('http://127.0.0.1:8000/api/visits',{
+                    params:{year:year, month:i+1 }
+                }).then(res=> {
+                    console.log(res)
+                    
+                    randomData.push(res.data.result); // Genera un numero casuale compreso tra 1 e 2000
+                })
+                
+            }
+            console.log(randomData)
+            return randomData;
         }
 
         // Definisci i dati per ciascun appartamento
@@ -37,6 +44,7 @@
         let defaultYear = '2022';
         let selectedYear = defaultYear;
         let initialData = getDataForYear(defaultYear);
+
 
         // Funzione per ottenere i dati per un determinato anno
         function getDataForYear(year) {
