@@ -4,25 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use App\Models\Sponsorship;
+use Braintree\Gateway;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
     // Metodo per visualizzare il modulo di pagamento 
-    public function show(Request $request)
+    public function show(Request $request, Gateway $gateway)
     {
-        // Recupera i dettagli necessari dal request
         $apartment_id = $request->input('apartment_id');
         $sponsorship_id = $request->input('sponsorship_id');
-
-        // Trova il prezzo del pacchetto di sponsorizzazione
         $sponsorship = Sponsorship::findOrFail($sponsorship_id);
         $price = $sponsorship->price;
+        $title = $sponsorship->title;
+        $h_duration = $sponsorship->h_duration;
 
-        // Passa i dettagli del pagamento alla vista
-        // Passiamo anche l'oggetto apartment per utilizzarlo nella vista di pagamento
-        return view('apartments.payment.form', compact('apartment_id', 'sponsorship_id', 'price'));
+
+ 
+        $clientToken = $gateway->clientToken()->generate();
+ 
+        return view('apartments.payment.form', compact('apartment_id', 'sponsorship_id', 'price', 'clientToken','title', 'h_duration'));
     }
 
     public function process(Request $request)
@@ -73,7 +75,7 @@ class PaymentController extends Controller
             ]);
     }
 
-    // Metodo per visualizzare la pagina di successo del pagamento (demo)
+    // Metodo per visualizzare la pagina di successo del pagamento 
     public function success()
     {
         // Recupera l'oggetto apartment dalla sessione
@@ -82,7 +84,8 @@ class PaymentController extends Controller
 
         // Verifica che apartment non sia null
         if (!$apartment || !$sponsorships) {
-            return redirect()->route('home')->withErrors('Dati non trovati per visualizzare la sponsorizzazione.');
+            return redirect()->route('admin.sponsor.create')->withErrors('Dati non trovati per visualizzare la sponsorizzazione.');
+
         }
 
         return view('apartments.sponsorl.sponsor-show', compact('apartment', 'sponsorships'));
