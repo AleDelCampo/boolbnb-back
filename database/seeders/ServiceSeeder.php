@@ -19,27 +19,27 @@ class ServiceSeeder extends Seeder
         $services = [
             [
                 "name" => "Wi-fi",
-                "icon" => "<i class='fa-solid fa-wifi'></i>"
+                "icon" => "fa-solid fa-wifi"
             ],
             [
                 "name" => "Piscina",
-                "icon" => "<i class='fa-solid fa-water-ladder'></i>"
+                "icon" => "fa-solid fa-water-ladder"
             ],
             [
                 "name" => "Portineria",
-                "icon" => "<i class='fa-solid fa-door-closed'></i>"
+                "icon" => "fa-solid fa-door-closed"
             ],
             [
                 "name" => "Posto auto",
-                "icon" => "<i class='fa-solid fa-car'></i>"
+                "icon" => "fa-solid fa-car"
             ],
             [
                 "name" => "Sauna",
-                "icon" => "<i class='fa-solid fa-person-booth'></i>"
+                "icon" => "fa-solid fa-person-booth"
             ],
             [
                 "name" => "Vista mare",
-                "icon" => "<i class='fa-solid fa-water'></i>"
+                "icon" => "fa-solid fa-water"
             ],
         ];
 
