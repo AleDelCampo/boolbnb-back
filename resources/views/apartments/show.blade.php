@@ -7,20 +7,19 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Funzione per generare dati casuali per un determinato anno
         function generateRandomData(year) {
-            let randomData = [];
-            let months = (year === '2024') ? 4 : 12; // Se l'anno è 2024, genera dati fino a maggio, altrimenti per tutti i mesi
-            for (let i = 0; i < months; i++) { // Genera dati per ogni mese
-                randomData.push(Math.floor(Math.random() * 60) + 1); // Genera un numero casuale compreso tra 1 e 2000
-            }
-            return randomData;
+            //let randomData = []; // Se l'anno è 2024, genera dati fino a maggio, altrimenti per tutti i mesi
+            //for (let i = 0; i < 12; i++) { // Genera dati per ogni mese
+                //randomData.push(Math.floor(Math.random() * 60) + 1); // Genera un numero casuale compreso tra 1 e 2000
+                
+            // }
+            // return randomData;
+            axios.get('http://127.0.0.1:8000/api/visits').then(res=> {
+                console.log(res)
+            })
         }
 
         // Definisci i dati per ciascun appartamento
         let apartmentData = [
-            {
-                year: '2021',
-                data: generateRandomData('2021')
-            },
             {
                 year: '2022',
                 data: generateRandomData('2022')
@@ -35,19 +34,16 @@
             }
         ];
 
-        let defaultYear = '2021';
+        let defaultYear = '2022';
         let selectedYear = defaultYear;
         let initialData = getDataForYear(defaultYear);
 
         // Funzione per ottenere i dati per un determinato anno
         function getDataForYear(year) {
         let data = apartmentData.find(apartment => apartment.year === year);
-        if (year === '2024') {
-            // Se l'anno è 2024, ottieni solo i dati per maggio
-            return data ? data.data.slice(0, 4) : [];
-        } else {
-            return data ? data.data : [];
-        }
+        
+        return data ? data.data : [];
+        
     }   
 
         // Funzione per aggiornare il grafico quando cambia l'anno selezionato
@@ -77,7 +73,7 @@
             labels: getLabelsForYear(defaultYear),
             datasets: [{
                 label: 'Statistiche Visualizzazioni:',
-                backgroundColor: getBarColors(initialData.length),
+                backgroundColor: getBarColors(initialData),
                 borderColor: 'rgb(255, 99, 132)',
                 borderWidth: 1,
                 hoverBackgroundColor: 'rgba(255, 99, 132, 0.4)',
@@ -96,7 +92,6 @@
 
     // Funzione per ottenere i label in base all'anno
     function getLabelsForYear(year) {
-        if (year === '2024') return ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio'];
         return ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
     }
 
@@ -110,13 +105,11 @@
     document.getElementById('prevYear').addEventListener('click', function () {
         if (selectedYear === '2024') selectedYear = '2023';
         else if (selectedYear === '2023') selectedYear = '2022';
-        else if (selectedYear === '2022') selectedYear = '2021';
         updateChart();
     });
 
     document.getElementById('nextYear').addEventListener('click', function () {
-        if (selectedYear === '2021') selectedYear = '2022';
-        else if (selectedYear === '2022') selectedYear = '2023';
+        if (selectedYear === '2022') selectedYear = '2023';
         else if (selectedYear === '2023') selectedYear = '2024';
         updateChart();
     });
