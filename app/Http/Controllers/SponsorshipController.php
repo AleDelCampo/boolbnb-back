@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use App\Models\Sponsorship;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SponsorshipController extends Controller
@@ -65,6 +66,18 @@ class SponsorshipController extends Controller
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
         $sponsorships = $apartment->sponsorships;
         return view('apartments.sponsorl.sponsor-show', compact('apartment', 'sponsorships'));
+    }
+
+    public function removeExpiredSponsorships()
+    {
+        $now = Carbon::now();
+        Apartment::whereHas('sponsorships', function ($query) use ($now) {
+            $query->where('end_sponsorship', '<', $now);
+        })->each(function ($apartment) use ($now) {
+            $apartment->sponsorships()->wherePivot('end_sponsorship', '<', $now)->detach();
+        });
+
+        return response()->json(['status' => 'success']);
     }
 }
 

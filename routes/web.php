@@ -43,7 +43,10 @@ Route::middleware(['auth', 'verified'])
         Route::get('sponsorship/create/{apartment:slug}', [SponsorshipController::class, 'create'])->name('sponsor.create');
         Route::post('sponsorship/store/{apartment:slug}', [SponsorshipController::class, 'store'])->name('sponsor.store');
         Route::get('sponsorship/show/{apartment:slug}', [SponsorshipController::class, 'show'])->name('sponsor.show');
+
     });
+    Route::get('/remove-expired-sponsorships', [SponsorshipController::class, 'removeExpiredSponsorships']);
+
 
         Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('payment/form', [PaymentController::class, 'show'])->name('payment.form');

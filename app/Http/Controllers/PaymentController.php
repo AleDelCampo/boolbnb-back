@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    // Metodo per visualizzare il modulo di pagamento 
+    // Metodo per visualizzare il modulo di pagamento  
     public function show(Request $request, Gateway $gateway)
     {
         $apartment_id = $request->input('apartment_id');
@@ -75,7 +75,7 @@ class PaymentController extends Controller
             ]);
     }
 
-    // Metodo per visualizzare la pagina di successo del pagamento 
+    // Metodo per visualizzare la ponsorizzazione dopo il pagamento
     public function success()
     {
         // Recupera l'oggetto apartment dalla sessione
