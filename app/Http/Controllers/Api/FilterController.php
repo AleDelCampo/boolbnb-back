@@ -56,7 +56,7 @@ class FilterController extends Controller
             }
         })
         ->having('distance', '<', $radius)
-        ->orderBy('apartment_sponsorship.apartment_id')
+        ->orderByRaw('-apartment_sponsorship.apartment_id DESC')
         ->orderBy('distance')
         ->get();
 
