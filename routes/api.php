@@ -30,3 +30,5 @@ Route::post('/new-contact', [LeadController::class, 'store']);
 Route::get('/visits', [StatisticController::class, 'counter']);
 
 Route::post('/visits/store', [StatisticController::class, 'store']);
+
+Route::get('/show-sponsored', [ApartmentController::class, 'showSponsored']); // Rotta per la visualizzazione delle sponsorizzate
