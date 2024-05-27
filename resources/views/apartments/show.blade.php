@@ -237,6 +237,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="d-flex justify-content-center align-items-center position-relative mt-4">
             <span id="prevYear" class="year-nav">&lt;</span>

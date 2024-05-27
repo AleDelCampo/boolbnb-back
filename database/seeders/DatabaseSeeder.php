@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             //ApartmentServiceSeeder::class,
             //ApartmentSponsorshipSeeder::class,
             VisitSeeder::class,
+           
+
         ]);
     }
 }

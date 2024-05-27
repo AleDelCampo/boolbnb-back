@@ -81,11 +81,35 @@
         <main >
             
             @yield('content')
+
             
 
         </main>
 
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function removeExpiredSponsorships() {
+                fetch('/remove-expired-sponsorships')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Expired sponsorships removed:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error removing expired sponsorships:', error);
+                    });
+            }
+    
+            // Esegui la funzione subito e poi ogni minuto 
+            removeExpiredSponsorships();
+            setInterval(removeExpiredSponsorships, 1 * 60 * 1000); // 1 minuto
+        });
+    </script>
+    
+    <script src="https://js.braintreegateway.com/web/dropin/1.28.0/js/dropin.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.89.1/js/client.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.89.1/js/hosted-fields.min.js"></script>
+    @yield('scripts')
 </body>
 
 </html>

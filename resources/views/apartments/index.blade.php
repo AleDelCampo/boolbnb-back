@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+@extends('layouts.app')
+
+@section('content')
 
 
 <section>
@@ -81,9 +84,10 @@
                                     </div>
                                     <div class="col-6 d-flex justify-content-end align-items-center">
                                         <div>
-                                            <a class="btn my_btn"
-                                                href="{{route('admin.apartments.show', $apartment)}}">Visualizza</a>
+                                            <a class="btn my_btn" href="{{route('admin.apartments.show', $apartment)}}">Visualizza</a>
+                                            <a class="btn my_btn" href="{{ route('admin.sponsor.create', $apartment->slug) }}">Sponsorizza</a>
 
+                                            
                                         </div>
 
                                     </div>
@@ -114,3 +118,9 @@
 
 </section>
 @endsection
+
+
+
+
+
+
