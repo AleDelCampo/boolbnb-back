@@ -5,65 +5,19 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Funzione per generare dati casuali per un determinato anno
-        function generateRandomData(year) {
-            let randomData = []; // Se l'anno è 2024, genera dati fino a maggio, altrimenti per tutti i mesi
-            
-            
-            for (let i = 0; i < 12; i++) { // Genera dati per ogni mese
-                
-                axios.get('http://127.0.0.1:8000/api/visits',{
-                    params:{year:year, month:i+1 }
-                }).then(res=> {
-                    console.log(res)
-                    
-                    randomData.push(res.data.result); // Genera un numero casuale compreso tra 1 e 2000
-                })
-                
-            }
-            console.log(randomData)
-            return randomData;
-        }
-
-        // Definisci i dati per ciascun appartamento
-        let apartmentData = [
-            {
-                year: '2022',
-                data: generateRandomData('2022')
-            },
-            {
-                year: '2023',
-                data: generateRandomData('2023')
-            },
-            {
-                year: '2024',
-                data: generateRandomData('2024')
-            }
-        ];
-
-        let defaultYear = '2022';
-        let selectedYear = defaultYear;
-        let initialData = getDataForYear(defaultYear);
-
-
-        // Funzione per ottenere i dati per un determinato anno
-        function getDataForYear(year) {
-        let data = apartmentData.find(apartment => apartment.year === year);
-        
-        return data ? data.data : [];
-        
-    }   
-
-        // Funzione per aggiornare il grafico quando cambia l'anno selezionato
-    function updateChart() {
-        let newData = getDataForYear(selectedYear);
-        myChart.data.datasets[0].data = newData;
-        myChart.data.datasets[0].backgroundColor = getBarColors(newData.length);
-        document.getElementById('yearLabel').textContent = selectedYear;
-        myChart.update();
+    // Funzione per ottenere i dati delle visite per un dato anno
+    function getVisitsData(year) {
+        return axios.get('/api/visits', {
+            params: { year: year }
+        });
     }
 
-        // Funzione per ottenere i colori delle barre
+    // Funzione per ottenere i label in base all'anno
+    function getLabelsForYear(year) {
+        return ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+    }
+
+    // Funzione per ottenere i colori delle barre
     function getBarColors(length) {
         let colors = [];
         for (let i = 0; i < length; i++) {
@@ -74,56 +28,85 @@
         return colors;
     }
 
-        // Configurazione del grafico
-    let config = {
-        type: 'bar',
-        data: {
-            labels: getLabelsForYear(defaultYear),
-            datasets: [{
-                label: 'Statistiche Visualizzazioni:',
-                backgroundColor: getBarColors(initialData),
-                borderColor: 'rgb(255, 99, 132)',
-                borderWidth: 1,
-                hoverBackgroundColor: 'rgba(255, 99, 132, 0.4)',
-                hoverBorderColor: 'rgb(255, 99, 132)',
-                data: initialData,
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    };
+    // Funzione per aggiornare il grafico con i dati delle visite
+    function updateChart(year) {
+    const apartmentId = {{$apartment->id}}; // Ottieni l'ID dell'appartamento dal PHP
 
-    // Funzione per ottenere i label in base all'anno
-    function getLabelsForYear(year) {
-        return ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-    }
+    axios.get(`/api/visits/${apartmentId}?year=${year}`)
+        .then(res => {
+            const visitsData = res.data.result;
+            const labels = getLabelsForYear(year);
+            const data = Array(12).fill(0); // Inizializza con 0 visite per ogni mese
+
+            // Popola i dati con le visite ricevute
+            visitsData.forEach(visit => {
+                const monthIndex = visit.month - 1; // Gennaio è 1, Febbraio è 2, etc.
+                data[monthIndex] = visit.total_visits;
+            });
+
+            myChart.data.labels = labels;
+            myChart.data.datasets[0].data = data;
+
+            myChart.update();
+        })
+        .catch(error => {
+            console.error('Errore nel caricamento dei dati delle visite:', error);
+        });
+}
+
+    // Imposta l'anno iniziale
+    let defaultYear = '2022';
+    let selectedYear = defaultYear;
 
     // Disegna il grafico sulla canvas
     let myChart = new Chart(
-        document.getElementById('myChart'),
-        config
+        document.getElementById('myChart').getContext('2d'),
+        {
+            type: 'bar',
+            data: {
+                labels: getLabelsForYear(defaultYear),
+                datasets: [{
+                    label: 'Statistiche Visualizzazioni:',
+                    backgroundColor: getBarColors(12), // Considerando 12 mesi
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(255, 99, 132, 0.4)',
+                    hoverBorderColor: 'rgb(255, 99, 132)',
+                    data: Array(12).fill(0), // Inizializza con 0 visite per ogni mese
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        }
     );
 
-    // Aggiungi listener per il click sulle frecce di switch anno
+    // Aggiorna il grafico quando cambia l'anno selezionato
+    function handleYearChange() {
+        updateChart(selectedYear);
+        document.getElementById('yearLabel').textContent = selectedYear;
+    }
+
+    // Listener per il click sulle frecce di switch anno
     document.getElementById('prevYear').addEventListener('click', function () {
         if (selectedYear === '2024') selectedYear = '2023';
         else if (selectedYear === '2023') selectedYear = '2022';
-        updateChart();
+        handleYearChange();
     });
 
     document.getElementById('nextYear').addEventListener('click', function () {
         if (selectedYear === '2022') selectedYear = '2023';
         else if (selectedYear === '2023') selectedYear = '2024';
-        updateChart();
+        handleYearChange();
     });
 
-    // Imposta l'anno iniziale nel label
+    // Imposta l'anno iniziale nel label e carica i dati del grafico
     document.getElementById('yearLabel').textContent = defaultYear;
+    updateChart(defaultYear);
 });
 </script>
 
