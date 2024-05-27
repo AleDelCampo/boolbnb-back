@@ -33,32 +33,34 @@ class SponsorshipController extends Controller
     }
 
     // Salva la sponsorizzazione
-    public function store(Request $request)
+    public function store(Request $request, $slug)
     {
-        // Trova l'appartamento specificato nel form tramite il suo ID
-        $apartment = Apartment::findOrFail($request->apartment_id);
+        // Trova l'appartamento per slug
+        $apartment = Apartment::where('slug', $slug)->firstOrFail();
 
         // Controlla se l'appartamento è già sponsorizzato
         if ($this->isApartmentSponsored($apartment)) {
-            // Se l'appartamento è già sponsorizzato, mostra un messaggio di errore
             return redirect()->back()->withErrors('Questo appartamento è già sponsorizzato.');
         }
 
         // Trova il pacchetto di sponsorizzazione specificato nel form tramite il suo ID
         $sponsorship = Sponsorship::findOrFail($request->sponsorship_id);
 
-        // Effettua il redirect alla pagina di pagamento con i dettagli necessari
-        return redirect()->route('payment.show', [
-            'apartment_id' => $request->apartment_id,
-            'sponsorship_id' => $request->sponsorship_id
+        // Aggiungi la sponsorizzazione all'appartamento (trattamento pivot table)
+        $apartment->sponsorships()->attach($sponsorship->id, [
+            'start_sponsorship' => now(),
+            'end_sponsorship' => now()->addHours($sponsorship->h_duration),
         ]);
+
+        // Effettua il redirect alla pagina di pagamento con i dettagli necessari
+        return redirect()->route('payment.show', ['apartment_id' => $apartment->id, 'sponsorship_id' => $sponsorship->id]);
     }
 
-    // Verifica se l'appartamento è già sponsorizzato
     private function isApartmentSponsored($apartment)
     {
         return $apartment->sponsorships()->exists();
     }
+
 
     // Mostra i dettagli della sponsorizzazione
     public function show($slug)

@@ -7,6 +7,7 @@ use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Service;
+use App\Models\Sponsorship;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -85,13 +86,28 @@ class ApartmentController extends Controller
         return redirect()->route('admin.apartments.show', $newApartment);
     }
 
-    /**
-     * Display the specified resource.
-     */
+  
+
     public function show(Apartment $apartment)
     {
-        return view('apartments.show', compact('apartment'));
+        // Carica le sponsorizzazioni collegate all'appartamento tramite eager loading
+        $apartment->load('sponsorships');
+    
+        // Recupera tutte le sponsorizzazioni disponibili
+        $sponsorshipsAvailable = Sponsorship::all();
+    
+        // Verifica che l'appartamento abbia sponsorizzazioni caricate
+        $sponsorships = $apartment->sponsorships;
+    
+        // Passa sempre le sponsorizzazioni (anche le disponibili) alla vista
+        return view('apartments.show', compact('apartment', 'sponsorships', 'sponsorshipsAvailable'));
     }
+    
+    
+    
+    
+
+
 
     /**
      * Show the form for editing the specified resource.
