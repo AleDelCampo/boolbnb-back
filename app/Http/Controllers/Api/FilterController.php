@@ -34,6 +34,7 @@ class FilterController extends Controller
             sin(radians(latitude))
         )
     ) AS distance", [$latitude, $longitude, $latitude])
+        ->join('apartment_sponsorship','id','=','apartment_sponsorship.apartment_id','left outer')
         ->when($rooms, function ($query, $rooms) {
             $query->where('n_rooms', $rooms);
         })
@@ -55,6 +56,7 @@ class FilterController extends Controller
             }
         })
         ->having('distance', '<', $radius)
+        ->orderBy('apartment_sponsorship.apartment_id')
         ->orderBy('distance')
         ->get();
 
