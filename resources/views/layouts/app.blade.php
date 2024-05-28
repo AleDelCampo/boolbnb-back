@@ -110,6 +110,42 @@
     <script src="https://js.braintreegateway.com/web/3.89.1/js/client.min.js"></script>
     <script src="https://js.braintreegateway.com/web/3.89.1/js/hosted-fields.min.js"></script>
     @yield('scripts')
+
+    <script>
+        var form = document.getElementById('payment-form');
+        var client_token = "{{ $clientToken }}";
+
+
+        braintree.dropin.create({
+            authorization: client_token,
+            container: '#dropin-container'
+        }, function (createErr, instance) {
+            if (createErr) {
+                console.error(createErr);
+                return;
+            }
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                instance.requestPaymentMethod(function (err, payload) {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+
+                    var nonceInput = document.createElement('input');
+                    nonceInput.name = 'payment_method_nonce';
+                    nonceInput.type = 'hidden';
+                    nonceInput.value = payload.nonce;
+                    form.appendChild(nonceInput);
+
+                    form.submit();
+                });
+            });
+        });   
+
+    </script>
 </body>
 
 </html>

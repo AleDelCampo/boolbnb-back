@@ -82,7 +82,6 @@ class PaymentController extends Controller
         // $apartment = session('apartment');
         // $sponsorships = session('sponsorships');
 
-        // $prova = [1, 2, 3];
 
         // Verifica che apartment non sia null
         // if (!$apartment || !$sponsorships) {
@@ -90,14 +89,9 @@ class PaymentController extends Controller
         // }
 
         session()->flash('success', 'Pagamento completato con successo!');
-        // $request->session()->flash('success', 'Pagamento completato con successo!'); prima del retun
 
-
-        // return view('apartments.show');
 
         return redirect()
             ->back();
-        // ->withInput($prova)
-        // ->with('success', 'pagamento avvenuto con successo');
     }
 }
