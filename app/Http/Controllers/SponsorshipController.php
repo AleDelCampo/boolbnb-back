@@ -5,19 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Apartment;
 use App\Models\Sponsorship;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 
 class SponsorshipController extends Controller
 {
     // Mostra il form per creare una nuova sponsorizzazione
-    public function index(Apartment $apartment)
+    public function index()
     {
-        $sponsorships = Sponsorship::all();
-        $apartments = Apartment::all();
+        // Recupera tutti gli appartamenti dell'utente autenticato
+        $user = Auth::user();
+        $apartments = Apartment::where('user_id', $user->id)->with('sponsorships')->get();
 
+        // Filtra solo gli appartamenti che hanno almeno una sponsorizzazione
+        $sponsoredApartments = $apartments->filter(function ($apartment) {
+            return $apartment->sponsorships->isNotEmpty();
+        });
 
-        return view('apartments.sponsorl.sponsor-index', compact('apartment', 'sponsorships', 'apartments'));
+        return view('apartments.sponsorl.sponsor-index', ['apartments' => $sponsoredApartments]);
     }
+
 
     public function create(Apartment $apartment)
     {

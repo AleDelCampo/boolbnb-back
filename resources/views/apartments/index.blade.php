@@ -41,6 +41,8 @@
                             <a class="btn my_bg_color fw-bold w-100" href="{{ route('logout') }}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"> {{ __('Logout') }}</a>
                         </div>
+                        <a class="btn my_bg_color fw-bold w-100" href="{{ route('admin.sponsor.index') }}">Sponsorizza</a>
+
 
 
 
@@ -84,9 +86,6 @@
                                     <div class="col-6 d-flex justify-content-end align-items-center">
                                         <div>
                                             <a class="btn my_btn" href="{{route('admin.apartments.show', $apartment)}}">Visualizza</a>
-                                            <a class="btn my_btn" href="{{ route('admin.sponsor.create', $apartment->slug) }}">Sponsorizza</a>
-
-                                            
                                         </div>
 
                                     </div>
