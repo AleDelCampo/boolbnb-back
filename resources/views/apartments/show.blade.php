@@ -112,8 +112,7 @@
 
         
         var form = document.getElementById('payment-form');
-        var client_token = "{{ $clientToken }}";
-    
+        var client_token = "{{ $clientToken }}";    
     
         braintree.dropin.create({
             authorization: client_token,
@@ -142,7 +141,16 @@
                     form.submit();
                 });
             });
-        });   
+        });  
+
+        let btn_sponsor = document.getElementById('cta-sponsor')
+                
+        btn_sponsor.addEventListener('click', function(){
+            document.getElementById('box-payment').classList.toggle('d-none')
+        })
+
+        
+
     });
     
     
@@ -153,7 +161,7 @@
 
 </script>
 
-<div id="prova1" class="container pb-4">
+<div class="container pb-4">
 
     <div class="card mt-4">
         <div class="d-flex flex-wrap">
@@ -236,37 +244,44 @@
 
 
                 
-                <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
-                    {{-- <input type="hidden" name="sponsorship_id" value="{{ $sponsorship->id }}"> --}}
-                    <select id="sponsorship_id" class="form-select"  name="sponsorship_id">
-                        <option>Seleziona sponsorizzazione</option>
-                        @foreach ($sponsorships as $sponsorship)
-                        <option value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
-        
-                        @endforeach
+                
+                <button id="cta-sponsor" class="btn btn-success">Attiva sponsorizzazione</button>
+                <div id="box-payment" class="d-none">
+                    <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
+                        {{-- <input type="hidden" name="sponsorship_id" value="{{ $sponsorship->id }}"> --}}
+                        <select id="sponsorship_id" class="form-select"  name="sponsorship_id">
+                            <option>Seleziona sponsorizzazione</option>
+                            @foreach ($sponsorships as $sponsorship)
+                            <option class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
+            
+                            @endforeach
+                            
+                        </select>
+                        {{-- <div class="form-group ">
+                            <label for="price" class="fw-bold">Prezzo da pagare:</label>
+                            <span id="price" class="fw-bold fst-italic"> €</span>
+                        </div>
+                        <div class="form-group ">
+                
+                            <label for="time" class="fw-bold">Durata:</label>
+                            <span id="time" class="fw-bold fst-italic">{{ $h_duration }}h</span>
+                
+                        </div> --}}        
                         
-                    </select>
-                    {{-- <div class="form-group ">
-                        <label for="price" class="fw-bold">Prezzo da pagare:</label>
-                        <span id="price" class="fw-bold fst-italic"> €</span>
-                    </div>
-                    <div class="form-group ">
-            
-                        <label for="time" class="fw-bold">Durata:</label>
-                        <span id="time" class="fw-bold fst-italic">{{ $h_duration }}h</span>
-            
-                    </div> --}}            
-            
-                    <div id="dropin-container"></div>
-        
-                    <button type="submit" class="btn btn-primary">Acquista</button>            
-                    
-                    
-                    
-                    
-                </form>
+                        
+                        
+                        
+                        
+                        <div id="dropin-container"></div>
+                        <button type="submit" class="btn btn-primary">Acquista</button>            
+                        
+                        
+                    </form>
+
+
+                </div>
                 
 
             </div>

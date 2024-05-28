@@ -109,7 +109,6 @@
     <script src="https://js.braintreegateway.com/web/dropin/1.28.0/js/dropin.min.js"></script>
     <script src="https://js.braintreegateway.com/web/3.89.1/js/client.min.js"></script>
     <script src="https://js.braintreegateway.com/web/3.89.1/js/hosted-fields.min.js"></script>
-    {{-- @yield('scripts') --}}
 
     
 </body>
