@@ -108,6 +108,45 @@
     document.getElementById('yearLabel').textContent = defaultYear;
     updateChart(defaultYear);
 });
+
+// braintree
+@section('scripts')
+<script>
+    var form = document.getElementById('payment-form');
+    var client_token = "{{ $clientToken }}";
+
+
+
+    braintree.dropin.create({
+        authorization: client_token,
+        container: '#dropin-container'
+    }, function (createErr, instance) {
+        if (createErr) {
+            console.error(createErr);
+            return;
+        }
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            instance.requestPaymentMethod(function (err, payload) {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                var nonceInput = document.createElement('input');
+                nonceInput.name = 'payment_method_nonce';
+                nonceInput.type = 'hidden';
+                nonceInput.value = payload.nonce;
+                form.appendChild(nonceInput);
+
+                form.submit();
+            });
+        });
+    });
+</script>
+
 </script>
 
 <div class="container pb-4">
@@ -181,6 +220,51 @@
                 </div>
             </div>
         </div>
+
+        {{-- braintree --}}
+
+        
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif 
+
+        
+        <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
+            @csrf
+            <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
+            {{-- <input type="hidden" name="sponsorship_id" value="{{ $sponsorship->id }}"> --}}
+            <select class="form-select" id="sponsorship_id" name="sponsorship_id">
+                <option>Seleziona sponsorizzazione</option>
+                @foreach ($sponsorships as $sponsorship)
+                <option  for value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
+
+                @endforeach
+                
+            </select>
+            {{-- <div class="form-group ">
+                <label for="price" class="fw-bold">Prezzo da pagare:</label>
+                <span id="price" class="fw-bold fst-italic"> €</span>
+            </div>
+            <div class="form-group ">
+    
+                <label for="time" class="fw-bold">Durata:</label>
+                <span id="time" class="fw-bold fst-italic">{{ $h_duration }}h</span>
+    
+            </div> --}}
+            
+    
+            <div id="dropin-container"></div>
+
+            <button type="submit" class="btn btn-primary">Acquista</button>            
+            
+            
+        </form>
+
+        
+
+        
 
         <div class="card-footer d-flex justify-content-center p-3 gap-3">
             {{-- link to room edit page --}}

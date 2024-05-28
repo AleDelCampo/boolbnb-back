@@ -21,10 +21,10 @@ class PaymentController extends Controller
         $h_duration = $sponsorship->h_duration;
 
 
- 
+
         $clientToken = $gateway->clientToken()->generate();
- 
-        return view('apartments.payment.form', compact('apartment_id', 'sponsorship_id', 'price', 'clientToken','title', 'h_duration'));
+
+        return view('apartments.payment.form', compact('apartment_id', 'sponsorship_id', 'price', 'clientToken', 'title', 'h_duration'));
     }
 
     public function process(Request $request)
@@ -79,16 +79,25 @@ class PaymentController extends Controller
     public function success()
     {
         // Recupera l'oggetto apartment dalla sessione
-        $apartment = session('apartment');
-        $sponsorships = session('sponsorships');
+        // $apartment = session('apartment');
+        // $sponsorships = session('sponsorships');
+
+        // $prova = [1, 2, 3];
 
         // Verifica che apartment non sia null
-        if (!$apartment || !$sponsorships) {
-            return redirect()->route('admin.sponsor.create')->withErrors('Dati non trovati per visualizzare la sponsorizzazione.');
+        // if (!$apartment || !$sponsorships) {
+        //     return redirect()->route('admin.sponsor.create')->withErrors('Dati non trovati per visualizzare la sponsorizzazione.');
+        // }
 
-        }
+        session()->flash('success', 'Pagamento completato con successo!');
+        // $request->session()->flash('success', 'Pagamento completato con successo!'); prima del retun
 
-        return view('apartments.sponsorl.sponsor-show', compact('apartment', 'sponsorships'));
+
+        // return view('apartments.show');
+
+        return redirect()
+            ->back();
+        // ->withInput($prova)
+        // ->with('success', 'pagamento avvenuto con successo');
     }
 }
-

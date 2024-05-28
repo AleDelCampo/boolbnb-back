@@ -7,7 +7,9 @@ use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Service;
+use App\Models\Sponsorship;
 use App\Models\User;
+use Braintree\Gateway;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -88,10 +90,18 @@ class ApartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Apartment $apartment)
+    public function show(Apartment $apartment, Gateway $gateway)
     {
-        return view('apartments.show', compact('apartment'));
+        $success = false;
+
+        $sponsorships = Sponsorship::all();
+
+        $clientToken = $gateway->clientToken()->generate();
+
+
+        return view('apartments.show', compact('success', 'apartment', 'clientToken', 'sponsorships'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
