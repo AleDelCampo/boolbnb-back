@@ -27,8 +27,10 @@ Route::get('/service_filter', [FilterController::class, 'serviceFilter']); // Ro
 // Rotta per prendere dati dal form front-end
 Route::post('/new-contact', [LeadController::class, 'store']);
 
+Route::get('/show-sponsored', [ApartmentController::class, 'showSponsored']); // Rotta per la visualizzazione delle sponsorizzate
+
 Route::get('/visits', [StatisticController::class, 'counter']);
 
-Route::post('/visits/store', [StatisticController::class, 'store']);
+Route::get('/visits/{apartmentId}', [StatisticController::class, 'getVisitsByApartmentId']);
 
-Route::get('/show-sponsored', [ApartmentController::class, 'showSponsored']); // Rotta per la visualizzazione delle sponsorizzate
+Route::post('/visits/store', [StatisticController::class, 'store']);
