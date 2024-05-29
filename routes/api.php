@@ -34,3 +34,5 @@ Route::get('/visits', [StatisticController::class, 'counter']);
 Route::get('/visits/{apartmentId}', [StatisticController::class, 'getVisitsByApartmentId']);
 
 Route::post('/visits/store', [StatisticController::class, 'store']);
+
+Route::get('/messages/{apartmentId}/{year}', [LeadController::class, 'getMessagesByApartmentIdAndYear']);

@@ -4,115 +4,142 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-
     document.addEventListener('DOMContentLoaded', function () {
-        // Funzione per ottenere i dati delle visite per un dato anno
-        function getVisitsData(year) {
-            return axios.get('/api/visits', {
-                params: { year: year }
-            });
-        }
+        // Ottiene l'ID dell'appartamento dal backend Laravel
+        const apartmentId = {{$apartment->id}};
+        let defaultYear = '2022'; // Anno predefinito
+        let selectedYear = defaultYear; // Anno selezionato inizialmente
 
-        // Funzione per ottenere i label in base all'anno
-        function getLabelsForYear(year) {
+        // Funzione per ottenere i dati delle visite per un determinato anno
+        const getVisitsData = (year) => {
+            return axios.get(`/api/visits/${apartmentId}?year=${year}`);
+        };
+
+        // Funzione per ottenere i dati dei messaggi per un determinato anno
+        const getMessagesData = (year) => {
+            return axios.get(`/api/messages/${apartmentId}/${year}`);
+        };
+
+        // Funzione per ottenere le etichette (mesi) per un determinato anno
+        const getLabelsForYear = (year) => {
             return ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-        }
+        };
 
-        // Funzione per ottenere i colori delle barre
-        function getBarColors(length) {
-            let colors = [];
-            for (let i = 0; i < length; i++) {
-                // Genera un colore casuale in formato RGBA
-                let color = 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.2)';
-                colors.push(color);
-            }
-            return colors;
-        }
+        // Funzione per generare un colore casuale in formato RGBA
+        const getRandomColor = () => {
+            return `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.2)`;
+        };
 
-        // Funzione per aggiornare il grafico con i dati delle visite
-        function updateChart(year) {
-            const apartmentId = {{$apartment->id}}; // Ottieni l'ID dell'appartamento dal PHP
-
-            axios.get(`/api/visits/${apartmentId}?year=${year}`)
+        // Funzione per aggiornare il grafico delle visite
+        const updateChart = (year) => {
+            getVisitsData(year)
                 .then(res => {
-                    const visitsData = res.data.result;
-                    const labels = getLabelsForYear(year);
-                    const data = Array(12).fill(0); // Inizializza con 0 visite per ogni mese
+                    const visitsData = res.data.result; // Dati delle visite
+                    const labels = getLabelsForYear(year); // Etichette dei mesi
+                    const data = Array(12).fill(0); // Inizializza i dati a zero
 
-                    // Popola i dati con le visite ricevute
+                    // Assegna i dati delle visite ai mesi corretti
                     visitsData.forEach(visit => {
-                        const monthIndex = visit.month - 1; // Gennaio è 1, Febbraio è 2, etc.
+                        const monthIndex = visit.month - 1; 
                         data[monthIndex] = visit.total_visits;
                     });
 
+                    // Aggiorna il grafico con i nuovi dati
                     myChart.data.labels = labels;
                     myChart.data.datasets[0].data = data;
-
                     myChart.update();
-
                 })
                 .catch(error => {
                     console.error('Errore nel caricamento dei dati delle visite:', error);
                 });
-        }
-        
-        // Imposta l'anno iniziale
-        let defaultYear = '2022';
-        let selectedYear = defaultYear;
-        
-        // Disegna il grafico sulla canvas
-        let myChart = new Chart(
-            document.getElementById('myChart').getContext('2d'),
-            {
-                type: 'bar',
-                data: {
-                    labels: getLabelsForYear(defaultYear),
-                    datasets: [{
-                        label: 'Statistiche Visualizzazioni:',
-                        backgroundColor: getBarColors(12), // Considerando 12 mesi
-                        borderColor: 'rgb(255, 99, 132)',
-                        borderWidth: 1,
-                        hoverBackgroundColor: 'rgba(255, 99, 132, 0.4)',
-                        hoverBorderColor: 'rgb(255, 99, 132)',
-                        data: Array(12).fill(0), // Inizializza con 0 visite per ogni mese
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+        };
+
+        // Funzione per aggiornare il grafico dei messaggi
+        const updateMessageChart = (year) => {
+            getMessagesData(year)
+                .then(res => {
+                    const messageData = res.data.result; // Dati dei messaggi
+                    const labels = getLabelsForYear(year); // Etichette dei mesi
+                    const data = Array(12).fill(0); // Inizializza i dati a zero
+
+                    // Assegna i dati dei messaggi ai mesi corretti
+                    for (const [month, count] of Object.entries(messageData)) {
+                        const monthIndex = parseInt(month) - 1;
+                        data[monthIndex] = count;
+                    }
+
+                    // Aggiorna il grafico con i nuovi dati
+                    myMessageChart.data.labels = labels;
+                    myMessageChart.data.datasets[0].data = data;
+                    myMessageChart.update();
+                })
+                .catch(error => {
+                    console.error('Errore nel caricamento dei dati dei messaggi:', error);
+                });
+        };
+
+        // Funzione per configurare un nuovo grafico
+        const setupChart = (canvasId, label, backgroundColor) => {
+            return new Chart(
+                document.getElementById(canvasId).getContext('2d'),
+                {
+                    type: 'bar',
+                    data: {
+                        labels: getLabelsForYear(defaultYear), // Etichette dei mesi
+                        datasets: [{
+                            label: label,
+                            backgroundColor: backgroundColor,
+                            borderColor: 'rgb(255, 99, 132)',
+                            borderWidth: 1,
+                            hoverBackgroundColor: 'rgba(255, 99, 132, 0.4)',
+                            hoverBorderColor: 'rgb(255, 99, 132)',
+                            data: Array(12).fill(0), // Dati iniziali a zero
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true // La scala Y parte da zero
+                            }
                         }
                     }
                 }
-            }
-        );
-        
-        // Aggiorna il grafico quando cambia l'anno selezionato
-        function handleYearChange() {
-            updateChart(selectedYear);
-            document.getElementById('yearLabel').textContent = selectedYear;
-        }
-        
-        // Listener per il click sulle frecce di switch anno
-        document.getElementById('prevYear').addEventListener('click', function () {
-            if (selectedYear === '2024') selectedYear = '2023';
-            else if (selectedYear === '2023') selectedYear = '2022';
-            handleYearChange();
-        });
-        
-        document.getElementById('nextYear').addEventListener('click', function () {
-            if (selectedYear === '2022') selectedYear = '2023';
-            else if (selectedYear === '2023') selectedYear = '2024';
-            handleYearChange();
-        });
-        
-        // Imposta l'anno iniziale nel label e carica i dati del grafico
-        document.getElementById('yearLabel').textContent = defaultYear;
-        updateChart(defaultYear);
+            );
+        };
 
-        
-        var form = document.getElementById('payment-form');
-        var client_token = "{{ $clientToken }}";    
+        // Crea i grafici delle visite e dei messaggi
+        let myChart = setupChart('myChart', 'Statistiche Visualizzazioni', Array(12).fill('').map(() => getRandomColor()));
+        let myMessageChart = setupChart('messageChart', 'Statistiche Messaggi', Array(12).fill('').map(() => getRandomColor()));
+
+        // Funzione per gestire il cambio di anno e aggiornare i grafici
+        const handleYearChange = () => {
+            updateChart(selectedYear);
+            updateMessageChart(selectedYear);
+            document.getElementById('yearLabel').textContent = selectedYear; // Aggiorna l'etichetta dell'anno
+        };
+
+        // Gestisce il clic sul pulsante per l'anno precedente
+        document.getElementById('prevYear').addEventListener('click', () => {
+            selectedYear = selectedYear === '2024' ? '2023' : '2022'; // Cambia l'anno selezionato
+            handleYearChange(); // Aggiorna i grafici
+        });
+
+        // Gestisce il clic sul pulsante per l'anno successivo
+        document.getElementById('nextYear').addEventListener('click', () => {
+            selectedYear = selectedYear === '2022' ? '2023' : '2024'; // Cambia l'anno selezionato
+            handleYearChange(); // Aggiorna i grafici
+        });
+
+        // Imposta l'etichetta dell'anno inizialmente
+        document.getElementById('yearLabel').textContent = defaultYear;
+        // Aggiorna i grafici con i dati dell'anno predefinito
+        updateChart(defaultYear);
+        updateMessageChart(defaultYear);
+
+
+        // Codice relativo ai pagamenti
+        let form = document.getElementById('payment-form');
+        let client_token = "{{ $clientToken }}"; // Token per Braintree    
     
         braintree.dropin.create({
             authorization: client_token,
@@ -132,32 +159,24 @@
                         return;
                     }
     
-                    var nonceInput = document.createElement('input');
+                    let nonceInput = document.createElement('input');
                     nonceInput.name = 'payment_method_nonce';
                     nonceInput.type = 'hidden';
-                    nonceInput.value = payload.nonce;
+                    nonceInput.value = payload.nonce; // Aggiunge il nonce al form
                     form.appendChild(nonceInput);
     
-                    form.submit();
+                    form.submit(); // Invia il form
                 });
             });
         });  
 
-        let btn_sponsor = document.getElementById('cta-sponsor')
-                
-        btn_sponsor.addEventListener('click', function(){
-            document.getElementById('box-payment').classList.toggle('d-none')
-        })
-
-        
+        // Gestisce il clic sul pulsante per mostrare/nascondere il box dei pagamenti
+        let btn_sponsor = document.getElementById('cta-sponsor');
+        btn_sponsor.addEventListener('click', function() {
+            document.getElementById('box-payment').classList.toggle('d-none'); // Mostra/nasconde il box
+        });
 
     });
-    
-    
-</script>
-
-<script>
-    
 
 </script>
 
@@ -166,10 +185,10 @@
     <div class="card mt-4">
         <div class="d-flex flex-wrap">
             <div class="card-body col-12">
-                
+
                 <h2 class="ms-4 card-title">
                     <strong>{{$apartment->title}}</strong>
-                
+
                 </h2>
                 {{-- room position --}}
                 <div class="ms-4 position pb-3">
@@ -178,25 +197,24 @@
 
                 {{-- link apartment image --}}
                 <img src="{{asset('storage/' . $apartment->image)}}" class="card-img-top"
-                    alt="immagine dell'appartamento" style="max-width: 100%; max-height: 400px; object-fit: cover"
-                >
+                    alt="immagine dell'appartamento" style="max-width: 100%; max-height: 400px; object-fit: cover">
 
             </div>
 
             <div class="card-body col-12 ">
-                
+
                 @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif 
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+                @endif
 
 
                 <div class="row">
 
                     <div class="col-xs-12 col-md-6">
-                        
-        
+
+
                         {{-- room infos --}}
                         <div class="d-flex gap-3 mb-3 justify-content-center ">
                             <small>
@@ -217,17 +235,17 @@
                                 </span>
                             </small>
                         </div>
-        
-        
+
+
                         <hr>
-        
+
                         {{-- room description --}}
                         <p>
                             {{$apartment->description}}
                         </p>
-        
+
                         <hr>
-        
+
                         {{-- room services --}}
                         <strong class="mb-3">
                             Servizi
@@ -237,14 +255,14 @@
                             <li>
                                 <div>
                                     {{$service->name}}
-        
+
                                 </div>
                                 <div>
                                     <i :class="{{$service->icon}}"></i>
                                 </div>
                             </li>
                             @endforeach
-                        </ul>   
+                        </ul>
 
                     </div>
 
@@ -257,48 +275,48 @@
                                 @csrf
                                 <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
                                 {{-- <input type="hidden" name="sponsorship_id" value="{{ $sponsorship->id }}"> --}}
-                                <select id="sponsorship_id" class="form-select"  name="sponsorship_id">
+                                <select id="sponsorship_id" class="form-select" name="sponsorship_id">
                                     <option>Seleziona sponsorizzazione</option>
                                     @foreach ($sponsorships as $sponsorship)
                                     <option class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
-                    
+
                                     @endforeach
-                                    
+
                                 </select>
                                 {{-- <div class="form-group ">
                                     <label for="price" class="fw-bold">Prezzo da pagare:</label>
                                     <span id="price" class="fw-bold fst-italic"> €</span>
                                 </div>
                                 <div class="form-group ">
-                        
+
                                     <label for="time" class="fw-bold">Durata:</label>
                                     <span id="time" class="fw-bold fst-italic">{{ $h_duration }}h</span>
-                        
-                                </div> --}}        
-                                
-                                
-                                
+
+                                </div> --}}
+
+
+
                                 <div id="dropin-container"></div>
-                                <button type="submit" class="btn btn-primary">Acquista</button>            
-                                
-                                
+                                <button type="submit" class="btn btn-primary">Acquista</button>
+
+
                             </form>
 
                         </div>
 
                     </div>
 
-                </div>               
+                </div>
 
             </div>
 
         </div>
 
-        
+
 
         <div class="card-footer d-flex justify-content-center p-3 gap-1">
 
-            
+
             {{-- link to room edit page --}}
             <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-outline-warning">Modifica</a>
 
@@ -344,6 +362,7 @@
             <span id="nextYear" class="year-nav">&gt;</span>
         </div>
         <canvas id="myChart" width="400" height="200" class="w-100"></canvas>
+        <canvas id="messageChart" width="400" height="200" class="w-100"></canvas>
     </div>
 </div>
 
