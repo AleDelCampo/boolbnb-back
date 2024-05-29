@@ -94,19 +94,5 @@
 }
 
 
-@media (max-width: 500px) {
-    /* Stili per schermi fino a circa 500px */
-    #lateral-nav {
-        padding: 0.5rem; /* Esempio di regolazione del padding */
-    }
-    
-    #img-user img {
-        max-width: 60px; /* Esempio di regolazione della larghezza massima dell'immagine utente */
-    }
 
-    #nav-list .btn {
-        font-size: 0.75rem; /* Esempio di regolazione della dimensione del font per i pulsanti di navigazione */
-    }
 
-    /* Aggiungi altri stili qui in base alle tue esigenze */
-}
