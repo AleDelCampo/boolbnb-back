@@ -165,77 +165,26 @@
 
     <div class="card mt-4">
         <div class="d-flex flex-wrap">
-            <div class="card-body col-12 col-md-6">
+            <div class="card-body col-12">
+                
+                <h2 class="ms-4 card-title">
+                    <strong>{{$apartment->title}}</strong>
+                
+                </h2>
+                {{-- room position --}}
+                <div class="ms-4 position pb-3">
+                    {{$apartment->address}}
+                </div>
+
                 {{-- link apartment image --}}
                 <img src="{{asset('storage/' . $apartment->image)}}" class="card-img-top"
-                    alt="immagine dell'appartamento" style="max-width: 100%">
+                    alt="immagine dell'appartamento" style="max-width: 100%; max-height: 400px; object-fit: cover"
+                >
+
             </div>
 
-            <div class="card-body col-12 col-md-6">
-                <div class="mb-3">
-                    <h2 class="card-title"><strong>{{$apartment->title}}</strong></h2>
-
-                        {{-- room position --}}
-                    <div class="position">
-                        {{$apartment->address}}
-                    </div>
-
-                    
-                    
-
-                </div>
-
-                {{-- room infos --}}
-                <div class="d-flex gap-3 mb-3 ">
-                    <small>
-                        <span class="m2">
-                            {{$apartment->squared_meters}}m²
-                        </span>
-                        -
-                        <span class="rooms">
-                            {{$apartment->n_rooms}} camera da letto
-                        </span>
-                        -
-                        <span class="beds">
-                            {{$apartment->n_beds}} posti letto
-                        </span>
-                        -
-                        <span class="bathrooms">
-                            {{$apartment->n_bathrooms}} bagni
-                        </span>
-                    </small>
-                </div>
-
-
-                <hr>
-
-                {{-- room description --}}
-                <p>
-                    {{$apartment->description}}
-                </p>
-
-                <hr>
-
-                {{-- room services --}}
-                <strong class="mb-3">
-                    Servizi
-                </strong>
-                <ul id="services-list" class="d-flex gap-5 flex-wrap p-3">
-                    @foreach($apartment->services as $service)
-                    <li>
-                        <div>
-                            {{$service->name}}
-
-                        </div>
-                        <div>
-                            <i :class="{{$service->icon}}"></i>
-                        </div>
-                    </li>
-                    @endforeach
-                </ul>
+            <div class="card-body col-12 ">
                 
-                <hr>               
-
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -243,53 +192,113 @@
                 @endif 
 
 
-                
-                
-                <button id="cta-sponsor" class="btn btn-success">Attiva sponsorizzazione</button>
-                <div id="box-payment" class="d-none">
-                    <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
-                        {{-- <input type="hidden" name="sponsorship_id" value="{{ $sponsorship->id }}"> --}}
-                        <select id="sponsorship_id" class="form-select"  name="sponsorship_id">
-                            <option>Seleziona sponsorizzazione</option>
-                            @foreach ($sponsorships as $sponsorship)
-                            <option class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
-            
-                            @endforeach
-                            
-                        </select>
-                        {{-- <div class="form-group ">
-                            <label for="price" class="fw-bold">Prezzo da pagare:</label>
-                            <span id="price" class="fw-bold fst-italic"> €</span>
+                <div class="row">
+
+                    <div class="col-xs-12 col-md-6">
+                        
+        
+                        {{-- room infos --}}
+                        <div class="d-flex gap-3 mb-3 justify-content-center ">
+                            <small>
+                                <span class="m2">
+                                    {{$apartment->squared_meters}}m²
+                                </span>
+                                -
+                                <span class="rooms">
+                                    {{$apartment->n_rooms}} camera da letto
+                                </span>
+                                -
+                                <span class="beds">
+                                    {{$apartment->n_beds}} posti letto
+                                </span>
+                                -
+                                <span class="bathrooms">
+                                    {{$apartment->n_bathrooms}} bagni
+                                </span>
+                            </small>
                         </div>
-                        <div class="form-group ">
-                
-                            <label for="time" class="fw-bold">Durata:</label>
-                            <span id="time" class="fw-bold fst-italic">{{ $h_duration }}h</span>
-                
-                        </div> --}}        
-                        
-                        
-                        
-                        
-                        
-                        <div id="dropin-container"></div>
-                        <button type="submit" class="btn btn-primary">Acquista</button>            
-                        
-                        
-                    </form>
+        
+        
+                        <hr>
+        
+                        {{-- room description --}}
+                        <p>
+                            {{$apartment->description}}
+                        </p>
+        
+                        <hr>
+        
+                        {{-- room services --}}
+                        <strong class="mb-3">
+                            Servizi
+                        </strong>
+                        <ul id="services-list" class="d-flex gap-5 flex-wrap p-3">
+                            @foreach($apartment->services as $service)
+                            <li>
+                                <div>
+                                    {{$service->name}}
+        
+                                </div>
+                                <div>
+                                    <i :class="{{$service->icon}}"></i>
+                                </div>
+                            </li>
+                            @endforeach
+                        </ul>   
 
+                    </div>
 
-                </div>
-                
+                    <div class="col-xs-12 col-md-6  px-5">
+
+                        <button id="cta-sponsor" class="btn btn-success mb-4">Attiva sponsorizzazione</button>
+
+                        <div id="box-payment" class="d-none">
+                            <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
+                                {{-- <input type="hidden" name="sponsorship_id" value="{{ $sponsorship->id }}"> --}}
+                                <select id="sponsorship_id" class="form-select"  name="sponsorship_id">
+                                    <option>Seleziona sponsorizzazione</option>
+                                    @foreach ($sponsorships as $sponsorship)
+                                    <option class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
+                    
+                                    @endforeach
+                                    
+                                </select>
+                                {{-- <div class="form-group ">
+                                    <label for="price" class="fw-bold">Prezzo da pagare:</label>
+                                    <span id="price" class="fw-bold fst-italic"> €</span>
+                                </div>
+                                <div class="form-group ">
+                        
+                                    <label for="time" class="fw-bold">Durata:</label>
+                                    <span id="time" class="fw-bold fst-italic">{{ $h_duration }}h</span>
+                        
+                                </div> --}}        
+                                
+                                
+                                
+                                <div id="dropin-container"></div>
+                                <button type="submit" class="btn btn-primary">Acquista</button>            
+                                
+                                
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>               
 
             </div>
+
         </div>
 
         
 
-        <div class="card-footer d-flex justify-content-center p-3 gap-3">
+        <div class="card-footer d-flex justify-content-center p-3 gap-1">
+
+            
             {{-- link to room edit page --}}
             <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-outline-warning">Modifica</a>
 
