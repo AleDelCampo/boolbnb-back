@@ -176,9 +176,31 @@
             document.getElementById('box-payment').classList.toggle('d-none'); // Mostra/nasconde il box
         });
 
+      
+        
+        
+        
+
     });
 
+    function change(value){
+
+    console.log(value)
+
+    const divs = document.querySelectorAll('.text-hide');
+
+    divs.forEach(div => {
+        div.classList.add('d-none');
+    });
+
+
+    document.querySelector('#box-description #text-description-' + value).classList.remove('d-none')
+    }
+    
+    
 </script>
+
+
 
 <div class="container pb-4">
 
@@ -189,6 +211,7 @@
                 <h2 class="ms-4 card-title">
                     <strong>{{$apartment->title}}</strong>
 
+                
                 </h2>
                 {{-- room position --}}
                 <div class="ms-4 position pb-3">
@@ -266,6 +289,15 @@
 
                     </div>
 
+                    <div id="box-description">
+
+                        <div id="text-description-1" class="text-hide d-none">{{$sponsorships[0]->description}}</div>
+                        <div id="text-description-2" class="text-hide d-none">{{$sponsorships[1]->description}}</div>
+                        <div id="text-description-3" class="text-hide d-none">{{$sponsorships[2]->description}}</div>
+                        
+
+                    </div>
+
                     <div class="col-xs-12 col-md-6  px-5">
 
                         <button id="cta-sponsor" class="btn btn-success mb-4">Attiva sponsorizzazione</button>
@@ -274,28 +306,16 @@
                             <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
-                                {{-- <input type="hidden" name="sponsorship_id" value="{{ $sponsorship->id }}"> --}}
-                                <select id="sponsorship_id" class="form-select" name="sponsorship_id">
+                                <select id="sponsorship_id" class="form-select"  name="sponsorship_id" onclick="change(value)">
                                     <option>Seleziona sponsorizzazione</option>
                                     @foreach ($sponsorships as $sponsorship)
-                                    <option class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
-
+                                    <option  class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
+                    
                                     @endforeach
 
                                 </select>
-                                {{-- <div class="form-group ">
-                                    <label for="price" class="fw-bold">Prezzo da pagare:</label>
-                                    <span id="price" class="fw-bold fst-italic"> €</span>
-                                </div>
-                                <div class="form-group ">
 
-                                    <label for="time" class="fw-bold">Durata:</label>
-                                    <span id="time" class="fw-bold fst-italic">{{ $h_duration }}h</span>
-
-                                </div> --}}
-
-
-
+                                
                                 <div id="dropin-container"></div>
                                 <button type="submit" class="btn btn-primary">Acquista</button>
 
@@ -366,6 +386,12 @@
     </div>
 </div>
 
+<script>
+
+
+
+</script>
+
 <style>
     body {
         background-color: #5F8B8D;
@@ -380,5 +406,6 @@
         border-radius: 50%;
     }
 </style>
+
 
 @endsection
