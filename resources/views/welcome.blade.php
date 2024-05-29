@@ -6,7 +6,7 @@
 
         <div class="row justify-content-end mt-5" id="card-wrapper">
 
-            <div class="row justify-content-end col-lg-8 col-md-10 col-10 py-5" id="logo-wrapper">
+            <div class="row justify-content-end col-lg-8 col-md-10 col-10" id="logo-wrapper">
                 <div class="col-12 g-0 mb-3" id="img-wrapper">
                     <img class="img-fluid" id="logo-welcome-home" src="{{asset('storage/bnb_images/BoolBnB.png')}}" alt="">
                 </div>
