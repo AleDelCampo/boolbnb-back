@@ -12,15 +12,6 @@
     border-radius: 15px;
 }
 
-#bg-homepage{
-    position: absolute;
-    z-index: -1;
-
-    width: 100vw;
-    
-    object-fit: cover;
-}
-
 
 @media screen and (max-width:991px){
     #card-wrapper{

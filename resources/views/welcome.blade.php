@@ -1,8 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<body  class="bg-home position-relative">
-
-    <img src="{{asset('storage/bnb_images/Prova-sfondo-2.png')}}" alt="sfodo" id="bg-homepage">
+<body  class="bg-home">
 
     <div class="container d-flex align-items-center ">
 
