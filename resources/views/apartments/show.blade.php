@@ -7,7 +7,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Ottiene l'ID dell'appartamento dal backend Laravel
         const apartmentId = {{$apartment->id}};
-        let defaultYear = '2022'; // Anno predefinito
+        let defaultYear = '2024'; // Anno predefinito
         let selectedYear = defaultYear; // Anno selezionato inizialmente
 
         // Funzione per ottenere i dati delle visite per un determinato anno
