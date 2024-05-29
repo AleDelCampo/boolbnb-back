@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified'])
 
 
         // Definisci le rotte per le sponsorizzazioni
+        Route::get('/sponsorships', [SponsorshipController::class, 'index'])->name('sponsor.index');
         Route::get('sponsorship/create/{apartment:slug}', [SponsorshipController::class, 'create'])->name('sponsor.create');
         Route::post('sponsorship/store/{apartment:slug}', [SponsorshipController::class, 'store'])->name('sponsor.store');
         Route::get('sponsorship/show/{apartment:slug}', [SponsorshipController::class, 'show'])->name('sponsor.show');

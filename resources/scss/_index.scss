@@ -48,3 +48,65 @@
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Media Queries
+
+@media (max-width: 767.98px) {
+    #lateral-nav {
+        padding: 1rem;
+    }
+    
+    #img-user img {
+        max-width: 80px;
+    }
+
+    #nav-list .btn {
+        font-size: 0.875rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    #lateral-nav {
+        padding: 0.2rem;
+    }
+
+    #img-user img {
+        max-width: 100px;
+    }
+
+    #nav-list .btn {
+        font-size: 1rem;
+    }
+}
+
+
+@media (max-width: 500px) {
+    /* Stili per schermi fino a circa 500px */
+    #lateral-nav {
+        padding: 0.5rem; /* Esempio di regolazione del padding */
+    }
+    
+    #img-user img {
+        max-width: 60px; /* Esempio di regolazione della larghezza massima dell'immagine utente */
+    }
+
+    #nav-list .btn {
+        font-size: 0.75rem; /* Esempio di regolazione della dimensione del font per i pulsanti di navigazione */
+    }
+
+    /* Aggiungi altri stili qui in base alle tue esigenze */
+}
