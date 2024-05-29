@@ -4,7 +4,7 @@
 
 <section>
     <div class="row m-0">
-        <div class="col-lg-2 col-md-3 col-12">
+        <div class="d-none d-md-block col-lg-2 col-md-3 col-12">
             <div id="lateral-nav" class="row p-5">
                 <div class="col-12">
                     <div class="row align-items-center mb-3">
@@ -31,30 +31,37 @@
         </div>
 
         <div class="col-lg-10 col-md-9 col-12 flex-grow-1">
+            <h2 class="fs-4 text-secondary ms-4 pt-4 pb-2 text-center text-md-start">Appartamenti</h2>
             <div class="container">
-                <h2 class="fs-4 text-secondary py-4 text-center text-md-start">Appartamenti</h2>
-                <div class="row justify-content-center py-5">
-                    <a class="btn my_bg_color fw-bold col-6" href="{{route('admin.apartments.create')}}">Aggiungi un nuovo appartamento</a>
-                    <a class="btn my_bg_color fw-bold col-6" href="{{ route('admin.sponsor.index') }}">Vedi Appartamenti Sponsorizzati</a>
+                <div class="row justify-content-center py-2 row-gap-2 p-1">
+                    <div class="col-12 col-lg-6">
+                    <a class="btn my_bg_color fw-bold col-12" href="{{route('admin.apartments.create')}}">Aggiungi un nuovo appartamento</a>
+
+                    </div>
+                    <div class="col-12 col-lg-6">
+                    <a class="btn my_bg_color fw-bold col-12" href="{{ route('admin.sponsor.index') }}">Vedi Appartamenti Sponsorizzati</a>
+
+                    </div>
                 </div>
                 </div>
-                <div class="row p-0">
+                <div class="row p-1">
                     @forelse ($apartments as $apartment)
                     <div class="col-lg-6 col-md-12">
-                        <div id="tile" class="row p-3 my-3">
-                            <div id="img-container" class="col-4 rounded-2">
-                                <img src="{{asset('storage/' . $apartment->image)}}" alt="" class="img-fluid">
+
+                        {{-- tile --}}
+                        <div id="tile" class="row py-3 px-1">
+                            <div id="img-container" class="col-6 col-sm-4 col-lg-4  rounded-2">
+                                <img src="{{asset('storage/' . $apartment->image)}}" class="img-fluid">
                             </div>
-                            <div class="col-8">
+                            <div class="col-6 col-sm-8 col-lg-8 text-center text-sm-start">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="fw-bold pt-1 pb-2">{{$apartment->title}}</div>
-                                        <div>{{$apartment->address}}</div>
+                                        <div class="fw-bold pt-1 pb-2 pb-sm-1">{{$apartment->title}}</div>
+                                        <div class="address d-none d-sm-block pb-sm-1">{{$apartment->address}}</div>
                                     </div>
-                                    <div class="col-12 d-flex justify-content-end align-items-center">
+                                    <div class="col-12 d-flex justify-content-center justify-content-sm-end">
                                         <div>
                                             <a class="btn my_btn" href="{{route('admin.apartments.show', $apartment)}}">Visualizza</a>
-                                            <a class="btn my_btn" href="{{ route('admin.sponsor.create', $apartment->slug) }}">Sponsorizza</a>
                                         </div>
                                     </div>
                                 </div>
