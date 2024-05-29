@@ -4,17 +4,17 @@
 
 <section>
     <div class="row m-0">
-        <div class="d-none d-md-block col-lg-2 col-md-3 col-12">
-            <div id="lateral-nav" class="row p-5">
+        <div class="d-none d-md-block col-md-3 col-lg-2">
+            <div id="lateral-nav" class="row p-2">
                 <div class="col-12">
                     <div class="row align-items-center mb-3">
                         <div class="col-4 col-md-12">
-                            <div id="img-user" class="text-center text-md-start">
+                            <div id="img-user" class="p-3">
                                 <img src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="" class="img-fluid rounded-circle">
                             </div>
                         </div>
-                        <div class="col-8 col-md-12 fw-bold text-center text-md-start">
-                            <h3>{{ Auth::user()->name }}</h3>
+                        <div class="col-8 col-md-12 fw-bold text-center pt-4">
+                            <h3>Benvenuto {{ Auth::user()->name }}</h3>
                         </div>
                     </div>
                     <div id="nav-list" class="row mt-5">
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div class="col-lg-10 col-md-9 col-12 flex-grow-1">
+        <div class="col-12 col-lg-10 col-md-9  flex-grow-1">
             <h2 class="fs-4 text-secondary ms-4 pt-4 pb-2 text-center text-md-start">Appartamenti</h2>
             <div class="container">
                 <div class="row justify-content-center py-2 row-gap-2 p-1">
@@ -39,7 +39,7 @@
 
                     </div>
                     <div class="col-12 col-lg-6">
-                    <a class="btn my_bg_color fw-bold col-12" href="{{ route('admin.sponsor.index') }}">Vedi Appartamenti Sponsorizzati</a>
+                    <a class="btn my_bg_color fw-bold col-12" href="{{ route('admin.sponsor.index') }}">Vedi i tuoi appartamenti sponsorizzati</a>
 
                     </div>
                 </div>

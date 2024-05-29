@@ -51,20 +51,13 @@ Route::middleware(['auth', 'verified'])
         Route::get('sponsorship/create/{apartment:slug}', [SponsorshipController::class, 'create'])->name('sponsor.create');
         Route::post('sponsorship/store/{apartment:slug}', [SponsorshipController::class, 'store'])->name('sponsor.store');
         Route::get('sponsorship/show/{apartment:slug}', [SponsorshipController::class, 'show'])->name('sponsor.show');
-
     });
-    Route::get('/remove-expired-sponsorships', [SponsorshipController::class, 'removeExpiredSponsorships']);
+Route::get('/remove-expired-sponsorships', [SponsorshipController::class, 'removeExpiredSponsorships']);
 
 
-        Route::middleware(['auth', 'verified'])->group(function () {
-            Route::get('payment/form', [PaymentController::class, 'show'])->name('payment.form');
-            Route::post('payment/process', [PaymentController::class, 'process'])->name('payment.process');
-            Route::get('payment/success', [PaymentController::class, 'success'])->name('payment.success');
-            Route::get('/payment/show', [PaymentController::class, 'show'])->name('payment.show');
-
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('payment/form', [PaymentController::class, 'show'])->name('payment.form');
+    Route::post('payment/process', [PaymentController::class, 'process'])->name('payment.process');
+    Route::get('payment/success', [PaymentController::class, 'success'])->name('payment.success');
+    Route::get('/payment/show', [PaymentController::class, 'show'])->name('payment.show');
 });
-
-
-
-
-// Route::get('/leads/{id}', [LeadController::class, 'index'])->middleware(['auth', 'verified'])->name('leads.index');
