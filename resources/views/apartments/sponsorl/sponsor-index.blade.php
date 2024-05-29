@@ -1,75 +1,82 @@
-@extends('layouts.app')
+@extends('layouts.app') 
 
-@section('content')
-<div class="container mt-5">
-    <h1>I miei appartamenti sponsorizzati</h1>
-    @if ($apartments->isEmpty())
-        <p>Non hai appartamenti sponsorizzati al momento.</p>
-    @else
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Immagine</th>
-                    <th>Titolo Appartamento</th>
-                    <th>Indirizzo</th>
-                    <th>Sponsorizzazione</th>
-                    <th>Data Inizio</th>
-                    <th>Data Fine</th>
-                    <th>Durata</th>
-                    <th>Durata Rimanente</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($apartments as $apartment)
-                    @foreach($apartment->sponsorships as $sponsorship)
-                        <tr>
-                            <td><img src="{{ asset('storage/' . $apartment->image) }}" alt="Immagine" style="max-width: 100px;"></td>
-                            <td>{{ $apartment->title }}</td>
-                            <td>{{ $apartment->address }}</td>
-                            <td>{{ $sponsorship->title }}</td>
-                            <td>{{ $sponsorship->pivot->start_sponsorship }}</td>
-                            <td>{{ $sponsorship->pivot->end_sponsorship }}</td>
-                            <td>{{ $sponsorship->h_duration }} ore</td>
-                            <td>
-                                <span id="timer-{{ $sponsorship->id }}"></span>
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        function startTimer(duration, display) {
-                                            var timer = duration, hours, minutes, seconds;
-                                            setInterval(function () {
-                                                hours = parseInt(timer / 3600, 10);
-                                                minutes = parseInt((timer % 3600) / 60, 10);
-                                                seconds = parseInt(timer % 60, 10);
+@section('content') 
 
-                                                hours = hours < 10 ? "0" + hours : hours;
-                                                minutes = minutes < 10 ? "0" + minutes : minutes;
-                                                seconds = seconds < 10 ? "0" + seconds : seconds;
+<div class="container mt-5 py-4"> 
+    <h1 class="text-center mb-4 pb-5">I miei appartamenti sponsorizzati</h1> 
+    <div class="card-deck"> 
+        
+        @if ($apartments->isEmpty()) 
+            <div class="alert alert-warning text-center" role="alert"> 
+                Non hai appartamenti sponsorizzati al momento.
+            </div>
+        @else
+            @foreach($apartments as $apartment)
+                @foreach($apartment->sponsorships as $sponsorship) 
+                    <div class="card mb-4 shadow-lg position-relative sponsorship-card"> 
+                        <a href="{{ route('admin.apartments.show', $apartment) }}" > 
 
-                                                display.textContent = hours + ":" + minutes + ":" + seconds;
-                                                if (--timer < 0) {
-                                                    timer = 0;
-                                                }
-                                            }, 1000);
-                                        }
-
-                                        var now = new Date().getTime();
-                                        var end = new Date('{{ \Carbon\Carbon::parse($sponsorship->pivot->end_sponsorship) }}').getTime();
-                                        var duration = Math.floor((end - now) / 1000);
-                                        var display = document.querySelector('#timer-{{ $sponsorship->id }}');
-                                        if (duration > 0) {
-                                            startTimer(duration, display);
-                                        } else {
-                                            display.textContent = '00:00:00';
-                                        }
-                                    });
-                                </script>
-                            </td>
-                        </tr>
-                    @endforeach
+                            <img class="card-img-top" src="{{ asset('storage/' . $apartment->image) }}" alt="" style="object-fit: cover; height: 200px; width: 100%;">
+                            <div class="overlay-sponsorship px-3 py-1">
+                                <div class="row">
+                                    
+                                    <div class="col-6">
+                                        <div class="content py-2">
+                                            <h5 class="apartment-title">{{ $apartment->title }}</h5> 
+                                            <p>{{ $apartment->address }}</p> 
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-6 text-end fw-bold">
+                                        <div class="content py-2 sponsorship-details  ">
+                                            <p>{{ $sponsorship->title }} <span>{{ intval($sponsorship->h_duration) }}h</span></p> 
+                                            <p>{{ \Carbon\Carbon::parse($sponsorship->pivot->end_sponsorship)->format('d/m/Y') }}</p> 
+                                            <span class="timer-box p-1 border-2 rounded " id="timer-{{ $apartment->id }}-{{ $sponsorship->id }}"></span> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            function startTimer(duration, display) {
+                                var timer = duration, hours, minutes, seconds;
+                                setInterval(function () {
+                                    hours = parseInt(timer / 3600, 10);
+                                    minutes = parseInt((timer % 3600) / 60, 10);
+                                    seconds = parseInt(timer % 60, 10);
+    
+                                    // Formato per visualizzare ore:minuti
+                                    hours = hours < 10 ? "0" + hours : hours;
+                                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                                    seconds = seconds < 10 ? "0" + seconds : seconds;
+    
+                                    display.textContent = hours + ":" + minutes + ":" + seconds;
+    
+                                    if (--timer < 0) {
+                                        timer = 0;
+                                    }
+                                }, 1000);
+                            }
+    
+                            var now = new Date().getTime();
+                            var end = new Date('{{ \Carbon\Carbon::parse($sponsorship->pivot->end_sponsorship) }}').getTime();
+                            var duration = Math.floor((end - now) / 1000);
+                            var display = document.querySelector('#timer-{{ $apartment->id }}-{{ $sponsorship->id }}');
+                            if (duration > 0) {
+                                startTimer(duration, display);
+                            } else {
+                                display.textContent = '00:00:00';
+                            }
+                        });
+                    </script>
                 @endforeach
-            </tbody>
-        </table>
-    @endif
+            @endforeach
+        @endif
+    </div>
 </div>
+
 @endsection
 
