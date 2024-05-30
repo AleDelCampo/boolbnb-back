@@ -21,3 +21,14 @@
         }
     }
 }
+
+.welcome{
+
+    background-image: url('../.././storage/app/public/bnb_images/1.png');
+    background-position: center;
+    background-size:cover;
+    border: 1px solid #0067693c;
+    color: white;
+    -webkit-text-stroke-width: 0.3px; /* Spessore del contorno del testo */
+    -webkit-text-stroke-color: white; /* Colore del contorno del testo */
+}

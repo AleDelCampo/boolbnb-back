@@ -22,16 +22,16 @@
                                     
                                     <div class="col-6">
                                         <div class="content py-2">
-                                            <h5 class="apartment-title">{{ $apartment->title }}</h5> 
-                                            <p>{{ $apartment->address }}</p> 
+                                            <h5 class="apartment-title text-sponsorship">{{ $apartment->title }}</h5> 
+                                            <p class="text-sponsorship">{{ $apartment->address }}</p> 
                                         </div>
                                     </div>
                                     
                                     <div class="col-6 text-end fw-bold">
                                         <div class="content py-2 sponsorship-details  ">
-                                            <p>{{ $sponsorship->title }} <span>{{ intval($sponsorship->h_duration) }}h</span></p> 
-                                            <p>{{ \Carbon\Carbon::parse($sponsorship->pivot->end_sponsorship)->format('d/m/Y') }}</p> 
-                                            <span class="timer-box p-1 border-2 rounded " id="timer-{{ $apartment->id }}-{{ $sponsorship->id }}"></span> 
+                                            <p class="text-sponsorship">{{ $sponsorship->title }} <span>{{ intval($sponsorship->h_duration) }}h</span></p> 
+                                            <p class="text-sponsorship">{{ \Carbon\Carbon::parse($sponsorship->pivot->end_sponsorship)->format('d/m/Y') }}</p> 
+                                            <span class="timer-box p-1 border-2 rounded  text-sponsorship" id="timer-{{ $apartment->id }}-{{ $sponsorship->id }}"></span> 
                                         </div>
                                     </div>
                                 </div>
