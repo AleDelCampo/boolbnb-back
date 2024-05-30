@@ -36,16 +36,16 @@ class FilterController extends Controller
     ) AS distance", [$latitude, $longitude, $latitude])
         ->join('apartment_sponsorship','id','=','apartment_sponsorship.apartment_id','left outer')
         ->when($rooms, function ($query, $rooms) {
-            $query->where('n_rooms', $rooms);
+            $query->where('n_rooms','>=', $rooms);
         })
         ->when($beds, function ($query, $beds) {
-            $query->where('n_beds', $beds);
+            $query->where('n_beds','>=', $beds);
         })
         ->when($bathrooms, function ($query, $bathrooms) {
-            $query->where('n_bathrooms', $bathrooms);
+            $query->where('n_bathrooms','>=', $bathrooms);
         })
         ->when($sqMeters, function ($query, $sqMeters) {
-            $query->where('squared_meters', $sqMeters);
+            $query->where('squared_meters','>=', $sqMeters);
         })
         ->when($services, function ($query, $services) {
             // Condizioni per garantire che tutti i servizi selezionati siano presenti
