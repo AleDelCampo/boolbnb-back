@@ -202,29 +202,29 @@
 
 
 
-<div class="container pb-4">
+<div class="container p-2">
 
-    <div class="card mt-4">
-        <div class="d-flex flex-wrap">
-            <div class="card-body col-12">
+    <div class=" apart-container p-3">
+        <div class="row">
+            <div class="col-12">
 
-                <h2 class="ms-4 card-title">
-                    <strong>{{$apartment->title}}</strong>
-
-                
+                {{-- title --}}
+                <h2 class="card-title pb-1">
+                    <strong>{{$apartment->title}}</strong>                
                 </h2>
                 {{-- room position --}}
-                <div class="ms-4 position pb-3">
+                <div class="position pb-3">
                     {{$apartment->address}}
                 </div>
 
-                {{-- link apartment image --}}
-                <img src="{{asset('storage/' . $apartment->image)}}" class="card-img-top"
-                    alt="immagine dell'appartamento" style="max-width: 100%; max-height: 400px; object-fit: cover">
+                {{-- image --}}
+                <img src="{{asset('storage/' . $apartment->image)}}" class="card-img-top rounded-2"
+                    alt="immagine dell'appartamento" style="max-width: 100%; max-height: 300px; object-fit: cover"
+                >
 
             </div>
 
-            <div class="card-body col-12 ">
+            <div class="col-12 ">
 
                 @if (session('success'))
                 <div class="alert alert-success">
@@ -233,27 +233,26 @@
                 @endif
 
 
-                <div class="row">
+                <div class="row pt-2">
 
                     <div class="col-xs-12 col-md-6">
 
-
                         {{-- room infos --}}
-                        <div class="d-flex gap-3 mb-3 justify-content-center ">
+                        <div class="d-flex gap-3 justify-content-center p-2 mt-1 ">
                             <small>
-                                <span class="m2">
+                                <span class="m2 p-1 me-1 border-end border-black">
                                     {{$apartment->squared_meters}}m²
                                 </span>
-                                -
-                                <span class="rooms">
-                                    {{$apartment->n_rooms}} camera da letto
+                                
+                                <span class="rooms p-1 me-1 border-end border-black">
+                                    {{$apartment->n_rooms}} camere
                                 </span>
-                                -
-                                <span class="beds">
+                                
+                                <span class="beds p-1 me-1 border-end border-black">
                                     {{$apartment->n_beds}} posti letto
                                 </span>
-                                -
-                                <span class="bathrooms">
+                                
+                                <span class="bathrooms p-1 me-1">
                                     {{$apartment->n_bathrooms}} bagni
                                 </span>
                             </small>
@@ -271,60 +270,27 @@
 
                         {{-- room services --}}
                         <strong class="mb-3">
-                            Servizi
+                            Servizi disponibili
                         </strong>
                         <ul id="services-list" class="d-flex gap-5 flex-wrap p-3">
                             @foreach($apartment->services as $service)
-                            <li>
+                            <li class="d-flex align-items-center flex-column">
+                                <div>
+                                    <i class='{{$service->icon}}'></i>
+                                </div>
                                 <div>
                                     {{$service->name}}
 
                                 </div>
-                                <div>
-                                    <i :class="{{$service->icon}}"></i>
-                                </div>
                             </li>
                             @endforeach
                         </ul>
-
-                    </div>
-
-                    <div id="box-description">
-
-                        <div id="text-description-1" class="text-hide d-none">{{$sponsorships[0]->description}}</div>
-                        <div id="text-description-2" class="text-hide d-none">{{$sponsorships[1]->description}}</div>
-                        <div id="text-description-3" class="text-hide d-none">{{$sponsorships[2]->description}}</div>
                         
 
+
                     </div>
 
-                    <div class="col-xs-12 col-md-6  px-5">
-
-                        <button id="cta-sponsor" class="btn btn-success mb-4">Attiva sponsorizzazione</button>
-
-                        <div id="box-payment" class="d-none">
-                            <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
-                                <select id="sponsorship_id" class="form-select"  name="sponsorship_id" onclick="change(value)">
-                                    <option>Seleziona sponsorizzazione</option>
-                                    @foreach ($sponsorships as $sponsorship)
-                                    <option  class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
                     
-                                    @endforeach
-
-                                </select>
-
-                                
-                                <div id="dropin-container"></div>
-                                <button type="submit" class="btn btn-primary">Acquista</button>
-
-
-                            </form>
-
-                        </div>
-
-                    </div>
 
                 </div>
 
@@ -332,25 +298,20 @@
 
         </div>
 
+        
 
 
-        <div class="card-footer d-flex justify-content-center p-3 gap-1">
+
+        <div class="row justify-content-center p-2 gap-1">
 
 
-            {{-- link to room edit page --}}
-            <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-outline-warning">Modifica</a>
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                data-bs-target="#deleteRoomModal">
-                Elimina
-            </button>
+            
 
             {{-- Test --}}
             {{-- <a href="{{route('leads.index', $apartment->id)}}" class="btn btn-outline-warning">Messaggi</a> --}}
-            <a href="{{route('admin.leads.index', $apartment->id)}}" class="btn btn-outline-info">Messaggi</a>
+            <a href="{{route('admin.leads.index', $apartment->id)}}" class="btn btn-outline-info">Messaggi ricevuti</a>
 
-            <a href="{{route('admin.apartments.index', $apartment)}}" class="btn btn-outline-success">Homepage</a>
+            {{-- <a href="{{route('admin.apartments.index', $apartment)}}" class="btn btn-outline-success">Homepage</a> --}}
 
             <!-- Modal -->
             <div class="modal fade" id="deleteRoomModal" tabindex="-1" aria-hidden="true">
@@ -376,13 +337,82 @@
             </div>
 
         </div>
-        <div class="d-flex justify-content-center align-items-center position-relative mt-4">
+
+        <h4 class="pt-4 stats position-relative">Statistiche</h4>
+        <div class="d-flex justify-content-center align-items-center position-relative">
             <span id="prevYear" class="year-nav">&lt;</span>
             <span id="yearLabel" class="mx-3"></span>
             <span id="nextYear" class="year-nav">&gt;</span>
         </div>
         <canvas id="myChart" width="400" height="200" class="w-100"></canvas>
         <canvas id="messageChart" width="400" height="200" class="w-100"></canvas>
+
+        
+        <div class="col-xs-12 col-md-6 pt-4">
+            
+            <button id="cta-sponsor" class="btn btn-success mb-4 w-100">Attiva sponsorizzazione</button>
+
+            
+
+            <div id="box-payment" class="d-none">
+
+                
+
+                <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
+                    <select id="sponsorship_id" class="form-select mb-3"  name="sponsorship_id" onclick="change(value)">
+                        <option>Seleziona sponsorizzazione</option>
+                        @foreach ($sponsorships as $sponsorship)
+                        <option  class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
+        
+                        @endforeach
+
+                    </select>
+
+                    <div id="box-description">
+
+
+                        <div id="text-description-1" class="text-hide d-none">
+                            <strong>Costo</strong>: {{$sponsorships[0]->price}}€ <br>
+                            <strong>Durata</strong>: 24 ore <br>
+                            {{$sponsorships[0]->description}}
+                        </div>
+                        <div id="text-description-2" class="text-hide d-none">
+                            <strong>Costo</strong>: {{$sponsorships[1]->price}}€ <br>
+                            <strong>Durata</strong>: 48 ore <br>
+                            {{$sponsorships[1]->description}}
+                        </div>
+                        <div id="text-description-3" class="text-hide d-none">
+                            <strong>Costo</strong>: {{$sponsorships[2]->price}}€ <br>
+                            <strong>Durata</strong>: 144 ore <br>
+                            {{$sponsorships[2]->description}}
+                        </div>
+                        
+            
+                    </div>
+
+                    
+                    <div id="dropin-container"></div>
+                    <button type="submit" class="btn btn-primary">Acquista</button>
+
+
+                </form>
+
+            </div>
+
+            
+
+        </div>
+
+        {{-- link to room edit page --}}
+        <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-outline-warning">Modifica</a>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+            data-bs-target="#deleteRoomModal">
+            Elimina
+        </button>
     </div>
 </div>
 

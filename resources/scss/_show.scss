@@ -1,0 +1,17 @@
+@use './variables' as *;
+
+.apart-container {
+    background-color: rgba(207, 226, 229, 0.445);
+    border-radius: 5px;
+}
+
+
+.stats:before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: $accentColor;
+}

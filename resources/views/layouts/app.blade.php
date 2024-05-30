@@ -9,18 +9,18 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
-
+    
+    
+    <!-- Usando Vite -->
+    @vite(['resources/js/app.js'])
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Usando Vite -->
-    @vite(['resources/js/app.js'])
+    
 </head>
 
 <body>
-    <div id="app" >
+    <div id="app" class="bg-white" >
 
 
         <nav class="navbar navbar-expand-md navbar-light shadow-sm bg-white">
