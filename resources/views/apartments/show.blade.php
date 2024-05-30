@@ -204,7 +204,7 @@
 
 <div class="container p-2">
 
-    <div class=" apart-container p-3">
+    <div class=" apart-container p-3 my-md-3">
         <div class="row">
             <div class="col-12">
 
@@ -224,6 +224,39 @@
 
             </div>
 
+            <div class="col-12 pt-2">
+                {{-- room infos --}}
+                <div class="row p-2 mt-1 justify-content-lg-center ">
+                    <div class="col-3 col-lg-1 m2 position-relative service  text-center">
+                       <small>
+                        {{$apartment->squared_meters}} m²
+                        </small>                             
+                    </div>
+                    
+                    <div class="col-3 col-lg-1 rooms position-relative service text-center ">
+                       <small>
+                        {{$apartment->n_rooms}} camere
+                        </small> 
+                    </div>
+                    
+                    <div class="col-3 col-lg-1 beds position-relative service text-center ">
+                       <small>
+                        {{$apartment->n_beds}} letti
+                        </small> 
+                    </div>
+                    
+                    <div class="col-3 col-lg-1 bathrooms position-relative service text-center ">
+                       <small>
+                        {{$apartment->n_bathrooms}} bagni
+                        </small> 
+                    </div>
+                    
+                </div>
+
+            </div>
+
+
+            
             <div class="col-12 ">
 
                 @if (session('success'))
@@ -233,68 +266,180 @@
                 @endif
 
 
-                <div class="row pt-2">
+                
 
-                    <div class="col-xs-12 col-md-6">
+            </div>
 
-                        {{-- room infos --}}
-                        <div class="d-flex gap-3 justify-content-center p-2 mt-1 ">
-                            <small>
-                                <span class="m2 p-1 me-1 border-end border-black">
-                                    {{$apartment->squared_meters}}m²
-                                </span>
-                                
-                                <span class="rooms p-1 me-1 border-end border-black">
-                                    {{$apartment->n_rooms}} camere
-                                </span>
-                                
-                                <span class="beds p-1 me-1 border-end border-black">
-                                    {{$apartment->n_beds}} posti letto
-                                </span>
-                                
-                                <span class="bathrooms p-1 me-1">
-                                    {{$apartment->n_bathrooms}} bagni
-                                </span>
-                            </small>
-                        </div>
+        </div>
+
+        <div class="row mt-3">
+
+            <div class="col-12 col-md-6 col-lg-4">
 
 
-                        <hr>
+                {{-- room description --}}
+                <p>
+                    {{$apartment->description}}
+                </p>
 
-                        {{-- room description --}}
-                        <p>
-                            {{$apartment->description}}
-                        </p>
-
-                        <hr>
-
-                        {{-- room services --}}
-                        <strong class="mb-3">
-                            Servizi disponibili
-                        </strong>
-                        <ul id="services-list" class="d-flex gap-5 flex-wrap p-3">
-                            @foreach($apartment->services as $service)
-                            <li class="d-flex align-items-center flex-column">
-                                <div>
-                                    <i class='{{$service->icon}}'></i>
-                                </div>
-                                <div>
-                                    {{$service->name}}
-
-                                </div>
-                            </li>
-                            @endforeach
-                        </ul>
-                        
+            </div>
 
 
-                    </div>
-
+            <div class="col-12 col-md-6 col-lg-4 my-3 my-md-2">
+                
                     
+                <div class="bg-white rounded-2 p-2">
+                    <strong class="p-1">
+                        Servizi disponibili
+                    </strong>
+                    <ul id="services-list" class="d-flex gap-4 flex-wrap pt-2 ">
+                        @foreach($apartment->services as $service)
+                        <li class="d-flex align-items-center flex-column">
+                            <div>
+                                <i class='{{$service->icon}}'></i>
+                            </div>
+                            <div>
+                                {{$service->name}}
+        
+                            </div>
+                        </li>
+                        @endforeach
+                    </ul>
 
                 </div>
 
             </div>
+
+            <div class="col-12 col-md-12 col-lg-4">
+
+                <a href="{{route('admin.leads.index', $apartment->id)}}" class="btn btn-outline-info mt-2 mb-3 w-100">Messaggi ricevuti</a>
+                
+                
+                <button id="cta-sponsor" class="btn btn-success mb-4 w-100" data-bs-toggle="modal"
+                data-bs-target="#showPayment"
+                >
+                    Attiva la sponsorizzazione
+                </button>
+
+                <div id="box-payment" class="d-none">
+
+                    {{-- <button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="modal"
+                    data-bs-target="#showPayment">
+                        Attiva
+                    </button> --}}
+
+                    <div class="modal fade" id="showPayment" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5">Attiva la sponsorizzazione</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
+                                        <select id="sponsorship_id" class="form-select mb-3"  name="sponsorship_id" onclick="change(value)">
+                                            <option>Seleziona sponsorizzazione</option>
+                                            @foreach ($sponsorships as $sponsorship)
+                                            <option  class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
+                            
+                                            @endforeach
+                    
+                                        </select>
+                    
+                                        <div id="box-description">
+                    
+                    
+                                            <div id="text-description-1" class="text-hide d-none">
+                                                <strong>Costo</strong>: {{$sponsorships[0]->price}}€ <br>
+                                                <strong>Durata</strong>: 24 ore <br>
+                                                {{$sponsorships[0]->description}}
+                                            </div>
+                                            <div id="text-description-2" class="text-hide d-none">
+                                                <strong>Costo</strong>: {{$sponsorships[1]->price}}€ <br>
+                                                <strong>Durata</strong>: 48 ore <br>
+                                                {{$sponsorships[1]->description}}
+                                            </div>
+                                            <div id="text-description-3" class="text-hide d-none">
+                                                <strong>Costo</strong>: {{$sponsorships[2]->price}}€ <br>
+                                                <strong>Durata</strong>: 144 ore <br>
+                                                {{$sponsorships[2]->description}}
+                                            </div>
+                                            
+                                
+                                        </div>
+                    
+                                        
+                                        <div id="dropin-container"></div>
+                    
+                                        <div class="d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary my-2">Acquista</button>
+                    
+                                        </div>
+                    
+                    
+                                    </form>
+                                   
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                
+
+                    {{-- <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
+                        <select id="sponsorship_id" class="form-select mb-3"  name="sponsorship_id" onclick="change(value)">
+                            <option>Seleziona sponsorizzazione</option>
+                            @foreach ($sponsorships as $sponsorship)
+                            <option  class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
+            
+                            @endforeach
+    
+                        </select>
+    
+                        <div id="box-description">
+    
+    
+                            <div id="text-description-1" class="text-hide d-none">
+                                <strong>Costo</strong>: {{$sponsorships[0]->price}}€ <br>
+                                <strong>Durata</strong>: 24 ore <br>
+                                {{$sponsorships[0]->description}}
+                            </div>
+                            <div id="text-description-2" class="text-hide d-none">
+                                <strong>Costo</strong>: {{$sponsorships[1]->price}}€ <br>
+                                <strong>Durata</strong>: 48 ore <br>
+                                {{$sponsorships[1]->description}}
+                            </div>
+                            <div id="text-description-3" class="text-hide d-none">
+                                <strong>Costo</strong>: {{$sponsorships[2]->price}}€ <br>
+                                <strong>Durata</strong>: 144 ore <br>
+                                {{$sponsorships[2]->description}}
+                            </div>
+                            
+                
+                        </div>
+    
+                        
+                        <div id="dropin-container"></div>
+    
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary my-2">Acquista</button>
+    
+                        </div>
+    
+    
+                    </form> --}}
+    
+                </div>
+
+
+            </div>    
+
+
 
         </div>
 
@@ -302,17 +447,10 @@
 
 
 
-        <div class="row justify-content-center p-2 gap-1">
-
-
+        <div class="row justify-content-center p-2 gap-1">            
             
 
-            {{-- Test --}}
-            {{-- <a href="{{route('leads.index', $apartment->id)}}" class="btn btn-outline-warning">Messaggi</a> --}}
-            <a href="{{route('admin.leads.index', $apartment->id)}}" class="btn btn-outline-info">Messaggi ricevuti</a>
-
-            {{-- <a href="{{route('admin.apartments.index', $apartment)}}" class="btn btn-outline-success">Homepage</a> --}}
-
+           
             <!-- Modal -->
             <div class="modal fade" id="deleteRoomModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
@@ -335,84 +473,51 @@
                     </div>
                 </div>
             </div>
-
+            
         </div>
-
-        <h4 class="pt-4 stats position-relative">Statistiche</h4>
+        
+        <h4 class="pt-1 stats position-relative">Statistiche</h4>
         <div class="d-flex justify-content-center align-items-center position-relative">
             <span id="prevYear" class="year-nav">&lt;</span>
             <span id="yearLabel" class="mx-3"></span>
             <span id="nextYear" class="year-nav">&gt;</span>
         </div>
-        <canvas id="myChart" width="400" height="200" class="w-100"></canvas>
-        <canvas id="messageChart" width="400" height="200" class="w-100"></canvas>
 
-        
-        <div class="col-xs-12 col-md-6 pt-4">
-            
-            <button id="cta-sponsor" class="btn btn-success mb-4 w-100">Attiva sponsorizzazione</button>
+        <div class="row">
 
-            
+            <div class="col-12 col-lg-6">
+                <canvas id="myChart" width="400" height="200" class="w-100"></canvas>
 
-            <div id="box-payment" class="d-none">
-
-                
-
-                <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
-                    <select id="sponsorship_id" class="form-select mb-3"  name="sponsorship_id" onclick="change(value)">
-                        <option>Seleziona sponsorizzazione</option>
-                        @foreach ($sponsorships as $sponsorship)
-                        <option  class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
-        
-                        @endforeach
-
-                    </select>
-
-                    <div id="box-description">
-
-
-                        <div id="text-description-1" class="text-hide d-none">
-                            <strong>Costo</strong>: {{$sponsorships[0]->price}}€ <br>
-                            <strong>Durata</strong>: 24 ore <br>
-                            {{$sponsorships[0]->description}}
-                        </div>
-                        <div id="text-description-2" class="text-hide d-none">
-                            <strong>Costo</strong>: {{$sponsorships[1]->price}}€ <br>
-                            <strong>Durata</strong>: 48 ore <br>
-                            {{$sponsorships[1]->description}}
-                        </div>
-                        <div id="text-description-3" class="text-hide d-none">
-                            <strong>Costo</strong>: {{$sponsorships[2]->price}}€ <br>
-                            <strong>Durata</strong>: 144 ore <br>
-                            {{$sponsorships[2]->description}}
-                        </div>
-                        
-            
-                    </div>
-
-                    
-                    <div id="dropin-container"></div>
-                    <button type="submit" class="btn btn-primary">Acquista</button>
-
-
-                </form>
+            </div>
+            <div class="col-12 col-lg-6">
+                <canvas id="messageChart" width="400" height="200" class="w-100"></canvas>
 
             </div>
 
-            
+        </div>
+
+        
+        
+
+        <div class="row pt-4">
+
+            <div class="col-6">
+                {{-- link to room edit page --}}
+                <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-warning w-100">Modifica</a>
+
+            </div>
+            <div class="col-6">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="modal"
+                    data-bs-target="#deleteRoomModal">
+                    Elimina
+                </button>
+
+            </div>
 
         </div>
 
-        {{-- link to room edit page --}}
-        <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-cta">Modifica</a>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-            data-bs-target="#deleteRoomModal">
-            Elimina
-        </button>
     </div>
 </div>
 
