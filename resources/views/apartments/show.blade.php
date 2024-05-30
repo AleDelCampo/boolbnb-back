@@ -406,7 +406,7 @@
         </div>
 
         {{-- link to room edit page --}}
-        <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-outline-warning">Modifica</a>
+        <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-cta">Modifica</a>
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"

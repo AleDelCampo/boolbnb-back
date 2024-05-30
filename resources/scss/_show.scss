@@ -15,3 +15,14 @@
     height: 3px;
     background-color: $accentColor;
 }
+
+.btn-cta {
+    border: 2px solid $accentColor;
+    background-color: white;
+
+    &:hover {
+        border: 2px solid white;
+        background-color: $accentColor;
+        color: white;
+    }
+}
