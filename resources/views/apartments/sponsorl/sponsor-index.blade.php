@@ -1,10 +1,10 @@
 @extends('layouts.app') 
 
 @section('content') 
+<h1 class="text-center pt-4 ">I miei appartamenti sponsorizzati</h1> 
 
-<div class="container mt-5 py-4"> 
-    <h1 class="text-center mb-4 pb-5">I miei appartamenti sponsorizzati</h1> 
-    <div class="card-deck"> 
+<div class="cont-spons container p-5 my-3 border rounded-3 shadow-lg "> 
+    <div class="card-deck "> 
         
         @if ($apartments->isEmpty()) 
             <div class="alert alert-warning text-center" role="alert"> 
@@ -13,7 +13,7 @@
         @else
             @foreach($apartments as $apartment)
                 @foreach($apartment->sponsorships as $sponsorship) 
-                    <div class="card mb-4 shadow-lg position-relative sponsorship-card"> 
+                    <div class="card shadow-lg position-relative sponsorship-card rounded-3 border-0"> 
                         <a href="{{ route('admin.apartments.show', $apartment) }}" > 
 
                             <img class="card-img-top" src="{{ asset('storage/' . $apartment->image) }}" alt="" style="object-fit: cover; height: 200px; width: 100%;">
