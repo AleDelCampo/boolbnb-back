@@ -1,24 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
-    <div class="row justify-content-center">
+<div class="container mt-4 ">
+    <div class="row justify-content-center ">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+            <div class="card text-secondary  shadow-lg border-0 rounded-3 fw-bold "> 
+                <div class="card-header " style="background-color: #0067697b; color:#4f4f4f">{{ __('Login') }}</div>
 
-                <div class="card-body">
+                <div class="card-body" style="background-color: #00676939;" >
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-                        <div class="mb-4 row">
+                        <div class="mb-4 row ">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                     name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                <span id="email-error" class="invalid-feedback" style="display: none;">Campo email
-                                    obbligatorio</span>
+                                <span id="email-error" class="invalid-feedback" style="display: none;">Campo email obbligatorio</span>
 
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -29,15 +28,13 @@
                         </div>
 
                         <div class="mb-4 row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password')
-                                }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror" name="password"
                                     required autocomplete="current-password">
-                                <span id="password-error" class="invalid-feedback" style="display: none;">Campo password
-                                    obbligatorio</span>
+                                <span id="password-error" class="invalid-feedback" style="display: none;">Campo password obbligatorio</span>
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -62,12 +59,12 @@
 
                         <div class="mb-4 row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
+                                <button type="submit" class="btn btn-register fw-bold" style="background-color: #0067696f; border-color: #0067696f;">
+                                    {{ __('Accedi') }}
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a class="btn btn-link text-secondary text-decoration-none" href="{{ route('password.request') }}">
                                     {{ __('Hai dimenticato la tua Password?') }}
                                 </a>
                                 @endif
@@ -126,9 +123,6 @@
     });
 </script>
 
-<style>
-    .invalid-feedback {
-        display: block;
-    }
-</style>
+
 @endsection
+

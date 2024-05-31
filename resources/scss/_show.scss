@@ -1,4 +1,11 @@
 @use './variables' as *;
+.card-img-show{
+
+   min-width: 100%;
+      object-fit: cover
+
+
+}
 
 .apart-container {
     background-color: rgba(207, 226, 229, 0.445);
