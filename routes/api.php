@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AutocompleteController;
 use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Api\FilterController;
 use App\Http\Controllers\Api\StatisticController;
+use App\Models\Apartment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,8 @@ Route::get('/service_filter', [FilterController::class, 'serviceFilter']); // Ro
 Route::post('/new-contact', [LeadController::class, 'store']);
 
 Route::get('/show-sponsored', [ApartmentController::class, 'showSponsored']); // Rotta per la visualizzazione delle sponsorizzate
+
+Route::get('/all-sponsorship', [ApartmentController::class, 'sponsorship_apartments']);
 
 Route::get('/visits', [StatisticController::class, 'counter']);
 
