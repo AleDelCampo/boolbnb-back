@@ -15,8 +15,10 @@ export default defineConfig({
     // Add resolve object and aliases
     resolve: {
         alias: {
+            '~fontawesome': path.resolve(__dirname, 'node_modules/@fortawesome/fontawesome-free'),
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
             '~resources': '/resources/'
+
         }
     }
 });

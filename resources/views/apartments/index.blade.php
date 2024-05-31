@@ -19,6 +19,9 @@
                     </div>
                     <div id="nav-list" class="row mt-5">
                         <div class="col-12 py-2">
+                            <a class="btn my_bg_color fw-bold w-100" href="{{ url('http://localhost:5174/') }}">BoolBnB</a>
+                        </div>
+                        <div class="col-12 py-2">
                             <a class="btn my_bg_color fw-bold w-100" href="{{ url('profile') }}">{{__('Profilo')}}</a>
                         </div>
                         <div class="col-12 py-2">
