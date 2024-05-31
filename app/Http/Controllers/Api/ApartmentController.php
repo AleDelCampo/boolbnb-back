@@ -99,4 +99,21 @@ class ApartmentController extends Controller
             "results" => $apartments,
         ]);
     }
+
+
+    public function sponsorship_apartments(){
+
+        $apartments = Apartment::select()
+        ->join('apartment_sponsorship', 'id', '=', 'apartment_sponsorship.apartment_id')
+        ->where('apartment_sponsorship.apartment_id','<>', null)
+        ->orderBy('id')
+        ->get();
+
+        // Restituisce i risultati della ricerca
+        return response()->json([
+            "success" => true,
+            "results" => $apartments,
+        ]);
+
+    }
 }
