@@ -22,7 +22,7 @@
 <body>
     <div id="app">
 
-        <nav class="navbar navbar-expand-md navbar-light shadow-sm bg-white">
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm bg-white  fixed-top ">
             <div class="container">
                 
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
@@ -78,7 +78,7 @@
             </div>
         </nav>
         
-        <main >
+        <main  class="py-5  mb-5">
             
             @yield('content')
 
@@ -90,7 +90,7 @@
        
 
     </div>
-    <div class="container-fluid shadow-lg bg-white text-center mt-5  py-4 ">
+    <div class="container-fluid shadow-lg bg-white text-center mt-4 py-3 fixed-bottom">
         <h6 class="text-center mb-3 ">
             Progetto finale di gruppo Boolean®, <span style="color: #006769c0;">BoolBnB</span>.
         </h6>
