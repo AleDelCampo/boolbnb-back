@@ -1,0 +1,30 @@
+#logo {
+    width: 120px;
+}
+
+.navbar-nav {
+    .nav-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        
+        .nav-link {
+            position: relative;
+            color: #006769c0;
+            font-weight: bold;
+
+            &:hover {
+                color: black;
+            }
+
+            &:hover::before {
+                content: "";
+                position: absolute;
+                bottom: -14px;
+                left: 0;
+                width: 100%;
+                border-bottom: 5px solid #006769c0;
+            }
+        }
+    }
+}
