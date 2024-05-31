@@ -292,9 +292,9 @@
                     <strong class="p-1">
                         Servizi disponibili
                     </strong>
-                    <ul id="services-list" class="d-flex gap-4 flex-wrap pt-2 ">
+                    <ul id="services-list" class="d-flex gap-4  pt-2 overflow-x-auto" >
                         @foreach($apartment->services as $service)
-                        <li class="d-flex align-items-center flex-column">
+                        <li class="d-flex align-items-center flex-column flex-shrink-0">
                             <div>
                                 <i class='{{$service->icon}}'></i>
                             </div>
@@ -312,13 +312,13 @@
 
             <div class="col-12 col-md-12 col-lg-4">
 
-                <a href="{{route('admin.leads.index', $apartment->id)}}" class="btn btn-outline-info mt-2 mb-3 w-100">Messaggi ricevuti</a>
+                <a href="{{route('admin.leads.index', $apartment->id)}}" class="btn btn-cta mt-2 mb-3 w-100"><i class="fa-solid fa-message me-3"></i><strong>Messaggi ricevuti</strong></a>
                 
                 
-                <button id="cta-sponsor" class="btn btn-success mb-4 w-100" data-bs-toggle="modal"
+                <button id="cta-sponsor" class="btn btn-cta mb-4 w-100" data-bs-toggle="modal"
                 data-bs-target="#showPayment"
                 >
-                    Attiva la sponsorizzazione
+                    <strong><i class="fa-solid fa-crown me-3"></i>Attiva la sponsorizzazione</strong>
                 </button>
 
                 <div id="box-payment" class="d-none">
@@ -387,64 +387,14 @@
                         </div>
                     </div>
 
-                
-
-                    {{-- <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
-                        <select id="sponsorship_id" class="form-select mb-3"  name="sponsorship_id" onclick="change(value)">
-                            <option>Seleziona sponsorizzazione</option>
-                            @foreach ($sponsorships as $sponsorship)
-                            <option  class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
             
-                            @endforeach
-    
-                        </select>
-    
-                        <div id="box-description">
-    
-    
-                            <div id="text-description-1" class="text-hide d-none">
-                                <strong>Costo</strong>: {{$sponsorships[0]->price}}€ <br>
-                                <strong>Durata</strong>: 24 ore <br>
-                                {{$sponsorships[0]->description}}
-                            </div>
-                            <div id="text-description-2" class="text-hide d-none">
-                                <strong>Costo</strong>: {{$sponsorships[1]->price}}€ <br>
-                                <strong>Durata</strong>: 48 ore <br>
-                                {{$sponsorships[1]->description}}
-                            </div>
-                            <div id="text-description-3" class="text-hide d-none">
-                                <strong>Costo</strong>: {{$sponsorships[2]->price}}€ <br>
-                                <strong>Durata</strong>: 144 ore <br>
-                                {{$sponsorships[2]->description}}
-                            </div>
-                            
-                
-                        </div>
-    
-                        
-                        <div id="dropin-container"></div>
-    
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary my-2">Acquista</button>
-    
-                        </div>
-    
-    
-                    </form> --}}
     
                 </div>
 
 
-            </div>    
-
-
+            </div>   
 
         </div>
-
-        
-
 
 
         <div class="row justify-content-center p-2 gap-1">            
@@ -467,7 +417,7 @@
                             <form action="{{route('admin.apartments.destroy', $apartment)}}" method="POST">
                                 @csrf
                                 @method("DELETE")
-                                <button class="btn btn-danger">Elimina</button>
+                                <button class="btn ">Elimina</button>
                             </form>
                         </div>
                     </div>
@@ -484,15 +434,15 @@
         </div>
 
         <div class="row">
-
             <div class="col-12 col-lg-6">
-                <canvas id="myChart" width="400" height="200" class="w-100"></canvas>
+                <canvas id="myChart" width="400" height="200"></canvas>
 
             </div>
             <div class="col-12 col-lg-6">
-                <canvas id="messageChart" width="400" height="200" class="w-100"></canvas>
+                <canvas id="messageChart" width="400" height="200"></canvas>
 
             </div>
+
 
         </div>
 
@@ -503,14 +453,14 @@
 
             <div class="col-6">
                 {{-- link to room edit page --}}
-                <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn btn-warning w-100">Modifica</a>
+                <a href="{{route('admin.apartments.edit', $apartment)}}" class="btn cta-warning w-100"><strong>Modifica</strong></a>
 
             </div>
             <div class="col-6">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="modal"
+                <button type="button" class="btn cta-danger w-100 shake-horizontal" data-bs-toggle="modal"
                     data-bs-target="#deleteRoomModal">
-                    Elimina
+                    <strong>Elimina</strong>
                 </button>
 
             </div>
@@ -528,9 +478,7 @@
 </script>
 
 <style>
-    body {
-        background-color: #5F8B8D;
-    }
+    
 
     #services-list {
         list-style-type: none;
@@ -540,6 +488,20 @@
         cursor: pointer;
         border-radius: 50%;
     }
+    
+    #services-list::-webkit-scrollbar {
+    height: 2px;
+    
+    }
+    #services-list::-webkit-scrollbar-track {
+    background-color: white;
+    /* box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5); */
+    border-radius: 2px;
+    }
+    #services-list::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 10px;
+}
 </style>
 
 
