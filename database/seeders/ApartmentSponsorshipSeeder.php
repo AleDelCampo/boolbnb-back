@@ -21,20 +21,20 @@ class ApartmentSponsorshipSeeder extends Seeder
             [
                 'apartment_id' => 1,
                 'sponsorship_id' => 2,
-                'start_sponsorship' => '2021-10-03',
-                'end_sponsorship' => '2021-11-05'
+                'start_sponsorship' => '2024-10-03T13:22:00',
+                'end_sponsorship' => '2025-11-03T13:22:00'
             ],
             [
                 'apartment_id' => 2,
                 'sponsorship_id' => 1,
-                'start_sponsorship' => '2021-10-03',
-                'end_sponsorship' => '2021-11-05'
+                'start_sponsorship' => '2021-10-03T13:22:00',
+                'end_sponsorship' => '2025-11-05T13:22:00'
             ],
             [
                 'apartment_id' => 3,
                 'sponsorship_id' => 3,
-                'start_sponsorship' => '2021-10-03',
-                'end_sponsorship' => '2021-11-05'
+                'start_sponsorship' => '2021-10-03T13:22:00',
+                'end_sponsorship' => '2025-11-05T13:22:00'
             ],
         ];
 

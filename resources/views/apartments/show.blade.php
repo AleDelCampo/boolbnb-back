@@ -257,18 +257,22 @@
 
 
             
-            <div class="col-12 ">
+            
+        </div>
+        
+        <div class="row justify-content-center mt-3">
 
+            <div class="col-12 col-lg-6 text-center">
                 @if (session('success'))
                 <div class="alert alert-success">
-                    {{ session('success') }}
+                    <strong>
+                        {{ session('success') }}
+                    </strong>   
                 </div>
                 @endif
 
-
-                
-
             </div>
+            
 
         </div>
 
