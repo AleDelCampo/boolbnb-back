@@ -54,11 +54,9 @@
     }
 
     .timer-box {
-        color: $secondaryColor;
+        color: $accentColor;
         border: 1px dotted $accentColor;
         font-size: smaller;
-        -webkit-text-stroke-width: 1px;
-        -webkit-text-stroke-color: $accentColor;
         &:hover {
             color: white;
         }

@@ -90,7 +90,7 @@
        
 
     </div>
-    <div class="container-fluid shadow-lg bg-white text-center mt-5  py-4 ">
+    {{-- <div class="container-fluid shadow-lg bg-white text-center mt-5  py-4 ">
         <h6 class="text-center mb-3 ">
             Progetto finale di gruppo Boolean®, <span style="color: #006769c0;">BoolBnB</span>.
         </h6>
@@ -98,7 +98,7 @@
         <div id="copyright">
             Copyright© 2024, Boolean®.
         </div>
-    </div>
+    </div> --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             function removeExpiredSponsorships() {
