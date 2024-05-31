@@ -40,7 +40,7 @@
           </div>
           <div class="mb-4">
             <label for="description" class="form-label fw-bold">Descrizione</label>
-            <textarea type="text" class="form-control @error('description') is-invalid @enderror" id="description" name="description" required>{{ old('description') ?? $apartment->description }}</textarea>
+            <textarea type="text" class="form-control @error('description') is-invalid @enderror" id="description" name="description">{{ old('description') ?? $apartment->description }}</textarea>
             @error('description')
             <div class="invalid-feedback">
               {{$message}}
