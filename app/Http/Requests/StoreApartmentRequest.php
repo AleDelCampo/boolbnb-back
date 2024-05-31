@@ -28,7 +28,7 @@ class StoreApartmentRequest extends FormRequest
             'n_rooms' => 'required|numeric|between:1,100',
             'n_beds' => 'required|numeric|between:1,100',
             'n_bathrooms' => 'required|numeric|between:1,100',
-            'squared_meters' => 'required|numeric|between:10,4000',
+            'squared_meters' => 'required|numeric|between:10,200',
             'address' => 'required|max:100',
             'services' => 'required|exists:services,id|array|min:1',
         ];
@@ -58,7 +58,7 @@ class StoreApartmentRequest extends FormRequest
             'n_bathrooms.numeric'=> 'Il valore da inserire deve essere numerico',
             
             'squared_meters.required' => 'Inserisci area Albergo',
-            'squared_meters.between'=> 'Non possono essere inseriti valori inferiori a 10 e maggiori di 4000',
+            'squared_meters.between'=> 'Non possono essere inseriti valori inferiori a 10 e maggiori di 200',
             'squared_meters.numeric'=> 'Il valore da inserire deve essere numerico',
             
             'address.required' => 'Inserisci un indirizzo valido',
