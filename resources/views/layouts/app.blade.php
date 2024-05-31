@@ -10,21 +10,20 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
+
+
 </head>
 
 <body>
     <div id="app">
-
         <nav class="navbar navbar-expand-md navbar-light shadow-sm bg-white">
             <div class="container">
-                
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                     <img id="logo" src="{{asset('storage/bnb_images/BoolBnB.png')}}" alt="Logo" class="d-inline-block align-text-top">
                 </a>
@@ -54,18 +53,17 @@
                         </li>
                         @endif
                         @else
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown d-flex justify-content-start">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                {{-- <a class="dropdown-item" href="{{ url('dashboard') }}">{{__('Dashboard')}}</a> --}}
                                 <a class="dropdown-item" href="{{ url('profile') }}">{{__('Profile')}}</a>
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
+                                <a class="dropdown-item" href="{{ url('http://localhost:5174/') }}">BoolBnB</a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
@@ -78,27 +76,11 @@
             </div>
         </nav>
         
-        <main >
-            
+        <main>
             @yield('content')
-
-            
-        
-
         </main>
-        
-       
-
     </div>
-    {{-- <div class="container-fluid shadow-lg bg-white text-center mt-5  py-4 ">
-        <h6 class="text-center mb-3 ">
-            Progetto finale di gruppo Boolean®, <span style="color: #006769c0;">BoolBnB</span>.
-        </h6>
-    
-        <div id="copyright">
-            Copyright© 2024, Boolean®.
-        </div>
-    </div> --}}
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             function removeExpiredSponsorships() {
@@ -121,9 +103,7 @@
     <script src="https://js.braintreegateway.com/web/dropin/1.28.0/js/dropin.min.js"></script>
     <script src="https://js.braintreegateway.com/web/3.89.1/js/client.min.js"></script>
     <script src="https://js.braintreegateway.com/web/3.89.1/js/hosted-fields.min.js"></script>
-
-    
 </body>
 
-
 </html>
+

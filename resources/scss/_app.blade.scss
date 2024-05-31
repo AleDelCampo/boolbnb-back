@@ -3,6 +3,8 @@
 }
 
 .navbar-nav {
+
+    
     .nav-item {
         position: relative;
         display: flex;
@@ -28,3 +30,18 @@
         }
     }
 }
+
+
+
+@media (max-width: 767.98px) { /* breakpoint per dispositivi mobili */
+    .navbar-nav .dropdown-menu {
+        position: absolute;
+        top: 100%; /* Posiziona il dropdown subito sotto il genitore */
+        left: 0;
+        right: 0;
+        margin-top: 0;
+        width: 100%;
+    }
+}
+
+
