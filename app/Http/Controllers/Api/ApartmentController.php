@@ -46,7 +46,7 @@ class ApartmentController extends Controller
                     sin(radians(latitude))
                 )
             ) AS distance", [$latitude, $longitude, $latitude])
-            ->join('apartment_sponsorship','id','=','apartment_sponsorship.apartment_id','left outer')
+            ->join('apartment_sponsorship', 'id', '=', 'apartment_sponsorship.apartment_id', 'left outer')
             ->having('distance', '<', 20)
             ->orderByRaw('-apartment_sponsorship.apartment_id DESC')  //Seleziona solo gli appartameti in cui il valore della colonna distance è inferiore al valore del raggio specificato dall'utente.
             ->orderBy('distance')
@@ -82,8 +82,8 @@ class ApartmentController extends Controller
                     sin(radians(latitude))
                 )
             ) AS distance", [$latitude, $longitude, $latitude])
-            ->join('apartment_sponsorship','id','=','apartment_sponsorship.apartment_id')
-            ->having('distance', '<', 20)  //Seleziona solo gli appartameti in cui il valore della colonna distance è inferiore al valore del raggio specificato dall'utente.
+            ->join('apartment_sponsorship', 'id', '=', 'apartment_sponsorship.apartment_id')
+            ->having('distance', '<', 30)  //Seleziona solo gli appartameti in cui il valore della colonna distance è inferiore al valore del raggio specificato dall'utente.
             ->orderBy('distance')
             ->when($sponsorships, function ($query, $sponsorships) {
                 // Condizioni per garantire che tutti i servizi selezionati siano presenti

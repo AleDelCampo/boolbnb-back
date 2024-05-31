@@ -90,14 +90,21 @@ class ApartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Apartment $apartment, Gateway $gateway)
+    public function show(Request $request, Gateway $gateway, $slug)
     {
+        // Trova l'appartamento utilizzando lo slug
+        $apartment = Apartment::where('slug', $slug)->firstOrFail();
+
+        // Controllo se l'utente è il proprietario dell'appartamento
+        if ($apartment->user_id !== Auth::id()) {
+            // Se l'utente non è il proprietario dell'appartamento, restituisci una risposta 404
+            abort(404);
+        }
+
+        // Altrimenti, mostra la vista dell'appartamento
         $success = false;
-
         $sponsorships = Sponsorship::all();
-
         $clientToken = $gateway->clientToken()->generate();
-
 
         return view('apartments.show', compact('success', 'apartment', 'clientToken', 'sponsorships'));
     }
