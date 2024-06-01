@@ -41,6 +41,20 @@
     }
 }
 
+.btn-payment {
+    background-color:#0067697b;
+    border-color: #00676939;
+    color: #4f4f4f;
+
+    &:hover{
+        background-color: #0067696d; 
+        border-color: #0067697b;
+        color: white;
+        
+    }
+
+}
+
 
 .cta-danger {
     border: 2px solid red;

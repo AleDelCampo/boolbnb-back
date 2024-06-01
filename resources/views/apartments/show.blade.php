@@ -334,12 +334,12 @@
 
                     <div class="modal fade" id="showPayment" tabindex="-1" aria-hidden="true" >
                         <div class="modal-dialog">
-                            <div class="modal-content" style="background-color: #006769cd;">
-                                <div class="modal-header">
+                            <div class="modal-content">
+                                <div class="modal-header " style="background-color: #0067697b; color:#4f4f4f">
                                     <h1 class="modal-title fs-5">Attiva la sponsorizzazione</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" style="background-color: #00676939;">
                                     <form id="payment-form" action="{{ route('payment.process') }}"  method="POST">
                                         @csrf
                                         <input type="hidden"  name="apartment_id" value="{{ $apartment->id }}">
