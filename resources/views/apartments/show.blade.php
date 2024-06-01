@@ -352,7 +352,7 @@
                     
                                         </select>
                     
-                                        <div id="box-description" class="text-white">
+                                        <div id="box-description" class="box-description" >
                     
                     
                                             <div id="text-description-1" class="text-hide d-none ">
