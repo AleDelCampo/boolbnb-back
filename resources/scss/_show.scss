@@ -1,4 +1,11 @@
 @use './variables' as *;
+.card-img-show{
+
+   min-width: 100%;
+      object-fit: cover
+
+
+}
 
 .apart-container {
     background-color: rgba(207, 226, 229, 0.445);
@@ -32,6 +39,20 @@
         background-color: $accentColor;
         color: white;
     }
+}
+
+.btn-payment {
+    background-color:#0067697b;
+    border-color: #00676939;
+    color: #4f4f4f;
+
+    &:hover{
+        background-color: #0067696d; 
+        border-color: #0067697b;
+        color: white;
+        
+    }
+
 }
 
 

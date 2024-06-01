@@ -5,7 +5,7 @@
 <body class="bg-form">
     <div class="container py-4">
       <h1 class="mt-3 mb-5 text-center">Modifica il tuo appartamento: {{$apartment->title}}</h1>
-      <div class="form-container p-5 rounded-3">
+      <div class="form-container p-5 rounded-3 text-secondary">
         <form action="{{route('admin.apartments.update', $apartment)}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
           @csrf
           @method("PUT")

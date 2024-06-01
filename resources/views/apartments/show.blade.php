@@ -314,7 +314,7 @@
 
             </div>
 
-            <div class="col-12 col-md-12 col-lg-4">
+            <div class="col-12 col-md-12 col-lg-4  text-white" >
 
                 <a href="{{route('admin.leads.index', $apartment->id)}}" class="btn btn-cta mt-2 mb-3 w-100"><i class="fa-solid fa-message me-3"></i><strong>Messaggi ricevuti</strong></a>
                 
@@ -322,7 +322,7 @@
                 <button id="cta-sponsor" class="btn btn-cta mb-4 w-100" data-bs-toggle="modal"
                 data-bs-target="#showPayment"
                 >
-                    <strong><i class="fa-solid fa-crown me-3"></i>Attiva la sponsorizzazione</strong>
+                    <strong><i class="fa-solid fa-crown me-3 "></i>Attiva la sponsorizzazione</strong>
                 </button>
 
                 <div id="box-payment" class="d-none">
@@ -332,19 +332,19 @@
                         Attiva
                     </button> --}}
 
-                    <div class="modal fade" id="showPayment" tabindex="-1" aria-hidden="true">
+                    <div class="modal fade" id="showPayment" tabindex="-1" aria-hidden="true" >
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header " style="background-color: #0067697b; color:#4f4f4f">
                                     <h1 class="modal-title fs-5">Attiva la sponsorizzazione</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
-                                    <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
+                                <div class="modal-body" style="background-color: #00676939;">
+                                    <form id="payment-form" action="{{ route('payment.process') }}"  method="POST">
                                         @csrf
-                                        <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
+                                        <input type="hidden"  name="apartment_id" value="{{ $apartment->id }}">
                                         <select id="sponsorship_id" class="form-select mb-3"  name="sponsorship_id" onclick="change(value)">
-                                            <option>Seleziona sponsorizzazione</option>
+                                            <option >Seleziona sponsorizzazione</option>
                                             @foreach ($sponsorships as $sponsorship)
                                             <option  class="option" value="{{$sponsorship->id}}">{{$sponsorship->title}}</option>
                             
@@ -352,10 +352,10 @@
                     
                                         </select>
                     
-                                        <div id="box-description">
+                                        <div id="box-description" class="text-white">
                     
                     
-                                            <div id="text-description-1" class="text-hide d-none">
+                                            <div id="text-description-1" class="text-hide d-none ">
                                                 <strong>Costo</strong>: {{$sponsorships[0]->price}}€ <br>
                                                 <strong>Durata</strong>: 24 ore <br>
                                                 {{$sponsorships[0]->description}}
@@ -378,7 +378,7 @@
                                         <div id="dropin-container"></div>
                     
                                         <div class="d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-primary my-2">Acquista</button>
+                                            <button type="submit" class="btn btn-payment fw-bold my-2">Acquista</button>
                     
                                         </div>
                     

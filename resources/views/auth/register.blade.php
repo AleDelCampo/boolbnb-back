@@ -2,16 +2,16 @@
 
 @section('content')
 <div class="container mt-4">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center ">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Registrati') }}</div>
+            <div class="card shadow-lg  text-secondary fw-bold">
+                <div class="card-header  "  style="background-color: #0067697b; color:#4f4f4f;">{{ __('Registrati') }}</div>
 
-                <div class="card-body">
+                <div class="card-body" style="background-color: #00676939;">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <div class="mb-4 row">
+                        <div class="mb-4 row ">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
 
                             <div class="col-md-6">
@@ -119,7 +119,7 @@
 
                         <div class="mb-4 row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-register fw-bold">
                                     {{ __('Registrati!!') }}
                                 </button>
                             </div>

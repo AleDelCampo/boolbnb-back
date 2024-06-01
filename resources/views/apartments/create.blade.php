@@ -2,7 +2,7 @@
 
 @section('content')
 
-<body class="bg-form">
+<body class="bg-form ">
   <div class="container py-4">
     <h1 class="mt-3 mb-5 text-center">Aggiungi un nuovo appartamento</h1>
     <div class="form-container p-5 rounded-3">
