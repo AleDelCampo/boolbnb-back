@@ -17,9 +17,11 @@ class LeadController extends Controller
     public function index($id)
     {
         $slug = Apartment::find($id);
-        $slug = $slug -> slug;
-        
-        $leads = Lead::where('apartment_id', '=', $id)->get();
+        $slug = $slug->slug;
+
+        $leads = Lead::where('apartment_id', '=', $id)
+            ->orderBy('created_at', 'DESC')
+            ->get();
         // $leads = Lead::all();
 
         return view('leads.index', compact('leads', 'slug'));
