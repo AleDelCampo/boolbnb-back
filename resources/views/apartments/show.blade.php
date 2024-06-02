@@ -282,9 +282,13 @@
 
 
                 {{-- room description --}}
+                @if($apartment->description)
                 <p>
                     {{$apartment->description}}
-                </p>
+                </p>                  
+                @else
+                    <p>Nessuna descrizione disponibile</p>
+                @endif
 
             </div>
 
@@ -421,7 +425,7 @@
                             <form action="{{route('admin.apartments.destroy', $apartment)}}" method="POST">
                                 @csrf
                                 @method("DELETE")
-                                <button class="btn ">Elimina</button>
+                                <button class="btn btn-danger">Elimina</button>
                             </form>
                         </div>
                     </div>

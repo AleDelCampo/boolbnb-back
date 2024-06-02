@@ -31,7 +31,7 @@
                                                     <div class="address d-none d-sm-block pb-sm-1  fw-light ">{{ $apartment->address }}</div>
                                                     <p class=" fw-semibold fst-italic">{{ $sponsorship->title }} <span>{{ intval($sponsorship->h_duration) }}h</span></p>
                                                     <p class=" fw-light fst-italic">Scadenza: {{ \Carbon\Carbon::parse($sponsorship->pivot->end_sponsorship)->format('d/m/Y') }} </p>
-                                                    <span class="timer-box p-1 border-2 rounded" id="timer-{{ $apartment->id }}-{{ $sponsorship->id }}"></span>
+                                                    <span class="timer-box p-1 border-0" id="timer-{{ $apartment->id }}-{{ $sponsorship->id }}"></span>
                                                 </div>
                                             </div>
                                         </div>

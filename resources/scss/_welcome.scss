@@ -2,7 +2,13 @@
 
 
 .bg-home {
-    height: calc(100vh - 56px);
+    width: 100%;
+    height: calc(100vh - 67px);
+
+    background-image: url("storage/bnb_images/welcomebnb.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
 
     .my_btn {
         border: 1px solid $accentColor;
@@ -22,13 +28,15 @@
     }
 }
 
-.welcome{
+// .welcome {
 
-    background-image: url('../.././storage/app/public/bnb_images/1.png');
-    background-position: center;
-    background-size:cover;
-    border: 1px solid #0067693c;
-    color: white;
-    -webkit-text-stroke-width: 0.3px; /* Spessore del contorno del testo */
-    -webkit-text-stroke-color: white; /* Colore del contorno del testo */
-}
+//     background-image: url('../.././storage/app/public/bnb_images/1.png');
+//     background-position: center;
+//     background-size: cover;
+//     border: 1px solid #0067693c;
+//     color: white;
+//     -webkit-text-stroke-width: 0.3px;
+//     /* Spessore del contorno del testo */
+//     -webkit-text-stroke-color: white;
+//     /* Colore del contorno del testo */
+// }
