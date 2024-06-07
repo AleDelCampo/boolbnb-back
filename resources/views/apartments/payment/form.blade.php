@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Pagamento sponsorizzazione <span class="fw-bold fst-italic"> {{$title}}</span> </h1>
-    <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
+    <form id="payment-form" action="{{ route('admin.payment.process') }}" method="POST">
         @csrf
         <input type="hidden" name="apartment_id" value="{{ $apartment_id }}">
         <input type="hidden" name="sponsorship_id" value="{{ $sponsorship_id }}">

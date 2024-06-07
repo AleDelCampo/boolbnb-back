@@ -344,7 +344,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body" style="background-color: #00676939;">
-                                    <form id="payment-form" action="{{ route('payment.process') }}"  method="POST">
+                                    <form id="payment-form" action="{{ route('admin.payment.process') }}"  method="POST">
                                         @csrf
                                         <input type="hidden"  name="apartment_id" value="{{ $apartment->id }}">
                                         <select id="sponsorship_id" class="form-select mb-3"  name="sponsorship_id" onclick="change(value)">

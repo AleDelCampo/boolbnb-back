@@ -68,7 +68,7 @@ class PaymentController extends Controller
         }
 
         // Passa i dati necessari per la vista success
-        return redirect()->route('payment.success')
+        return redirect()->route('admin.payment.success')
             ->with([
                 'apartment' => $apartment,
                 'sponsorships' => $apartment->sponsorships

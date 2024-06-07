@@ -37,6 +37,7 @@ Route::get('/errors.404', function () {
 })->middleware(['auth', 'verified'])->name('errors.404');
 
 require __DIR__ . '/auth.php';
+Route::get('/leads/{id}', [LeadController::class, 'index'])->name('leads.index');
 
 Route::middleware(['auth', 'verified'])
     ->name('admin.')
