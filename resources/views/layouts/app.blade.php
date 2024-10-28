@@ -22,7 +22,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light shadow-sm bg-white">
+        <nav class="navbar navbar-expand-md shadow-sm">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                     <img id="logo" src="{{asset('storage/bnb_images/BoolBnB.png')}}" alt="Logo" class="d-inline-block align-text-top">
@@ -36,7 +36,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link router line ms-lg-5" href="{{ route('admin.apartments.index') }}">{{ __('Home') }}</a>
+                            <a class="nav-link router line ms-lg-5" href="{{ route('admin.apartments.index') }}">{{ __('') }}</a>
                         </li>
                     </ul>
 

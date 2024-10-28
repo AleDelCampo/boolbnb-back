@@ -5,7 +5,6 @@ use App\Http\Controllers\Api\AutocompleteController;
 use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Api\FilterController;
 use App\Http\Controllers\Api\StatisticController;
-use App\Models\Apartment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
